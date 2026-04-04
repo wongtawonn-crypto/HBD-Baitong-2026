@@ -3,66 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surprise for You 🥥✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500&display=swap" rel="stylesheet">
+    <title>Surprise! 🥥✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Itim&family=Kanit:wght@300;500&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Kanit', sans-serif; background: #fff5f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .box { background: white; padding: 30px; border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); text-align: center; width: 320px; transition: 0.5s; }
+        /* ส่วนที่ 1: การตกแต่งพื้นหลังและรูปแบบทั่วไป */
+        body { 
+            font-family: 'Itim', cursive; /* ใช้ฟอนต์แนวลายมือน่ารักๆ */
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe4e1 100%); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+        }
+
+        .box { 
+            background: rgba(255, 255, 255, 0.95); 
+            padding: 40px; 
+            border-radius: 35px; 
+            box-shadow: 0 20px 40px rgba(255, 154, 154, 0.15); 
+            text-align: center; 
+            width: 300px; 
+            border: 3px solid #ffffff;
+            transition: 0.5s;
+        }
+
+        /* ส่วนที่ 2: การตกแต่งหน้า Login */
+        h2 { color: #ff8b8b; margin-bottom: 10px; font-size: 28px; }
+        p { color: #888; font-size: 16px; line-height: 1.5; }
+
+        input { 
+            width: 90%; 
+            padding: 15px; 
+            margin: 25px 0; 
+            border: 2px solid #fff0f0; 
+            border-radius: 20px; 
+            font-size: 18px; 
+            text-align: center;
+            outline: none;
+            background: #fffafa;
+            transition: 0.3s;
+            font-family: 'Itim', cursive;
+        }
+        input:focus {
+            border-color: #ffadad;
+            background: #ffffff;
+            box-shadow: 0 0 15px rgba(255, 173, 173, 0.2);
+        }
+
+        button { 
+            background: #ff8b8b; 
+            color: white; 
+            border: none; 
+            padding: 15px; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            font-size: 18px; 
+            font-weight: 500; 
+            width: 100%; 
+            transition: 0.3s;
+            box-shadow: 0 8px 20px rgba(255, 139, 139, 0.3);
+            font-family: 'Itim', cursive;
+        }
+        button:hover { 
+            background: #ff7474; 
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(255, 139, 139, 0.4);
+        }
+
+        /* คลาสสำหรับซ่อนหน้า */
         .hidden { display: none; }
-        input { width: 90%; padding: 12px; margin: 15px 0; border: 1.5px solid #eee; border-radius: 12px; font-size: 16px; outline: none; }
-        button { background: #ffadad; color: white; border: none; padding: 12px 25px; border-radius: 12px; cursor: pointer; font-size: 16px; font-weight: 500; width: 100%; transition: 0.3s; }
-        button:hover { background: #ff8b8b; transform: translateY(-2px); }
-        img { width: 100%; border-radius: 20px; margin-bottom: 15px; }
-        p { color: #666; line-height: 1.6; }
-        h2 { color: #ff8b8b; margin-top: 0; }
     </style>
 </head>
 <body>
 
     <div id="p1" class="box">
-        <h2>🔒 Restricted Access</h2>
-        <p>กรุณากรอกชื่อเล่นเพื่อยืนยันตัวตน</p>
-        <input type="text" id="nameInput" placeholder="ชื่อเล่นคนสวย...">
-        <button onclick="goP2()">Confirm</button>
+        <h2>🔒 ยืนยันตัวตน</h2>
+        <p>เพื่อเข้าสู่ระบบเซอร์ไพรส์ <br> กรุณาบอกชื่อเล่นคนสวยหน่อยครับ</p>
+        <input type="text" id="nameInput" placeholder="พิมพ์ตรงนี้เลย...">
+        <button onclick="goP2()">Login ✨</button>
     </div>
 
     <div id="p2" class="box hidden">
-        <h2>📍 Quiz Time!</h2>
-        <p>ทายซิ... ระยะทางจากระยอง <br>มาถึงใจเธอคือ "กี่กิโลเมตร"?</p>
-        <input type="number" id="distInput" placeholder="ตัวเลขเท่านั้น...">
-        <button onclick="goP3()">Check</button>
-        <p id="hint" style="color: #ffadad; font-size: 14px; margin-top: 10px;"></p>
-    </div>
-
-    <div id="p3" class="box hidden">
-        <h2>HBD นะคะ! 🎂</h2>
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJmN2R6amZ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6JmNoYz1n/3o7TKoWXm3okO1kgHC/giphy.gif" alt="Cake">
-        <p>
-            ถึงปีนี้จะไม่ได้อยู่เป่าเค้กด้วยกัน <br>
-            แต่เค้กมะพร้าว <b>Chowchercof</b> <br>
-            น่าจะถึงมือเธอแล้วนะ... <br>
-            ระยะทางกี่กิโลก็แค่ตัวเลข <br>
-            ขอให้มีความสุขมากๆ นะครับ ❤️
-        </p>
+        <h2 id="welcomeMsg"></h2>
+        <p>ทายระยะทางจากระยองไปหาเธอหน่อย!</p>
+        <input type="number" id="distInput" placeholder="กี่กิโลเมตรนะ?">
+        <button onclick="goP3()">ตรวจคำตอบ 📍</button>
+        <p id="hint" style="color: #ff8b8b;"></p>
     </div>
 
     <script>
         function goP2() {
-            if(document.getElementById('nameInput').value !== "") {
+            const name = document.getElementById('nameInput').value;
+            if(name.trim() !== "") {
+                document.getElementById('welcomeMsg').innerText = "สวัสดีครับ " + name + " ❤️";
                 document.getElementById('p1').classList.add('hidden');
                 document.getElementById('p2').classList.remove('hidden');
-            }
-        }
-        function goP3() {
-            const val = document.getElementById('distInput').value;
-            const target = 145; // เปลี่ยนเลขระยะทางที่คุณต้องการให้ตอบ
-            if(parseInt(val) === target) {
-                document.getElementById('p2').classList.add('hidden');
-                document.getElementById('p3').classList.remove('hidden');
             } else {
-                document.getElementById('hint').innerText = val > target ? "ไกลไปนิด ลองใหม่!" : "ใกล้ไปหน่อย ลองใหม่!";
+                alert("บอกชื่อก่อนสิครับคนดี!");
             }
         }
+        
+        // ฟังก์ชัน goP3 จะมาต่อในรอบหน้าครับ
     </script>
 </body>
 </html>
