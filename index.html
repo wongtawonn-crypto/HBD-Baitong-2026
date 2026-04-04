@@ -2,219 +2,248 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nattawat OS v1.0 🥥</title>
-    <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>My Sweet OS 🥥</title>
+    <link href="https://fonts.googleapis.com/css2?family=Itim&family=Kanit:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
             --primary: #ff8b8b;
-            --glass: rgba(255, 255, 255, 0.2);
+            --glass: rgba(255, 255, 255, 0.25);
             --window-bg: rgba(255, 255, 255, 0.9);
+            --text-color: #444;
         }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body, html {
             margin: 0; padding: 0; height: 100%;
             font-family: 'Itim', cursive;
             overflow: hidden;
-            background: url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?q=80&w=2070') no-repeat center center fixed;
+            /* Wallpaper แนว Abstract ทันสมัย */
+            background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964') no-repeat center center fixed;
             background-size: cover;
         }
 
-        /* --- หน้า Login Screen --- */
+        /* --- Login Screen (Modern Lockscreen) --- */
         #login-screen {
             position: fixed; inset: 0;
-            background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(20px);
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(15px);
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
-            z-index: 1000; transition: 0.8s ease;
+            z-index: 1000; transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .user-avatar {
-            width: 120px; height: 120px;
-            background: white; border-radius: 50%;
-            margin-bottom: 20px; border: 4px solid var(--primary);
-            display: flex; justify-content: center; align-items: center; font-size: 50px;
+        .login-box {
+            text-align: center; color: white;
         }
 
-        .login-box input {
-            padding: 12px; border-radius: 20px; border: none;
-            text-align: center; font-family: 'Itim'; font-size: 18px; outline: none;
+        .login-box h1 { font-size: 3rem; margin: 0; text-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+
+        .login-input-group {
+            margin-top: 30px; position: relative;
         }
 
-        /* --- หน้า Desktop --- */
+        #passInput {
+            padding: 12px 20px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.2); color: white;
+            font-family: 'Itim'; font-size: 18px; outline: none; width: 250px;
+            text-align: center; backdrop-filter: blur(5px);
+        }
+        #passInput::placeholder { color: rgba(255,255,255,0.7); }
+
+        /* --- Desktop Area --- */
         #desktop {
-            height: calc(100% - 50px);
-            padding: 20px; display: grid;
-            grid-template-columns: repeat(auto-fill, 100px);
-            grid-template-rows: repeat(auto-fill, 100px);
-            grid-flow: column; gap: 20px;
+            height: 100%; padding: 30px 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            grid-auto-rows: 90px;
+            gap: 20px;
+            align-content: start;
         }
 
         .icon {
             display: flex; flex-direction: column; align-items: center;
-            cursor: pointer; color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-            transition: 0.3s;
+            cursor: pointer; transition: 0.2s;
         }
-        .icon:hover { background: rgba(255,255,255,0.2); border-radius: 10px; }
-        .icon-img { font-size: 40px; margin-bottom: 5px; }
+        .icon:active { transform: scale(0.9); }
 
-        /* --- หน้าต่างโปรแกรม (Window) --- */
+        .icon-box {
+            width: 60px; height: 60px;
+            border-radius: 16px;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 28px; color: white;
+            margin-bottom: 8px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        /* สี Icon สไตล์ iOS */
+        .bg-pink { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
+        .bg-blue { background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); }
+        .bg-green { background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%); }
+        .bg-orange { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+
+        .icon span {
+            color: white; font-size: 13px; font-weight: 500;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* --- Windows --- */
         .window {
-            position: absolute; top: 15%; left: 10%;
-            width: 80%; max-width: 400px;
-            background: var(--window-bg); border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%; max-width: 400px;
+            background: var(--window-bg); border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
             display: none; flex-direction: column;
             overflow: hidden; z-index: 100;
-            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
-        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
         .window-header {
-            background: #eee; padding: 10px 15px;
-            display: flex; justify-content: space-between; align-items: center;
-            cursor: move;
+            padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid #eee;
         }
 
-        .close-btn { color: #ff5f56; cursor: pointer; font-weight: bold; }
-
-        .window-body { padding: 20px; text-align: center; }
-
-        /* --- Taskbar --- */
-        #taskbar {
-            height: 50px; background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            position: fixed; bottom: 0; width: 100%;
-            display: flex; align-items: center; padding: 0 20px;
-            box-sizing: border-box; border-top: 1px solid rgba(255,255,255,0.2);
+        .close-btn { 
+            width: 12px; height: 12px; background: #ff5f56; border-radius: 50%; cursor: pointer;
         }
 
-        .start-btn { color: white; font-size: 24px; margin-right: 20px; cursor: pointer; }
-        .clock { color: white; margin-left: auto; }
+        .window-body { padding: 25px; text-align: center; color: var(--text-color); }
 
-        .hidden { display: none !important; opacity: 0; }
+        /* --- Taskbar (iOS Style Dock) --- */
+        #dock {
+            position: fixed; bottom: 15px; left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255,255,255,0.3);
+            backdrop-filter: blur(20px);
+            padding: 10px 20px; border-radius: 25px;
+            display: flex; gap: 15px; border: 1px solid rgba(255,255,255,0.2);
+            z-index: 500;
+        }
+
+        .dock-item {
+            width: 45px; height: 45px; border-radius: 12px;
+            display: flex; justify-content: center; align-items: center;
+            color: white; font-size: 20px; cursor: pointer;
+        }
+
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
     <div id="login-screen">
-        <div class="user-avatar">👤</div>
-        <h2 style="color: white;">ยินดีต้อนรับครับคนเก่ง</h2>
         <div class="login-box">
-            <input type="text" id="passInput" placeholder="กรอกชื่อเล่นเธอเพื่อปลดล็อค...">
-            <button onclick="unlock()" style="display:none;"></button> </div>
-        <p style="color: #ccc; margin-top: 10px; font-size: 14px;">(กด Enter หลังพิมพ์เสร็จ)</p>
+            <h1 id="live-time">00:00</h1>
+            <p style="font-size: 1.2rem;">Saturday, 7 April</p>
+            <div class="login-input-group">
+                <input type="text" id="passInput" placeholder="พิมพ์ชื่อเพื่อปลดล็อค...">
+            </div>
+        </div>
     </div>
 
     <div id="desktop">
         <div class="icon" onclick="openWindow('quiz-win')">
-            <div class="icon-img">📍</div>
+            <div class="icon-box bg-blue"><i class="fas fa-location-dot"></i></div>
             <span>Distance</span>
         </div>
 
         <div class="icon" onclick="openWindow('cake-win')">
-            <div class="icon-img">🥥</div>
-            <span>Surprise</span>
+            <div class="icon-box bg-pink"><i class="fas fa-birthday-cake"></i></div>
+            <span>Cake</span>
         </div>
 
         <div class="icon" onclick="openWindow('gallery-win')">
-            <div class="icon-img">📸</div>
-            <span>Memories</span>
+            <div class="icon-box bg-green"><i class="fas fa-images"></i></div>
+            <span>Gallery</span>
+        </div>
+
+        <div class="icon" onclick="openWindow('msg-win')">
+            <div class="icon-box bg-orange"><i class="fas fa-heart"></i></div>
+            <span>From Me</span>
         </div>
     </div>
 
-    <div id="taskbar">
-        <div class="start-btn">❤️</div>
-        <div id="active-apps"></div>
-        <div class="clock" id="live-clock">00:00</div>
+    <div id="dock">
+        <div class="dock-item bg-blue" onclick="openWindow('quiz-win')"><i class="fas fa-location-arrow"></i></div>
+        <div class="dock-item bg-pink" onclick="openWindow('cake-win')"><i class="fas fa-gift"></i></div>
+        <div class="dock-item bg-green" onclick="openWindow('gallery-win')"><i class="fas fa-camera"></i></div>
     </div>
 
     <div id="quiz-win" class="window">
         <div class="window-header">
-            <span>Distance.exe</span>
-            <span class="close-btn" onclick="closeWindow('quiz-win')">✖</span>
+            <span style="font-weight:bold;">Distance Tracker</span>
+            <div class="close-btn" onclick="closeWindow('quiz-win')"></div>
         </div>
         <div class="window-body">
-            <p>ทายระยะทางจากระยองไปหาเธอหน่อย!</p>
-            <input type="number" id="distInput" placeholder="กี่กิโลเมตรนะ?">
-            <button onclick="checkDist()" style="width:100%; padding:10px; border-radius:10px; border:none; background:var(--primary); color:white; cursor:pointer;">ตรวจคำตอบ</button>
-            <p id="hint" style="color:red;"></p>
+            <p>ทายระยะทางจากระยอง <br> มาถึงหน้าห้องเธอหน่อยสิ! (กม.)</p>
+            <input type="number" id="distInput" style="width:100%; padding:12px; border-radius:12px; border:1px solid #ddd; text-align:center; margin-bottom:15px;" placeholder="0">
+            <button onclick="checkDist()" style="width:100%; padding:12px; border-radius:12px; border:none; background:var(--primary); color:white; font-weight:bold; cursor:pointer;">ตรวจคำตอบ</button>
+            <p id="hint" style="color:red; margin-top:10px;"></p>
         </div>
     </div>
 
     <div id="cake-win" class="window">
         <div class="window-header">
-            <span>Surprise.exe</span>
-            <span class="close-btn" onclick="closeWindow('cake-win')">✖</span>
+            <span style="font-weight:bold;">Special Surprise</span>
+            <div class="close-btn" onclick="closeWindow('cake-win')"></div>
         </div>
         <div class="window-body">
-            <h3>HBD นะคะ! 🎂</h3>
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3hpeXN2ejN6ZzI2ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6JmNoYz1n/MCG263dfe91ONF5d54/giphy.gif" style="width:100%; border-radius:10px;">
-            <p>เค้กมะพร้าว <b>Chowchercof</b> ถึงมือหรือยัง?<br>กินให้อร่อยนะ!</p>
+            <h3>HBD นะคะคนเก่ง! 🎂</h3>
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3hpeXN2ejN6ZzI2ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6JmNoYz1n/MCG263dfe91ONF5d54/giphy.gif" style="width:100%; border-radius:15px;">
+            <p>เค้กมะพร้าว <b>Chowchercof</b> <br>สั่งมาให้เป่าแล้วนะ อร่อยไหม?</p>
         </div>
     </div>
 
-    <div id="gallery-win" class="window">
+    <div id="msg-win" class="window">
         <div class="window-header">
-            <span>Gallery.jpg</span>
-            <span class="close-btn" onclick="closeWindow('gallery-win')">✖</span>
+            <span style="font-weight:bold;">Letter</span>
+            <div class="close-btn" onclick="closeWindow('msg-win')"></div>
         </div>
         <div class="window-body">
-            <p>ส่วนนี้ไว้ใส่รูปคู่ของเรานะ ❤️</p>
-            <div style="background:#ddd; height:200px; display:flex; align-items:center; justify-content:center; border-radius:10px;">
-                (รูปภาพสุดน่ารัก)
-            </div>
+            <p>ถึงเธอ... <br><br> ไม่ว่าจะอยู่ระยองหรือลาดกระบัง <br> ระยะทางก็เป็นแค่ตัวเลขเนอะ <br> มีความสุขมากๆ นะครับ ❤️</p>
         </div>
     </div>
 
     <script>
-        // ระบบ Login
-        const passInput = document.getElementById('passInput');
-        passInput.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') unlock();
+        // ระบบ Lock Screen ปลดล็อคด้วย Enter
+        document.getElementById('passInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                document.getElementById('login-screen').style.transform = 'translateY(-100%)';
+            }
         });
 
-        function unlock() {
-            if(passInput.value.trim() !== "") {
-                document.getElementById('login-screen').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('login-screen').classList.add('hidden');
-                }, 800);
-            }
-        }
-
-        // ระบบจัดการหน้าต่าง
+        // ระบบเปิด-ปิดหน้าต่าง
         function openWindow(id) {
             const win = document.getElementById(id);
             win.style.display = 'flex';
-            win.style.zIndex = Math.floor(Date.now() / 1000); // เอาหน้าต่างล่าสุดมาไว้บนสุด
         }
-
         function closeWindow(id) {
             document.getElementById(id).style.display = 'none';
         }
 
-        // ระบบ Quiz
+        // เช็คระยะทาง
         function checkDist() {
             const val = document.getElementById('distInput').value;
             const target = 145; // แก้ระยะทางจริงที่นี่
-            const hint = document.getElementById('hint');
             if(parseInt(val) === target) {
-                alert("เก่งมาก! ถูกต้องครับ 🎉");
+                alert("เก่งมาก! เปิดของขวัญได้เลย 🎉");
                 openWindow('cake-win');
                 closeWindow('quiz-win');
             } else {
-                hint.innerText = val > target ? "ไกลไปนิด ลองใหม่!" : "ใกล้ไปหน่อย ลองใหม่!";
+                document.getElementById('hint').innerText = val > target ? "ไกลไปนิด ลองใหม่!" : "ใกล้ไปหน่อย ลองใหม่!";
             }
         }
 
-        // นาฬิกา Real-time
-        setInterval(() => {
+        // อัปเดตเวลาบนหน้า Lockscreen
+        function updateClock() {
             const now = new Date();
-            document.getElementById('live-clock').innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-        }, 1000);
+            document.getElementById('live-time').innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
     </script>
 </body>
 </html>
