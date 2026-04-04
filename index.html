@@ -3,40 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surprise! 🥥✨</title>
+    <title>HBD Surprise ✨</title>
     <link href="https://fonts.googleapis.com/css2?family=Itim&family=Kanit:wght@300;500&display=swap" rel="stylesheet">
     
     <style>
-        /* ส่วนที่ 1: การตกแต่งพื้นหลังและรูปแบบทั่วไป */
+        :root {
+            --primary-color: #ff8b8b;
+            --bg-gradient: linear-gradient(135deg, #fff5f5 0%, #ffe4e1 100%);
+            --box-shadow: 0 20px 40px rgba(255, 139, 139, 0.15);
+        }
+
         body { 
-            font-family: 'Itim', cursive; /* ใช้ฟอนต์แนวลายมือน่ารักๆ */
-            background: linear-gradient(135deg, #fff5f5 0%, #ffe4e1 100%); 
+            font-family: 'Itim', cursive; 
+            background: var(--bg-gradient); 
             display: flex; 
             justify-content: center; 
             align-items: center; 
             height: 100vh; 
             margin: 0; 
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 320px;
         }
 
         .box { 
-            background: rgba(255, 255, 255, 0.95); 
-            padding: 40px; 
+            background: rgba(255, 255, 255, 0.98); 
+            padding: 40px 30px; 
             border-radius: 35px; 
-            box-shadow: 0 20px 40px rgba(255, 154, 154, 0.15); 
+            box-shadow: var(--box-shadow); 
             text-align: center; 
-            width: 300px; 
             border: 3px solid #ffffff;
-            transition: 0.5s;
+            transition: all 0.5s ease-in-out;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            box-sizing: border-box;
         }
 
-        /* ส่วนที่ 2: การตกแต่งหน้า Login */
-        h2 { color: #ff8b8b; margin-bottom: 10px; font-size: 28px; }
-        p { color: #888; font-size: 16px; line-height: 1.5; }
+        /* Animation เวลาเปลี่ยนหน้า */
+        .hidden { 
+            opacity: 0;
+            transform: translateY(-40%) scale(0.9);
+            pointer-events: none;
+            visibility: hidden;
+        }
+
+        h2 { color: var(--primary-color); margin-bottom: 10px; font-size: 26px; }
+        p { color: #777; font-size: 16px; line-height: 1.6; margin-bottom: 20px; }
 
         input { 
-            width: 90%; 
+            width: 100%; 
             padding: 15px; 
-            margin: 25px 0; 
+            margin-bottom: 20px; 
             border: 2px solid #fff0f0; 
             border-radius: 20px; 
             font-size: 18px; 
@@ -45,22 +68,21 @@
             background: #fffafa;
             transition: 0.3s;
             font-family: 'Itim', cursive;
+            box-sizing: border-box;
         }
         input:focus {
             border-color: #ffadad;
-            background: #ffffff;
             box-shadow: 0 0 15px rgba(255, 173, 173, 0.2);
         }
 
         button { 
-            background: #ff8b8b; 
+            background: var(--primary-color); 
             color: white; 
             border: none; 
             padding: 15px; 
             border-radius: 20px; 
             cursor: pointer; 
             font-size: 18px; 
-            font-weight: 500; 
             width: 100%; 
             transition: 0.3s;
             box-shadow: 0 8px 20px rgba(255, 139, 139, 0.3);
@@ -68,65 +90,89 @@
         }
         button:hover { 
             background: #ff7474; 
-            transform: translateY(-4px);
+            transform: translateY(-3px);
             box-shadow: 0 12px 25px rgba(255, 139, 139, 0.4);
         }
 
-        /* คลาสสำหรับซ่อนหน้า */
-        .hidden { display: none; }
+        .card-img {
+            width: 100%;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        #hint {
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
-    <div id="p1" class="box">
-        <h2>🔒 ยืนยันตัวตน</h2>
-        <p>เพื่อเข้าสู่ระบบเซอร์ไพรส์ <br> กรุณาบอกชื่อเล่นคนสวยหน่อยครับ</p>
-        <input type="text" id="nameInput" placeholder="พิมพ์ตรงนี้เลย...">
-        <button onclick="goP2()">Login ✨</button>
-    </div>
+    <div class="container">
+        <div id="p1" class="box">
+            <h2>🔒 ยืนยันตัวตน</h2>
+            <p>เพื่อเข้าสู่ระบบเซอร์ไพรส์ <br> กรุณาบอกชื่อเล่นคนสวยหน่อยครับ</p>
+            <input type="text" id="nameInput" placeholder="พิมพ์ชื่อเธอตรงนี้...">
+            <button onclick="goP2()">Login ✨</button>
+        </div>
 
-    <div id="p2" class="box hidden">
-        <h2 id="welcomeMsg"></h2>
-        <p>ทายระยะทางจากระยองไปหาเธอหน่อย!</p>
-        <input type="number" id="distInput" placeholder="กี่กิโลเมตรนะ?">
-        <button onclick="goP3()">ตรวจคำตอบ 📍</button>
-        <p id="hint" style="color: #ff8b8b;"></p>
+        <div id="p2" class="box hidden">
+            <h2 id="welcomeMsg"></h2>
+            <p>ทายซิ... ระยะทางจากระยอง <br>มาถึงใจเธอคือ "กี่กิโลเมตร"?</p>
+            <input type="number" id="distInput" placeholder="ใส่ตัวเลขเท่านั้น...">
+            <button onclick="goP3()">ตรวจคำตอบ 📍</button>
+            <p id="hint"></p>
+        </div>
+
+        <div id="p3" class="box hidden">
+            <h2>HBD นะคะ! 🎂</h2>
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJmN2R6amZ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6JmNoYz1n/3o7TKoWXm3okO1kgHC/giphy.gif" class="card-img" alt="HBD">
+            <p>
+                ปีนี้ไม่ได้อยู่เป่าเค้กด้วยกัน <br>
+                แต่ใจ (และเค้กมะพร้าว) ส่งไปถึงแล้วนะ <br>
+                <b>Chowchercof</b> อร่อยไหม? <br>
+                ขอให้เธอมีความสุขมากๆ นะครับคนเก่ง ❤️
+            </p>
+            <button onclick="location.reload()">ดูวนไปจ้า ✨</button>
+        </div>
     </div>
 
     <script>
-    function goP2() {
-        const name = document.getElementById('nameInput').value;
-        if(name.trim() !== "") {
-            document.getElementById('welcomeMsg').innerText = "สวัสดีครับ " + name + " ❤️";
-            document.getElementById('p1').style.display = 'none';
-            document.getElementById('p2').classList.remove('hidden');
-        } else {
-            alert("บอกชื่อก่อนสิครับคนดี!");
+        // ฟังก์ชันไปหน้า 2
+        function goP2() {
+            const name = document.getElementById('nameInput').value;
+            if(name.trim() !== "") {
+                document.getElementById('welcomeMsg').innerText = "สวัสดีครับ " + name + " ❤️";
+                document.getElementById('p1').classList.add('hidden');
+                setTimeout(() => {
+                    document.getElementById('p2').classList.remove('hidden');
+                }, 300);
+            } else {
+                alert("บอกชื่อก่อนสิครับคนดี!");
+            }
         }
-    }
 
-    function goP3() {
-        const val = document.getElementById('distInput').value;
-        const target = 145; // แก้เลขนี้เป็นระยะทางจริงที่คุยกันไว้ (กม.)
-        
-        if(parseInt(val) === target) {
-            document.getElementById('p2').style.display = 'none';
-            document.getElementById('p3').classList.remove('hidden');
-            
-            // ใส่ลูกเล่นพลุกระดาษแบบบ้านๆ
-            alert("เก่งมาก! ตอบถูกเป๊ะเลย 🎉");
-        } else {
+        // ฟังก์ชันไปหน้า 3 (ตรวจคำตอบ)
+        function goP3() {
+            const val = document.getElementById('distInput').value;
+            const target = 145; // *** แก้เลขนี้เป็นระยะทางจริงที่คุณต้องการ (กม.) ***
             const hint = document.getElementById('hint');
-            hint.innerText = val > target ? "ไกลไปนิดดด ลองใหม่!" : "ใกล้ไปหน่อยยย ลองใหม่!";
+
+            if(parseInt(val) === target) {
+                document.getElementById('p2').classList.add('hidden');
+                setTimeout(() => {
+                    document.getElementById('p3').classList.remove('hidden');
+                }, 300);
+            } else if (val > target) {
+                hint.style.color = "#ff8b8b";
+                hint.innerText = "ไกลไปนิดดด ลองใหม่!";
+            } else {
+                hint.style.color = "#ff8b8b";
+                hint.innerText = "ใกล้ไปหน่อยยย ลองใหม่!";
+            }
         }
-    }
-</scri<div id="p3" class="box hidden">
-    <h2>HBD นะคะ! 🎂</h2>
-    <p>
-        ปีนี้ไม่ได้อยู่เป่าเค้กด้วยกัน <br>
-        แต่ใจ (และเค้กมะพร้าว) ส่งไปถึงแล้วนะ <br>
-        <b>Chowchercof</b> อร่อยไหม? <br>
-        มีความสุขมากๆ นะครับคนเก่ง ❤️
-    </p>
-    <button onclick="location.reload()">ดูอีกรอบ ✨</button>
-</div>pt>
+    </script>
+</body>
+</html>
