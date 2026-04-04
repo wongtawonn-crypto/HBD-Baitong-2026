@@ -3,176 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HBD Surprise 🥥✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Itim&family=Kanit:wght@300;600&display=swap" rel="stylesheet">
+    <title>Nattawat OS v1.0 🥥</title>
+    <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
     <style>
         :root {
-            --sweet-pink: #ffafbd;
-            --sweet-orange: #ffc3a0;
-            --glass: rgba(255, 255, 255, 0.9);
+            --primary: #ff8b8b;
+            --glass: rgba(255, 255, 255, 0.2);
+            --window-bg: rgba(255, 255, 255, 0.9);
         }
 
-        body {
+        body, html {
+            margin: 0; padding: 0; height: 100%;
             font-family: 'Itim', cursive;
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(-45deg, #ffafbd, #ffc3a0, #ffafbd, #ffc3a0);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
             overflow: hidden;
+            background: url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?q=80&w=2070') no-repeat center center fixed;
+            background-size: cover;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* --- หน้า Login Screen --- */
+        #login-screen {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(20px);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            z-index: 1000; transition: 0.8s ease;
         }
 
-        /* หัวใจลอย */
-        .heart {
-            position: absolute;
-            bottom: -10%;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 20px;
-            animation: float Up 6s linear infinite;
+        .user-avatar {
+            width: 120px; height: 120px;
+            background: white; border-radius: 50%;
+            margin-bottom: 20px; border: 4px solid var(--primary);
+            display: flex; justify-content: center; align-items: center; font-size: 50px;
         }
 
-        @keyframes floatUp {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        .login-box input {
+            padding: 12px; border-radius: 20px; border: none;
+            text-align: center; font-family: 'Itim'; font-size: 18px; outline: none;
         }
 
-        .container {
-            width: 90%;
-            max-width: 360px;
-            z-index: 10;
+        /* --- หน้า Desktop --- */
+        #desktop {
+            height: calc(100% - 50px);
+            padding: 20px; display: grid;
+            grid-template-columns: repeat(auto-fill, 100px);
+            grid-template-rows: repeat(auto-fill, 100px);
+            grid-flow: column; gap: 20px;
         }
 
-        .box {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            padding: 35px 25px;
-            border-radius: 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-            text-align: center;
-            border: 2px solid rgba(255,255,255,0.5);
-            /* ลบ transition ตรงนี้ออกเพื่อไม่ให้ตีกับ display none */
+        .icon {
+            display: flex; flex-direction: column; align-items: center;
+            cursor: pointer; color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            transition: 0.3s;
+        }
+        .icon:hover { background: rgba(255,255,255,0.2); border-radius: 10px; }
+        .icon-img { font-size: 40px; margin-bottom: 5px; }
+
+        /* --- หน้าต่างโปรแกรม (Window) --- */
+        .window {
+            position: absolute; top: 15%; left: 10%;
+            width: 80%; max-width: 400px;
+            background: var(--window-bg); border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            display: none; flex-direction: column;
+            overflow: hidden; z-index: 100;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* ซ่อนหน้าเริ่มต้น */
-        .hidden { display: none; }
+        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-        h2 { color: #d63384; font-size: 26px; margin-top: 0; }
-        p { color: #5d4037; font-size: 17px; line-height: 1.6; }
-
-        input {
-            width: 100%;
-            padding: 15px;
-            margin: 20px 0;
-            border: 2px solid #eee;
-            border-radius: 15px;
-            background: white;
-            font-size: 18px;
-            text-align: center;
-            font-family: 'Itim', cursive;
-            outline: none;
-            box-sizing: border-box;
+        .window-header {
+            background: #eee; padding: 10px 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            cursor: move;
         }
 
-        button {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 15px;
-            background: linear-gradient(to right, #ff758c, #ff7eb3);
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            font-family: 'Itim', cursive;
-            box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
+        .close-btn { color: #ff5f56; cursor: pointer; font-weight: bold; }
+
+        .window-body { padding: 20px; text-align: center; }
+
+        /* --- Taskbar --- */
+        #taskbar {
+            height: 50px; background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            position: fixed; bottom: 0; width: 100%;
+            display: flex; align-items: center; padding: 0 20px;
+            box-sizing: border-box; border-top: 1px solid rgba(255,255,255,0.2);
         }
 
-        button:hover { transform: translateY(-2px); }
+        .start-btn { color: white; font-size: 24px; margin-right: 20px; cursor: pointer; }
+        .clock { color: white; margin-left: auto; }
 
-        .card-img { width: 100%; border-radius: 20px; margin-bottom: 20px; border: 4px solid white; box-sizing: border-box; }
-        
-        #hint { color: #e91e63; font-weight: bold; margin-top: 10px; min-height: 24px; }
+        .hidden { display: none !important; opacity: 0; }
     </style>
 </head>
 <body>
 
-    <script>
-        // สร้างหัวใจลอยแบบสุ่ม
-        for (let i = 0; i < 15; i++) {
-            let heart = document.createElement('div');
-            heart.className = 'heart';
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animation = `floatUp ${(Math.random() * 3 + 4)}s linear infinite`;
-            heart.style.animationDelay = Math.random() * 5 + 's';
-            document.body.appendChild(heart);
-        }
-    </script>
+    <div id="login-screen">
+        <div class="user-avatar">👤</div>
+        <h2 style="color: white;">ยินดีต้อนรับครับคนเก่ง</h2>
+        <div class="login-box">
+            <input type="text" id="passInput" placeholder="กรอกชื่อเล่นเธอเพื่อปลดล็อค...">
+            <button onclick="unlock()" style="display:none;"></button> </div>
+        <p style="color: #ccc; margin-top: 10px; font-size: 14px;">(กด Enter หลังพิมพ์เสร็จ)</p>
+    </div>
 
-    <div class="container">
-        <div id="p1" class="box">
-            <h2>🔒 เข้าสู่ระบบ</h2>
-            <p>เพื่อรับของขวัญจากระยอง <br> กรุณาบอกชื่อเล่นคนสวยหน่อยครับ</p>
-            <input type="text" id="nameInput" placeholder="ชื่อเล่นเธอคือ...">
-            <button onclick="goP2()">ตกลง ✨</button>
+    <div id="desktop">
+        <div class="icon" onclick="openWindow('quiz-win')">
+            <div class="icon-img">📍</div>
+            <span>Distance</span>
         </div>
 
-        <div id="p2" class="box hidden">
-            <h2 id="welcomeMsg"></h2>
-            <p>ทายซิ... ระยะทางจากระยอง <br>มาถึงใจเธอคือ "กี่กิโลเมตร"?</p>
-            <input type="number" id="distInput" placeholder="ใส่ตัวเลขกิโลเมตร...">
-            <button onclick="goP3()">ตรวจคำตอบ 📍</button>
-            <div id="hint"></div>
+        <div class="icon" onclick="openWindow('cake-win')">
+            <div class="icon-img">🥥</div>
+            <span>Surprise</span>
         </div>
 
-        <div id="p3" class="box hidden">
-            <h2>Happy Birthday! 🎂</h2>
-            <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3hpeXN2ejN6ZzI2ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6JmNoYz1n/MCG263dfe91ONF5d54/giphy.gif" class="card-img">
-            <p>
-                ปีนี้ไม่ได้อยู่เป่าเค้กด้วยกัน <br>
-                แต่ใจ (และเค้กมะพร้าว) ส่งไปถึงแล้วนะ <br>
-                <b>Chowchercof</b> อร่อยไหม? <br>
-                ขอให้มีความสุขมากๆ นะคะคนเก่ง ❤️
-            </p>
-            <button onclick="location.reload()">Reset ✨</button>
+        <div class="icon" onclick="openWindow('gallery-win')">
+            <div class="icon-img">📸</div>
+            <span>Memories</span>
+        </div>
+    </div>
+
+    <div id="taskbar">
+        <div class="start-btn">❤️</div>
+        <div id="active-apps"></div>
+        <div class="clock" id="live-clock">00:00</div>
+    </div>
+
+    <div id="quiz-win" class="window">
+        <div class="window-header">
+            <span>Distance.exe</span>
+            <span class="close-btn" onclick="closeWindow('quiz-win')">✖</span>
+        </div>
+        <div class="window-body">
+            <p>ทายระยะทางจากระยองไปหาเธอหน่อย!</p>
+            <input type="number" id="distInput" placeholder="กี่กิโลเมตรนะ?">
+            <button onclick="checkDist()" style="width:100%; padding:10px; border-radius:10px; border:none; background:var(--primary); color:white; cursor:pointer;">ตรวจคำตอบ</button>
+            <p id="hint" style="color:red;"></p>
+        </div>
+    </div>
+
+    <div id="cake-win" class="window">
+        <div class="window-header">
+            <span>Surprise.exe</span>
+            <span class="close-btn" onclick="closeWindow('cake-win')">✖</span>
+        </div>
+        <div class="window-body">
+            <h3>HBD นะคะ! 🎂</h3>
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3hpeXN2ejN6ZzI2ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6JmNoYz1n/MCG263dfe91ONF5d54/giphy.gif" style="width:100%; border-radius:10px;">
+            <p>เค้กมะพร้าว <b>Chowchercof</b> ถึงมือหรือยัง?<br>กินให้อร่อยนะ!</p>
+        </div>
+    </div>
+
+    <div id="gallery-win" class="window">
+        <div class="window-header">
+            <span>Gallery.jpg</span>
+            <span class="close-btn" onclick="closeWindow('gallery-win')">✖</span>
+        </div>
+        <div class="window-body">
+            <p>ส่วนนี้ไว้ใส่รูปคู่ของเรานะ ❤️</p>
+            <div style="background:#ddd; height:200px; display:flex; align-items:center; justify-content:center; border-radius:10px;">
+                (รูปภาพสุดน่ารัก)
+            </div>
         </div>
     </div>
 
     <script>
-        function goP2() {
-            const name = document.getElementById('nameInput').value;
-            if(name.trim() !== "") {
-                document.getElementById('welcomeMsg').innerText = "สวัสดีค่ะ " + name + " ❤️";
-                document.getElementById('p1').style.display = 'none';
-                document.getElementById('p2').style.display = 'block';
-            } else {
-                alert("บอกชื่อก่อนสิครับ!");
+        // ระบบ Login
+        const passInput = document.getElementById('passInput');
+        passInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') unlock();
+        });
+
+        function unlock() {
+            if(passInput.value.trim() !== "") {
+                document.getElementById('login-screen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('login-screen').classList.add('hidden');
+                }, 800);
             }
         }
 
-        function goP3() {
+        // ระบบจัดการหน้าต่าง
+        function openWindow(id) {
+            const win = document.getElementById(id);
+            win.style.display = 'flex';
+            win.style.zIndex = Math.floor(Date.now() / 1000); // เอาหน้าต่างล่าสุดมาไว้บนสุด
+        }
+
+        function closeWindow(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        // ระบบ Quiz
+        function checkDist() {
             const val = document.getElementById('distInput').value;
-            const target = 145; // แก้ระยะทางจริงที่นี่ครับ
+            const target = 145; // แก้ระยะทางจริงที่นี่
             const hint = document.getElementById('hint');
-
             if(parseInt(val) === target) {
-                document.getElementById('p2').style.display = 'none';
-                document.getElementById('p3').style.display = 'block';
-            } else if (val === "") {
-                hint.innerText = "ใส่ตัวเลขก่อนน้าา";
+                alert("เก่งมาก! ถูกต้องครับ 🎉");
+                openWindow('cake-win');
+                closeWindow('quiz-win');
             } else {
-                hint.innerText = val > target ? "ไกลไปนิดดด ลองใหม่!" : "ใกล้ไปหน่อยยย ลองใหม่!";
+                hint.innerText = val > target ? "ไกลไปนิด ลองใหม่!" : "ใกล้ไปหน่อย ลองใหม่!";
             }
         }
+
+        // นาฬิกา Real-time
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('live-clock').innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }, 1000);
     </script>
 </body>
 </html>
