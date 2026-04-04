@@ -94,18 +94,39 @@
     </div>
 
     <script>
-        function goP2() {
-            const name = document.getElementById('nameInput').value;
-            if(name.trim() !== "") {
-                document.getElementById('welcomeMsg').innerText = "สวัสดีครับ " + name + " ❤️";
-                document.getElementById('p1').classList.add('hidden');
-                document.getElementById('p2').classList.remove('hidden');
-            } else {
-                alert("บอกชื่อก่อนสิครับคนดี!");
-            }
+    function goP2() {
+        const name = document.getElementById('nameInput').value;
+        if(name.trim() !== "") {
+            document.getElementById('welcomeMsg').innerText = "สวัสดีครับ " + name + " ❤️";
+            document.getElementById('p1').style.display = 'none';
+            document.getElementById('p2').classList.remove('hidden');
+        } else {
+            alert("บอกชื่อก่อนสิครับคนดี!");
         }
+    }
+
+    function goP3() {
+        const val = document.getElementById('distInput').value;
+        const target = 145; // แก้เลขนี้เป็นระยะทางจริงที่คุยกันไว้ (กม.)
         
-        // ฟังก์ชัน goP3 จะมาต่อในรอบหน้าครับ
-    </script>
-</body>
-</html>
+        if(parseInt(val) === target) {
+            document.getElementById('p2').style.display = 'none';
+            document.getElementById('p3').classList.remove('hidden');
+            
+            // ใส่ลูกเล่นพลุกระดาษแบบบ้านๆ
+            alert("เก่งมาก! ตอบถูกเป๊ะเลย 🎉");
+        } else {
+            const hint = document.getElementById('hint');
+            hint.innerText = val > target ? "ไกลไปนิดดด ลองใหม่!" : "ใกล้ไปหน่อยยย ลองใหม่!";
+        }
+    }
+</scri<div id="p3" class="box hidden">
+    <h2>HBD นะคะ! 🎂</h2>
+    <p>
+        ปีนี้ไม่ได้อยู่เป่าเค้กด้วยกัน <br>
+        แต่ใจ (และเค้กมะพร้าว) ส่งไปถึงแล้วนะ <br>
+        <b>Chowchercof</b> อร่อยไหม? <br>
+        มีความสุขมากๆ นะครับคนเก่ง ❤️
+    </p>
+    <button onclick="location.reload()">ดูอีกรอบ ✨</button>
+</div>pt>
