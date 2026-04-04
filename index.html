@@ -9,7 +9,7 @@
         :root {
             --sweet-pink: #ffafbd;
             --sweet-orange: #ffc3a0;
-            --glass: rgba(255, 255, 255, 0.85);
+            --glass: rgba(255, 255, 255, 0.9);
         }
 
         body {
@@ -19,9 +19,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(45deg, var(--sweet-pink), var(--sweet-orange));
+            background: linear-gradient(-45deg, #ffafbd, #ffc3a0, #ffafbd, #ffc3a0);
             background-size: 400% 400%;
-            animation: gradientBG 10s ease infinite;
+            animation: gradientBG 15s ease infinite;
             overflow: hidden;
         }
 
@@ -31,56 +31,50 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* ตกแต่งหัวใจลอยไปมา */
+        /* หัวใจลอย */
         .heart {
             position: absolute;
-            color: rgba(255, 255, 255, 0.5);
+            bottom: -10%;
+            color: rgba(255, 255, 255, 0.6);
             font-size: 20px;
-            user-select: none;
-            animation: float 6s linear infinite;
-            z-index: 0;
+            animation: float Up 6s linear infinite;
         }
 
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
         }
 
         .container {
-            z-index: 10;
             width: 90%;
-            max-width: 350px;
-            perspective: 1000px;
+            max-width: 360px;
+            z-index: 10;
         }
 
         .box {
             background: var(--glass);
-            backdrop-filter: blur(10px);
-            padding: 40px 30px;
+            backdrop-filter: blur(15px);
+            padding: 35px 25px;
             border-radius: 30px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.5);
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid rgba(255,255,255,0.5);
+            /* ลบ transition ตรงนี้ออกเพื่อไม่ให้ตีกับ display none */
         }
 
-        .hidden {
-            display: none;
-            opacity: 0;
-            transform: rotateY(90deg) scale(0.8);
-        }
+        /* ซ่อนหน้าเริ่มต้น */
+        .hidden { display: none; }
 
-        h2 { color: #d63384; font-size: 28px; margin-bottom: 10px; text-shadow: 1px 1px 2px rgba(0,0,0,0.05); }
-        p { color: #6a4c4c; font-size: 17px; line-height: 1.6; }
+        h2 { color: #d63384; font-size: 26px; margin-top: 0; }
+        p { color: #5d4037; font-size: 17px; line-height: 1.6; }
 
         input {
             width: 100%;
             padding: 15px;
             margin: 20px 0;
-            border: none;
+            border: 2px solid #eee;
             border-radius: 15px;
-            background: rgba(255, 255, 255, 0.6);
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+            background: white;
             font-size: 18px;
             text-align: center;
             font-family: 'Itim', cursive;
@@ -98,51 +92,51 @@
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.3s;
             font-family: 'Itim', cursive;
             box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
         }
 
-        button:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(255, 117, 140, 0.6); }
+        button:hover { transform: translateY(-2px); }
 
-        .card-img { width: 100%; border-radius: 20px; margin-bottom: 20px; border: 5px solid white; box-sizing: border-box; }
+        .card-img { width: 100%; border-radius: 20px; margin-bottom: 20px; border: 4px solid white; box-sizing: border-box; }
         
-        #hint { height: 20px; margin-top: 10px; font-weight: bold; color: #ff4757; }
+        #hint { color: #e91e63; font-weight: bold; margin-top: 10px; min-height: 24px; }
     </style>
 </head>
 <body>
 
     <script>
+        // สร้างหัวใจลอยแบบสุ่ม
         for (let i = 0; i < 15; i++) {
             let heart = document.createElement('div');
             heart.className = 'heart';
             heart.innerHTML = '❤️';
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
-            heart.style.delay = Math.random() * 5 + 's';
+            heart.style.animation = `floatUp ${(Math.random() * 3 + 4)}s linear infinite`;
+            heart.style.animationDelay = Math.random() * 5 + 's';
             document.body.appendChild(heart);
         }
     </script>
 
     <div class="container">
         <div id="p1" class="box">
-            <h2>🔒 Restricted Access</h2>
-            <p>เพื่อเข้าสู่ระบบเซอร์ไพรส์ <br> รบกวนบอกชื่อเล่นคนสวยหน่อยค่ะ</p>
-            <input type="text" id="nameInput" placeholder="พิมพ์ชื่อเล่นเธอสิ...">
-            <button onclick="goP2()">Confirm ✨</button>
+            <h2>🔒 เข้าสู่ระบบ</h2>
+            <p>เพื่อรับของขวัญจากระยอง <br> กรุณาบอกชื่อเล่นคนสวยหน่อยครับ</p>
+            <input type="text" id="nameInput" placeholder="ชื่อเล่นเธอคือ...">
+            <button onclick="goP2()">ตกลง ✨</button>
         </div>
 
         <div id="p2" class="box hidden">
             <h2 id="welcomeMsg"></h2>
             <p>ทายซิ... ระยะทางจากระยอง <br>มาถึงใจเธอคือ "กี่กิโลเมตร"?</p>
-            <input type="number" id="distInput" placeholder="ตัวเลขเท่านั้นน้า...">
-            <button onclick="goP3()">Check! 📍</button>
-            <p id="hint"></p>
+            <input type="number" id="distInput" placeholder="ใส่ตัวเลขกิโลเมตร...">
+            <button onclick="goP3()">ตรวจคำตอบ 📍</button>
+            <div id="hint"></div>
         </div>
 
         <div id="p3" class="box hidden">
             <h2>Happy Birthday! 🎂</h2>
-            <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3hpeXN2ejN6ZzI2ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6JmNoYz1n/MCG263dfe91ONF5d54/giphy.gif" class="card-img" alt="HBD">
+            <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3hpeXN2ejN6ZzI2ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6JmNoYz1n/MCG263dfe91ONF5d54/giphy.gif" class="card-img">
             <p>
                 ปีนี้ไม่ได้อยู่เป่าเค้กด้วยกัน <br>
                 แต่ใจ (และเค้กมะพร้าว) ส่งไปถึงแล้วนะ <br>
@@ -158,26 +152,23 @@
             const name = document.getElementById('nameInput').value;
             if(name.trim() !== "") {
                 document.getElementById('welcomeMsg').innerText = "สวัสดีค่ะ " + name + " ❤️";
-                const p1 = document.getElementById('p1');
-                const p2 = document.getElementById('p2');
-                p1.style.display = 'none';
-                p2.style.display = 'block';
-                setTimeout(() => p2.style.opacity = '1', 50);
+                document.getElementById('p1').style.display = 'none';
+                document.getElementById('p2').style.display = 'block';
             } else {
-                alert("บอกชื่อก่อนนะคะ!");
+                alert("บอกชื่อก่อนสิครับ!");
             }
         }
 
         function goP3() {
             const val = document.getElementById('distInput').value;
-            const target = 145; // แก้ระยะทางจริงที่นี่
+            const target = 145; // แก้ระยะทางจริงที่นี่ครับ
             const hint = document.getElementById('hint');
+
             if(parseInt(val) === target) {
-                const p2 = document.getElementById('p2');
-                const p3 = document.getElementById('p3');
-                p2.style.display = 'none';
-                p3.style.display = 'block';
-                setTimeout(() => p3.style.opacity = '1', 50);
+                document.getElementById('p2').style.display = 'none';
+                document.getElementById('p3').style.display = 'block';
+            } else if (val === "") {
+                hint.innerText = "ใส่ตัวเลขก่อนน้าา";
             } else {
                 hint.innerText = val > target ? "ไกลไปนิดดด ลองใหม่!" : "ใกล้ไปหน่อยยย ลองใหม่!";
             }
