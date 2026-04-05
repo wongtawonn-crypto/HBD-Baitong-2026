@@ -2,127 +2,37 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Nattawat OS v1.0 🥥</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday OS 🥥</title>
     <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary: #ff8b8b;
-            --window-bg: rgba(255, 255, 255, 0.95);
-        }
-
-        body, html {
-            margin: 0; padding: 0; height: 100%;
-            font-family: 'Itim', cursive;
-            overflow: hidden;
-            background: url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?q=80&w=2070') no-repeat center center fixed;
-            background-size: cover;
-        }
-
-        /* --- Login Screen --- */
-        #login-screen {
-            position: fixed; inset: 0;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(20px);
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            z-index: 1000; transition: 0.8s ease;
-        }
-
-        .login-box { text-align: center; color: white; }
-        
-        .input-group {
-            display: flex; align-items: center; gap: 10px;
-            background: rgba(255,255,255,0.2);
-            padding: 8px 8px 8px 20px;
-            border-radius: 30px;
-            border: 1px solid rgba(255,255,255,0.3);
-            margin-top: 20px;
-        }
-
-        #passInput {
-            background: transparent; border: none; color: white;
-            font-family: 'Itim'; font-size: 18px; outline: none; width: 180px;
-        }
-        #passInput::placeholder { color: rgba(255,255,255,0.6); }
-
-        .enter-btn {
-            width: 40px; height: 40px; border-radius: 50%;
-            border: none; background: var(--primary); color: white;
-            cursor: pointer; display: flex; justify-content: center; align-items: center;
-        }
-
-        /* --- Desktop Area --- */
-        #desktop {
-            height: calc(100% - 50px);
-            padding: 20px; display: grid;
-            grid-template-columns: repeat(auto-fill, 90px);
-            grid-auto-rows: 100px; gap: 15px;
-        }
-
-        .icon {
-            display: flex; flex-direction: column; align-items: center;
-            cursor: pointer; color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-        }
-        .icon i { font-size: 35px; margin-bottom: 8px; }
-        .icon span { font-size: 14px; text-align: center; }
-
-        /* --- Window Style --- */
-        .window {
-            position: absolute; top: 15%; left: 5%;
-            width: 90%; max-width: 380px;
-            background: var(--window-bg); border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            display: none; flex-direction: column;
-            z-index: 100; overflow: hidden;
-        }
-
-        .window-header {
-            background: #f1f1f1; padding: 10px 15px;
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .close-btn { color: #ff5f56; cursor: pointer; font-size: 20px; }
+        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Itim', cursive; overflow: hidden; background: #ffafbd; }
+        #login-screen { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(15px); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; color: white; transition: 0.5s; }
+        .input-group { display: flex; gap: 10px; margin-top: 20px; }
+        input { padding: 10px; border-radius: 20px; border: none; text-align: center; outline: none; }
+        .enter-btn { background: #ff8b8b; border: none; color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; }
+        #desktop { height: 100%; padding: 20px; display: grid; grid-template-columns: repeat(auto-fill, 80px); gap: 20px; }
+        .icon { display: flex; flex-direction: column; align-items: center; color: white; cursor: pointer; text-shadow: 1px 1px 2px black; }
+        .window { position: absolute; top: 10%; left: 5%; width: 90%; max-width: 350px; background: white; border-radius: 15px; display: none; flex-direction: column; z-index: 100; box-shadow: 0 10px 30px rgba(0,0,0,0.3); color: #333; }
+        .window-header { background: #eee; padding: 10px; display: flex; justify-content: space-between; border-radius: 15px 15px 0 0; }
         .window-body { padding: 20px; text-align: center; }
-
-        /* --- Taskbar --- */
-        #taskbar {
-            height: 50px; background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            position: fixed; bottom: 0; width: 100%;
-            display: flex; align-items: center; padding: 0 20px;
-            border-top: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .hidden { display: none !important; opacity: 0; }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
     <div id="login-screen">
-        <div style="font-size: 60px; margin-bottom: 10px;">👤</div>
-        <div class="login-box">
-            <h2>Welcome Back</h2>
-            <div class="input-group">
-                <input type="text" id="passInput" placeholder="พิมพ์ชื่อเล่นเธอ..." autocomplete="off">
-                <button class="enter-btn" onclick="unlock()">
-                    <i class="fas fa-arrow-right"></i>
-                </button>
-            </div>
+        <h2>Birthday OS</h2>
+        <div class="input-group">
+            <input type="text" id="passInput" placeholder="พิมพ์ชื่อเล่น...">
+            <button class="enter-btn" onclick="unlock()"><i class="fas fa-arrow-right"></i></button>
         </div>
     </div>
 
     <div id="desktop">
-        <div class="icon" onclick="openWindow('quiz-win')">
-            <i class="fas fa-location-dot" style="color: #a1c4fd;"></i>
-            <span>Distance</span>
-        </div>
-        <div class="icon" onclick="openWindow('cake-win')">
-            <i class="fas fa-birthday-cake" style="color: #ff9a9e;"></i>
-            <span>Surprise</span>
-        </div>
-        <div class="icon" onclick="openWindow('msg-win')">
-            <i class="fas fa-envelope" style="color: #84fab0;"></i>
-            <span>
+        <div class="icon" onclick="openWin('win1')"><i class="fas fa-birthday-cake" style="font-size: 40px;"></i><span>Gift</span></div>
+    </div>
+
+    <div id="win1" class="window">
+        <div class="window-header
