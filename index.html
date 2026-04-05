@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Deep Space: LOG 01 🌌</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500&family=Prompt:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* สไตล์เดิมทั้งหมด (ตัดออกเพื่อความกระชับ) */
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body {
             font-family: 'Prompt', sans-serif;
@@ -21,10 +21,39 @@
             justify-content: center;
             padding: 20px;
         }
+
+        /* --- Volume Control --- */
+        .volume-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 8px 15px;
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            opacity: 0; /* ซ่อนไว้ก่อน จะโชว์ตอนเริ่มเกม */
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        .volume-control.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .volume-control input[type=range] {
+            width: 80px;
+            accent-color: #64ffda;
+        }
+
         .container {
             width: 100%;
             max-width: 420px;
-            background: rgba(15, 23, 42, 0.4);
+            background: rgba(15, 23, 42, 0.45);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.15);
@@ -52,6 +81,10 @@
         .progress-bar { width: 75%; height: 3px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; position: relative; }
         .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: #fff; transition: width 0.4s ease; }
         .question-text { font-family: 'Kanit', sans-serif; font-size: 1.2rem; font-weight: 400; margin-bottom: 30px; line-height: 1.6; color: #f8fafc; text-align: left; width: 100%; }
+        
+        /* สไตล์สำหรับบทเล่าเรื่องโดยเฉพาะ */
+        .story-text { font-family: 'Prompt', sans-serif; font-size: 1.1rem; font-weight: 300; margin-bottom: 35px; line-height: 1.8; color: #cbd5e1; text-align: left; width: 100%; font-style: italic; border-left: 3px solid rgba(255,255,255,0.3); padding-left: 15px;}
+
         .choices-wrapper { width: 100%; display: flex; flex-direction: column; gap: 12px; }
         .choice-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15); color: #e2e8f0; padding: 18px 20px; font-size: 0.95rem; border-radius: 12px; font-family: 'Prompt'; font-weight: 300; cursor: pointer; transition: all 0.3s ease; width: 100%; text-align: left; line-height: 1.5; }
         .choice-btn:hover, .choice-btn:active { border-color: rgba(255, 255, 255, 0.8); background: rgba(255, 255, 255, 0.15); color: #fff; }
@@ -71,6 +104,11 @@
 </head>
 <body>
 
+    <div class="volume-control" id="vol-control">
+        <i class="fas fa-music" style="color: #cbd5e1; font-size: 0.9rem;"></i>
+        <input type="range" id="vol-slider" min="0" max="1" step="0.05" value="0.4">
+    </div>
+
     <div class="container">
         
         <div id="screen-start" class="screen active">
@@ -82,10 +120,10 @@
 
         <div id="screen-quiz" class="screen">
             <div class="progress-header">
-                <span class="q-number" id="q-counter">LOG 01/07</span>
+                <span class="q-number" id="q-counter">LOG 01/10</span>
                 <div class="progress-bar"><div id="progress" class="progress-fill" style="width: 0%;"></div></div>
             </div>
-            <div id="question-text" class="question-text"></div>
+            <div id="question-text"></div>
             <div id="choices-container" class="choices-wrapper"></div>
         </div>
 
@@ -111,17 +149,34 @@
     <script>
         let bgMusic = null;
 
-        const questions = [
+        // เชื่อมต่อสไลเดอร์ปรับเสียง
+        document.getElementById('vol-slider').addEventListener('input', function(e) {
+            if(bgMusic) {
+                bgMusic.volume = e.target.value;
+            }
+        });
+
+        // มีทั้งหมด 10 หน้า ผสมระหว่าง 'story' (เล่าเรื่อง) และ 'question' (ให้เลือก)
+        const missionLogs = [
             {
+                type: 'story',
+                text: "ภารกิจลับสุดยอดเริ่มต้นขึ้นแล้ว...<br><br>คุณคือนักบินอวกาศที่ได้รับมอบหมายให้เดินทางไปยังระบบดาวที่ไกลออกไป เพื่อค้นหา 'ความลับ' บางอย่างที่ถูกซ่อนไว้ในห้วงอวกาศ"
+            },
+            {
+                type: 'question',
                 q: "ระบบเตรียมพร้อมปล่อยยาน! เพื่อลดความตื่นเต้น คุณจะเลือกเปิดเพลงแนวไหนคลอไปตลอดการเดินทาง?",
                 choices: [
-                    // แก้ไขชื่อไฟล์เพลงตามที่คุณอัปโหลดขึ้น GitHub ได้เลยครับ
                     { text: "เพียงยิ้ม", audio: "- WINN CHANON Official Audio.mp3" }, 
                     { text: "ชั่วโมงต้องมนต์", audio: "Magic Moment  Friday Official Audio.mp3" },
                     { text: "นี่ฉันเอง", audio: "PURPEECH -  Its me Official MV.mp3" }
                 ]
             },
             {
+                type: 'story',
+                text: "เครื่องยนต์จุดระเบิด เสียงเพลงที่คุณเลือกดังขึ้นเบาๆ ผสมกับเสียงคำรามของเครื่องยนต์...<br><br>ยานค่อยๆ ทะยานออกจากฐานบัญชาการ มุ่งหน้าสู่ความเวิ้งว้างที่สวยงามเบื้องหน้า"
+            },
+            {
+                type: 'question',
                 q: "เพื่อความคล่องตัวในสภาวะไร้น้ำหนัก คุณเลือกสวมเสื้อยืดปฏิบัติการด้านในเป็นสีอะไร?",
                 choices: [
                     { text: "สีเขียวหรือสีฟ้าคุมโทน" },
@@ -130,15 +185,12 @@
                 ]
             },
             {
-                q: "ยานพุ่งทะยานออกไป สิ่งแรกที่คุณสังเกตเห็นนอกหน้าต่างคืออะไร?",
-                choices: [
-                    { text: "กลุ่มเนบิวลาหลากสีสวยงาม" },
-                    { text: "ความมืดมิดที่เงียบสงบ" },
-                    { text: "สะเก็ดดาวตกที่ส่องแสงวาบ" }
-                ]
+                type: 'story',
+                text: "คุณสลับเข้าสู่โหมดควบคุมยานด้วยตัวเอง... การบังคับยานอวกาศลำนี้ให้ความรู้สึกสมูทและเงียบเชียบ ราวกับตอนที่คุณกำลังขับรถ EV คันโปรดไม่มีผิดเพี้ยน"
             },
             {
-                q: "มีกลุ่มอุกกาบาตขวางทาง! คุณจะทำอย่างไร?",
+                type: 'question',
+                q: "สัญญาณเตือนภัยดังขึ้น มีกลุ่มอุกกาบาตขวางทาง! คุณจะทำอย่างไร?",
                 choices: [
                     { text: "ยิงพลังคลื่นเต่าใส่เลยแบบโกคู!" },
                     { text: "โยกหลบด้วยทักษะระดับเซียน" },
@@ -146,7 +198,8 @@
                 ]
             },
             {
-                q: "ลงจอดบนดาวดวงใหม่สำเร็จ สิ่งแรกที่คุณพบคือพืชต่างดาว...",
+                type: 'question',
+                q: "ลงจอดบนดาวดวงใหม่สำเร็จ สิ่งแรกที่คุณพบคือพืชต่างดาวลักษณะใด?",
                 choices: [
                     { text: "ดอกไม้สีฟ้าและม่วงเรืองแสง" },
                     { text: "ป่าเห็ดคริสตัลระยิบระยับ" },
@@ -154,7 +207,12 @@
                 ]
             },
             {
-                q: "ระบบ 'PatrolSat' แจ้งเตือนพัสดุลึกลับกำลังพุ่งมา คุณคิดว่ามันคืออะไร?",
+                type: 'story',
+                text: "ระหว่างที่กำลังสำรวจพืชพรรณต่างดาว จู่ๆ สัญญาณจากดาวเทียม 'PatrolSat' บนข้อมือของคุณก็ดังขึ้น!<br><br>มันตรวจพบคลื่นความร้อนจากวัตถุบางอย่างที่พุ่งฝ่าชั้นบรรยากาศลงมา..."
+            },
+            {
+                type: 'question',
+                q: "ระบบแจ้งเตือนว่าพัสดุลึกลับกำลังพุ่งมา คุณคิดว่ามันคืออะไร?",
                 choices: [
                     { text: "สัญญาณจากสิ่งมีชีวิตอื่น" },
                     { text: "ชิ้นส่วนดาวตก" },
@@ -162,6 +220,7 @@
                 ]
             },
             {
+                type: 'question',
                 q: "วัตถุนั้นลงจอดที่เป้าหมายแล้ว คุณจะทำอย่างไร?",
                 choices: [
                     { text: "วิ่งออกไปดูเดี๋ยวนี้เลย!" },
@@ -171,7 +230,7 @@
             }
         ];
 
-        let currentQuestion = 0;
+        let currentLogIndex = 0;
 
         function transitionScreen(hideId, showId) {
             const hideEl = document.getElementById(hideId);
@@ -186,27 +245,48 @@
         }
 
         function startQuiz() {
-            currentQuestion = 0;
+            currentLogIndex = 0;
+            // โชว์แถบปรับเสียง
+            document.getElementById('vol-control').classList.add('active');
             transitionScreen('screen-start', 'screen-quiz');
-            loadQuestion();
+            loadLog();
         }
 
-        function loadQuestion() {
-            const qData = questions[currentQuestion];
-            document.getElementById('q-counter').innerText = `LOG ${(currentQuestion + 1).toString().padStart(2, '0')}/07`;
-            document.getElementById('question-text').innerText = qData.q;
-            document.getElementById('progress').style.width = `${(currentQuestion / questions.length) * 100}%`;
+        function loadLog() {
+            const logData = missionLogs[currentLogIndex];
+            document.getElementById('q-counter').innerText = `LOG ${(currentLogIndex + 1).toString().padStart(2, '0')}/10`;
+            document.getElementById('progress').style.width = `${(currentLogIndex / missionLogs.length) * 100}%`;
 
+            const questionContainer = document.getElementById('question-text');
             const choicesContainer = document.getElementById('choices-container');
+            
+            questionContainer.innerHTML = '';
             choicesContainer.innerHTML = ''; 
 
-            qData.choices.forEach((choice) => {
-                const btn = document.createElement('button');
-                btn.className = 'choice-btn';
-                btn.innerText = choice.text;
-                btn.onclick = () => handleAnswer(choice.audio);
-                choicesContainer.appendChild(btn);
-            });
+            if (logData.type === 'story') {
+                // โหมดเล่าเรื่อง
+                questionContainer.className = 'story-text';
+                questionContainer.innerHTML = logData.text;
+                
+                const nextBtn = document.createElement('button');
+                nextBtn.className = 'btn-main';
+                nextBtn.innerText = "ดำเนินการต่อ (Continue)";
+                nextBtn.onclick = () => handleAnswer(null);
+                choicesContainer.appendChild(nextBtn);
+
+            } else {
+                // โหมดคำถาม
+                questionContainer.className = 'question-text';
+                questionContainer.innerHTML = logData.q;
+                
+                logData.choices.forEach((choice) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'choice-btn';
+                    btn.innerText = choice.text;
+                    btn.onclick = () => handleAnswer(choice.audio);
+                    choicesContainer.appendChild(btn);
+                });
+            }
         }
 
         function handleAnswer(audioSrc) {
@@ -214,15 +294,27 @@
                 if (bgMusic) { bgMusic.pause(); } 
                 bgMusic = new Audio(audioSrc);
                 bgMusic.loop = true; 
-                bgMusic.volume = 0.5; 
+                bgMusic.volume = document.getElementById('vol-slider').value; // เล่นด้วยเสียงระดับปัจจุบัน 
                 bgMusic.play().catch(e => console.log("ต้องการการคลิกก่อนเล่นเพลง"));
             }
 
-            currentQuestion++;
-            if (currentQuestion < questions.length) {
-                loadQuestion();
+            currentLogIndex++;
+            if (currentLogIndex < missionLogs.length) {
+                const choicesContainer = document.getElementById('choices-container');
+                const qText = document.getElementById('question-text');
+                
+                choicesContainer.style.opacity = '0';
+                qText.style.opacity = '0';
+                
+                setTimeout(() => {
+                    loadLog();
+                    choicesContainer.style.opacity = '1';
+                    qText.style.opacity = '1';
+                }, 400);
             } else {
                 document.getElementById('progress').style.width = `100%`;
+                // ซ่อนแถบปรับเสียงตอนจบ
+                document.getElementById('vol-control').classList.remove('active');
                 transitionScreen('screen-quiz', 'screen-loading');
                 setTimeout(() => transitionScreen('screen-loading', 'screen-result'), 3000);
             }
