@@ -3,90 +3,37 @@
         <h1 id="live-time">00:00</h1>
         <p style="font-size: 1.2rem; opacity: 0.8;">Saturday, 7 April</p>
         
-        <div class="login-input-group">
-            <input type="text" id="passInput" placeholder="พิมพ์ชื่อเพื่อปลดล็อค..." autocomplete="off">
-            <button id="unlockBtn" onclick="unlockOS()">
+        <div class="login-input-wrapper" style="display: flex; align-items: center; gap: 10px; margin-top: 25px;">
+            <input type="text" id="passInput" placeholder="พิมพ์ชื่อเพื่อปลดล็อค..." 
+                   style="padding: 12px 20px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.4); 
+                          background: rgba(255,255,255,0.2); color: white; outline: none; width: 200px; 
+                          text-align: center; backdrop-filter: blur(5px);">
+            
+            <button onclick="unlockOS()" 
+                    style="width: 45px; height: 45px; border-radius: 50%; border: none; 
+                           background: #ff8b8b; color: white; cursor: pointer; 
+                           box-shadow: 0 4px 10px rgba(0,0,0,0.2); display: flex; 
+                           justify-content: center; align-items: center; transition: 0.3s;">
                 <i class="fas fa-arrow-right"></i>
             </button>
         </div>
-        <p style="font-size: 0.9rem; margin-top: 15px; opacity: 0.6;">Tap the arrow to enter</p>
     </div>
 </div>
 
-<style>
-    /* ปรับแต่งปุ่มปลดล็อคให้ดูโมเดิร์น */
-    .login-input-group {
-        margin-top: 30px; 
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        background: rgba(255, 255, 255, 0.1);
-        padding: 5px 5px 5px 15px;
-        border-radius: 30px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    #passInput {
-        background: transparent;
-        border: none;
-        color: white;
-        font-family: 'Itim';
-        font-size: 18px;
-        outline: none;
-        width: 180px;
-        padding: 10px 0;
-    }
-
-    #unlockBtn {
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        border: none;
-        background: var(--primary);
-        color: white;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: 0.3s;
-        box-shadow: 0 4px 15px rgba(255, 139, 139, 0.4);
-    }
-
-    #unlockBtn:active {
-        transform: scale(0.9);
-        background: #ff7474;
-    }
-</style>
-
 <script>
-    // รวมฟังก์ชันการปลดล็อคให้ใช้ได้ทั้ง Enter และการกดปุ่ม
+    // ฟังก์ชันปลดล็อค (ใช้ได้ทั้งปุ่มในจอ และปุ่ม Enter บนคีย์บอร์ด)
     function unlockOS() {
         const name = document.getElementById('passInput').value;
         if(name.trim() !== "") {
             document.getElementById('login-screen').style.transform = 'translateY(-100%)';
             document.getElementById('login-screen').style.opacity = '0';
         } else {
-            // แกล้งทำ Effect สั่นถ้าไม่ได้กรอกชื่อ
-            const box = document.querySelector('.login-box');
-            box.style.animation = 'shake 0.5s';
-            setTimeout(() => box.style.animation = '', 500);
+            alert("ใส่ชื่อเล่นก่อนน้าา");
         }
     }
 
-    // รองรับปุ่ม Enter เหมือนเดิม
+    // ฟังก์ชันรองรับคนกด Enter บนคีย์บอร์ดคอมพิวเตอร์
     document.getElementById('passInput').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') unlockOS();
     });
-
-    // CSS สำหรับการสั่นเวลาลืมกรอกชื่อ
-    const style = document.createElement('style');
-    style.innerHTML = `
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-    `;
-    document.head.appendChild(style);
 </script>
