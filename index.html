@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Personality Quiz ✨</title>
+    <title>What is your true vibe? ✨</title>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&family=Itim&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -12,7 +12,7 @@
 
         body {
             font-family: 'Prompt', sans-serif;
-            background: #fff5f5; /* สีชมพูพาสเทลอ่อนๆ สบายตา */
+            background: #f7f9fc; /* สีพื้นหลังสไตล์ Ooopenlab */
             color: #333;
             min-height: 100vh;
             display: flex;
@@ -24,73 +24,75 @@
 
         .container {
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             background: white;
-            border-radius: 24px;
-            box-shadow: 0 10px 30px rgba(255, 139, 139, 0.15);
-            padding: 40px 25px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            padding: 40px 30px;
             text-align: center;
             position: relative;
             overflow: hidden;
-            min-height: 400px;
+            min-height: 550px;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
         /* --- Screens --- */
-        .screen { display: none; animation: fadeIn 0.5s ease-out; }
-        .screen.active { display: flex; flex-direction: column; align-items: center; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .screen { display: none; opacity: 0; transition: opacity 0.4s ease, transform 0.4s ease; transform: translateY(20px); }
+        .screen.active { display: flex; flex-direction: column; align-items: center; opacity: 1; transform: translateY(0); }
 
         /* --- Start Screen --- */
-        .title-icon { font-size: 60px; margin-bottom: 20px; animation: float 3s ease-in-out infinite; }
+        .cover-img { font-size: 80px; margin-bottom: 20px; animation: float 3s ease-in-out infinite; }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        h1 { font-size: 1.5rem; color: #ff6b81; margin-bottom: 10px; font-weight: 600; }
-        p.subtitle { color: #666; font-size: 0.95rem; margin-bottom: 30px; line-height: 1.5; }
+        h1 { font-size: 1.6rem; color: #4a6572; margin-bottom: 15px; font-weight: 600; line-height: 1.4;}
+        p.subtitle { color: #888; font-size: 1rem; margin-bottom: 35px; line-height: 1.6; font-weight: 300;}
         
-        .btn-start {
-            background: #ff6b81; color: white; border: none;
-            padding: 15px 30px; font-size: 1.1rem; border-radius: 50px;
+        .btn-main {
+            background: #f9a826; color: white; border: none;
+            padding: 16px 30px; font-size: 1.1rem; border-radius: 16px;
             font-family: 'Prompt'; font-weight: 500; cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 107, 129, 0.3);
+            box-shadow: 0 8px 20px rgba(249, 168, 38, 0.3);
             transition: 0.2s; width: 100%;
         }
-        .btn-start:active { transform: scale(0.95); box-shadow: none; }
+        .btn-main:active { transform: scale(0.96); box-shadow: none; }
 
         /* --- Quiz Screen --- */
-        .progress-bar { width: 100%; height: 6px; background: #eee; border-radius: 10px; margin-bottom: 30px; overflow: hidden; position: relative; }
-        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: #ff6b81; transition: width 0.3s ease; }
+        .progress-header { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .q-number { font-family: 'Itim'; font-size: 1.2rem; color: #f9a826; }
+        .progress-bar { width: 70%; height: 8px; background: #eee; border-radius: 10px; overflow: hidden; position: relative; }
+        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: #f9a826; transition: width 0.3s ease; }
         
-        .question-text { font-size: 1.2rem; font-weight: 500; margin-bottom: 30px; line-height: 1.5; color: #444; }
+        .question-text { font-size: 1.25rem; font-weight: 500; margin-bottom: 30px; line-height: 1.6; color: #333; text-align: left; width: 100%; }
         
+        .choices-wrapper { width: 100%; display: flex; flex-direction: column; gap: 12px; }
         .choice-btn {
-            background: white; border: 2px solid #ffe3e3; color: #555;
-            padding: 15px 20px; font-size: 1rem; border-radius: 15px;
-            font-family: 'Prompt'; cursor: pointer; margin-bottom: 12px;
+            background: #fdfdfd; border: 2px solid #eee; color: #555;
+            padding: 18px 20px; font-size: 1.05rem; border-radius: 16px;
+            font-family: 'Prompt'; cursor: pointer;
             transition: 0.2s; width: 100%; text-align: left;
-            display: flex; align-items: center; gap: 10px;
+            display: flex; align-items: center; gap: 15px; line-height: 1.4;
         }
         .choice-btn:hover, .choice-btn:active {
-            border-color: #ff6b81; background: #fff0f0; color: #ff6b81;
+            border-color: #f9a826; background: #fffaf0; color: #f9a826;
         }
+        .choice-icon { font-size: 1.5rem; }
 
         /* --- Loading Screen --- */
-        .loading-spinner { font-size: 40px; color: #ff6b81; margin-bottom: 20px; }
-        .loading-text { font-size: 1.1rem; color: #555; font-weight: 500; }
+        .loading-spinner { font-size: 50px; color: #f9a826; margin-bottom: 25px; }
+        .loading-text { font-size: 1.1rem; color: #555; font-weight: 500; margin-bottom: 10px; }
+        .loading-subtext { font-size: 0.9rem; color: #999; font-weight: 300; }
 
         /* --- Result Screen --- */
+        .result-type { font-family: 'Itim'; font-size: 1.2rem; color: #888; margin-bottom: 5px; }
+        .result-title { font-size: 2rem; color: #f9a826; font-weight: 600; margin-bottom: 20px; line-height: 1.2; }
         .result-card {
-            background: #fff9f9; border: 2px dashed #ffb8b8;
-            border-radius: 20px; padding: 25px; margin-bottom: 20px; width: 100%;
+            background: #fffaf0; border: 2px dashed #fcd288;
+            border-radius: 20px; padding: 25px; margin-bottom: 25px; width: 100%;
+            text-align: left;
         }
-        .result-title { font-family: 'Itim'; font-size: 1.4rem; color: #ff6b81; margin-bottom: 15px; }
-        .result-desc { font-size: 1rem; color: #444; line-height: 1.6; }
-        .highlight { color: #0078d4; font-weight: 600; }
+        .result-desc { font-size: 1rem; color: #555; line-height: 1.7; font-weight: 300; }
+        .highlight { color: #ff6b81; font-weight: 500; }
 
     </style>
 </head>
@@ -99,98 +101,137 @@
     <div class="container">
         
         <div id="screen-start" class="screen active">
-            <div class="title-icon">🔮</div>
-            <h1>แบบทดสอบพลังจิต</h1>
-            <p class="subtitle">มาดูกันว่าในวันหยุดแบบนี้<br>เซนส์ของคุณจะแม่นยำแค่ไหน?</p>
-            <button class="btn-start" onclick="startQuiz()">เริ่มทำแบบทดสอบเลย</button>
+            <div class="cover-img">🎧🌱</div>
+            <h1>แบบทดสอบ:<br>วันหยุดนี้ คุณเป็นคนแบบไหน?</h1>
+            <p class="subtitle">ลองจินตนาการว่าวันนี้คือวันหยุดพักผ่อนของคุณ<br>มาตอบคำถามสั้นๆ 6 ข้อ เพื่อดูผลลัพธ์กัน!</p>
+            <button class="btn-main" onclick="startQuiz()">เริ่มทำแบบทดสอบ</button>
         </div>
 
         <div id="screen-quiz" class="screen">
-            <div class="progress-bar"><div id="progress" class="progress-fill" style="width: 0%;"></div></div>
-            <div id="question-text" class="question-text">คำถามจะอยู่ตรงนี้</div>
-            <div id="choices-container" style="width: 100%;">
+            <div class="progress-header">
+                <span class="q-number" id="q-counter">Q.1</span>
+                <div class="progress-bar"><div id="progress" class="progress-fill" style="width: 0%;"></div></div>
+            </div>
+            <div id="question-text" class="question-text">คำถาม</div>
+            <div id="choices-container" class="choices-wrapper">
                 </div>
         </div>
 
         <div id="screen-loading" class="screen">
-            <i class="fas fa-magic fa-spin loading-spinner"></i>
-            <div class="loading-text" id="loading-msg">กำลังประมวลผลคำตอบ...</div>
+            <i class="fas fa-compact-disc fa-spin loading-spinner"></i>
+            <div class="loading-text" id="loading-msg">กำลังวิเคราะห์บุคลิกภาพ...</div>
+            <div class="loading-subtext">รอแป๊บนึงนะกำลังประมวลผล ✨</div>
         </div>
 
         <div id="screen-result" class="screen">
-            <h2 style="font-size: 1.8rem; margin-bottom: 5px;">ผลลัพธ์ของคุณคือ...</h2>
-            <div style="font-size: 50px; margin-bottom: 10px;">🎂✨</div>
+            <div class="result-type">ผลลัพธ์ของคุณคือ...</div>
+            <h2 class="result-title">ผู้โชคดีที่ควรได้รับ<br>ของขวัญเดี๋ยวนี้! 🎂</h2>
             
             <div class="result-card">
-                <div class="result-title">"ผู้โชคดีประจำวันที่ 7 เมษา"</div>
                 <div class="result-desc">
-                    คำทำนายบอกว่า ไม่ว่าคุณจะเลือกคำตอบไหน... 
-                    ตอนนี้มี <b>เค้กมะพร้าวแสนอร่อย</b> เดินทางฝ่าฟันระยะทาง <span class="highlight">145 กิโลเมตร</span> 
-                    มาถึงหน้าหอพักของคุณเรียบร้อยแล้ว!
+                    ดวงดาวบอกว่าช่วงนี้คุณอาจจะเหนื่อยกับการเรียนวิศวะหรือการเดินทาง แต่ไม่ต้องห่วง!<br><br>
+                    เพราะตอนนี้มี <span class="highlight">เค้กมะพร้าวสุดอร่อย</span> ที่เดินทางข้ามระยะทางกว่า <span class="highlight">145 กิโลเมตร</span> จากระยอง มาถึงหน้าหอพักย่านลาดกระบังของคุณเรียบร้อยแล้ว!<br><br>
+                    ไม่ว่าคุณจะตอบว่าชอบฟังเพลง J-Pop หรือ Britpop หรือชอบใส่เสื้อยืดสีเขียว... ผลลัพธ์เดียวของวันนี้คือคุณต้องมีความสุขมากๆ นะ!
                 </div>
             </div>
             
-            <p style="font-weight: 600; color: #ff6b81; font-size: 1.1rem; margin-top: 10px; font-family: 'Itim';">
-                รีบแต่งตัวแล้วลงไปรับของด่วนนน! 🏃‍♀️💨
-            </p>
+            <button class="btn-main" onclick="alert('แฮปปี้เบิร์ธเดย์นะคะคนเก่ง! รีบลงไปเอาเค้กเร็ววว 🏃‍♀️💨')">รับของขวัญของคุณ 🎁</button>
         </div>
 
     </div>
 
     <script>
-        // ชุดคำถามหลอกล่อ
+        // ชุดคำถามแนวสถานการณ์ (Storytelling)
         const questions = [
             {
-                q: "สมมติว่าตอนนี้กำลังรู้สึกหิวจัดๆ สิ่งแรกที่โหยหาคืออะไร?",
+                q: "ตื่นเช้ามาในวันหยุดแสนสบาย เสียงเพลงที่คุณอยากเปิดฟังเพื่อปลุกเอนเนอร์จี้คือแนวไหน?",
                 choices: [
-                    { icon: "🍧", text: "ของหวานเยียวยาจิตใจ" },
-                    { icon: "🥩", text: "หมูกระทะชาบูเท่านั้น!" }
+                    { icon: "🎸", text: "แนวร็อก 90s หรือบริตป็อปเท่ๆ ให้มีเอนเนอร์จี้" },
+                    { icon: "🎤", text: "เสียงร้องทรงพลังแบบศิลปินญี่ปุ่น ฟังแล้วอินสุดๆ" },
+                    { icon: "🎧", text: "ป็อปอาร์แอนด์บีไทยชิลล์ๆ ฟังสบายๆ" }
                 ]
             },
             {
-                q: "ถ้าจู่ๆ มีคนบอกให้ 'แต่งตัวลงมาข้างล่างตอนนี้เลย' จะทำยังไง?",
+                q: "ได้เวลาลุกไปอาบน้ำเตรียมตัวออกไปข้างนอก ชุดเก่งที่คุณมักจะหยิบมาใส่บ่อยๆ คือชุดแบบไหน?",
                 choices: [
-                    { icon: "😳", text: "หน้าสดชุดนอนก็ลงไปได้เลย!" },
-                    { icon: "💄", text: "ขอเวลา 5 นาที เติมคิ้วนิดนึง" }
+                    { icon: "👕", text: "เสื้อยืดสีฟ้าหรือเขียวสบายๆ คู่กับกางเกงยีนส์" },
+                    { icon: "👗", text: "เดรสน่ารักๆ ที่เตรียมรีดไว้ตั้งแต่เมื่อคืน" },
+                    { icon: "🕶️", text: "ชุดคุมโทนสไตล์ชิคๆ ดูทะมัดทะแมง" }
                 ]
             },
             {
-                q: "ระหว่าง 'ระยะทางไกลๆ' กับ 'ของกินอร่อยๆ' คิดว่าอะไรจะมาถึงก่อนกัน?",
+                q: "ระหว่างนั่งรถไฟฟ้าไปเที่ยว ถ้าบังเอิญมีคนเดินมาทัก คิดว่าเขาจะทักคุณเรื่องอะไร?",
                 choices: [
-                    { icon: "🤤", text: "ของกินสิ รอรับเลย!" },
-                    { icon: "🤔", text: "ความหิวววว" }
+                    { icon: "⚙️", text: "'น้องเรียนวิศวะป่าวครับ หน้าตาดูทรงอย่างแบด'" },
+                    { icon: "🗺️", text: "'ขอโทษนะครับ แถวลาดกระบังไปทางไหนครับ'" },
+                    { icon: "👋", text: "'อุ๊ย ทักคนผิดครับ ขอโทษครับ!'" }
+                ]
+            },
+            {
+                q: "คุณเดินผ่านร้านขายของเล่นและโมเดล มีของตั้งโชว์อยู่ คุณจะหยุดดูชิ้นไหน?",
+                choices: [
+                    { icon: "🔥", text: "โมเดลโกคูร่างซูเปอร์ไซย่าสุดเท่จาก Dragon Ball" },
+                    { icon: "🪴", text: "โมเดลต้นไม้จัดสวนสวยๆ มีดอกไม้สีม่วงหรือสีฟ้า" },
+                    { icon: "🧸", text: "กล่องสุ่มอาร์ตทอยคอลเลกชันใหม่ล่าสุด" }
+                ]
+            },
+            {
+                q: "ตกเย็น จู่ๆ โทรศัพท์ก็ดังขึ้น มีข้อความลึกลับส่งมาว่า 'เตรียมตัวรับของขวัญ' คิดว่าของขวัญนั้นเดินทางมาจากไหน?",
+                choices: [
+                    { icon: "🛵", text: "แถวๆ นี้แหละ สั่งเดลิเวอรี่สาขาใกล้ๆ มาแน่ๆ" },
+                    { icon: "✈️", text: "ส่งมาจากต่างประเทศแหงๆ รอนานหน่อยแต่ชัวร์" },
+                    { icon: "🛣️", text: "น่าจะไกลหน่อย... สัก 145 กิโลเมตรล่ะมั้ง" }
+                ]
+            },
+            {
+                q: "ในที่สุด... โทรศัพท์ก็เข้า! 'ฮัลโหลครับ มีของมาส่งครับ' คุณจะทำยังไง?",
+                choices: [
+                    { icon: "💄", text: "ขอเวลา 5 นาที หวีผมทาลิปนิดนึง แล้วค่อยเดินลงไป" },
+                    { icon: "🏃‍♀️", text: "วิ่งลงไปทั้งชุดนี้แหละ อยากรู้ว่าคืออะไร!" }
                 ]
             }
         ];
 
         let currentQuestion = 0;
 
-        function showScreen(screenId) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
+        function transitionScreen(hideId, showId) {
+            const hideEl = document.getElementById(hideId);
+            const showEl = document.getElementById(showId);
+            
+            hideEl.style.opacity = '0';
+            hideEl.style.transform = 'translateY(-20px)';
+            
+            setTimeout(() => {
+                hideEl.classList.remove('active');
+                showEl.classList.add('active');
+                // Force reflow
+                void showEl.offsetWidth;
+                showEl.style.opacity = '1';
+                showEl.style.transform = 'translateY(0)';
+            }, 400);
         }
 
         function startQuiz() {
             currentQuestion = 0;
-            showScreen('screen-quiz');
+            transitionScreen('screen-start', 'screen-quiz');
             loadQuestion();
         }
 
         function loadQuestion() {
             const qData = questions[currentQuestion];
-            document.getElementById('question-text').innerText = `คำถามที่ ${currentQuestion + 1}: ${qData.q}`;
+            document.getElementById('q-counter').innerText = `Q.${currentQuestion + 1}`;
+            document.getElementById('question-text').innerText = qData.q;
             
-            // อัปเดตหลอดความคืบหน้า
             const progressPercent = ((currentQuestion) / questions.length) * 100;
             document.getElementById('progress').style.width = `${progressPercent}%`;
 
             const choicesContainer = document.getElementById('choices-container');
-            choicesContainer.innerHTML = ''; // เคลียร์ปุ่มเก่า
+            choicesContainer.innerHTML = ''; 
 
-            qData.choices.forEach((choice, index) => {
+            qData.choices.forEach((choice) => {
                 const btn = document.createElement('button');
                 btn.className = 'choice-btn';
-                btn.innerHTML = `<span style="font-size: 1.5rem;">${choice.icon}</span> ${choice.text}`;
+                btn.innerHTML = `<span class="choice-icon">${choice.icon}</span> <span>${choice.text}</span>`;
                 btn.onclick = () => handleAnswer();
                 choicesContainer.appendChild(btn);
             });
@@ -200,39 +241,48 @@
             currentQuestion++;
             
             if (currentQuestion < questions.length) {
-                // ไปคำถามถัดไป
-                loadQuestion();
+                // ให้ปุ่มเฟดออกนิดนึงก่อนโหลดข้อใหม่
+                const choicesContainer = document.getElementById('choices-container');
+                choicesContainer.style.opacity = '0';
+                setTimeout(() => {
+                    loadQuestion();
+                    choicesContainer.style.opacity = '1';
+                }, 300);
             } else {
-                // ตอบครบแล้ว ไปหน้า Loading
                 document.getElementById('progress').style.width = `100%`;
                 setTimeout(() => {
-                    showScreen('screen-loading');
+                    transitionScreen('screen-quiz', 'screen-loading');
                     processResult();
-                }, 300);
+                }, 400);
             }
         }
 
         function processResult() {
             const msgs = [
-                "กำลังวิเคราะห์นิสัย...",
-                "กำลังเชื่อมต่อกับดาวเทียม...",
-                "กำลังคำนวณระยะทางจากระยอง...",
-                "พบพิกัดหอพักเป้าหมายแล้ว!"
+                "กำลังวิเคราะห์บุคลิกภาพ...",
+                "กำลังสแกนหาพิกัดย่านลาดกระบัง...",
+                "ตรวจพบกล่องของขวัญลึกลับ...",
+                "คำนวณระยะทางจากระยอง 145 กม. สำเร็จ!"
             ];
             
             let i = 0;
             const msgEl = document.getElementById('loading-msg');
             
-            // เปลี่ยนข้อความตอนโหลดเพื่อบิลด์อารมณ์
             const interval = setInterval(() => {
                 i++;
                 if (i < msgs.length) {
-                    msgEl.innerText = msgs[i];
+                    msgEl.style.opacity = '0';
+                    setTimeout(() => {
+                        msgEl.innerText = msgs[i];
+                        msgEl.style.opacity = '1';
+                    }, 200);
                 } else {
                     clearInterval(interval);
-                    showScreen('screen-result'); // โชว์ผลลัพธ์
+                    setTimeout(() => {
+                        transitionScreen('screen-loading', 'screen-result');
+                    }, 800);
                 }
-            }, 1000); // เปลี่ยนข้อความทุกๆ 1 วินาที
+            }, 1500); 
         }
     </script>
 </body>
