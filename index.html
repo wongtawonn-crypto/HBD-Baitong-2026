@@ -46,7 +46,7 @@
         .screen.active { display: flex; flex-direction: column; align-items: center; opacity: 1; transform: translateY(0); width: 100%; }
 
         /* --- Start Screen --- */
-        .cover-icon { font-size: 50px; margin-bottom: 25px; animation: float 4s ease-in-out infinite; }
+        .cover-icon { font-size: 60px; margin-bottom: 20px; animation: float 4s ease-in-out infinite; }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         h1 { font-family: 'Kanit', sans-serif; font-size: 1.5rem; color: #f8fafc; margin-bottom: 15px; font-weight: 500; line-height: 1.4; letter-spacing: 1px;}
         p.subtitle { color: #cbd5e1; font-size: 0.95rem; margin-bottom: 35px; line-height: 1.7; font-weight: 300;}
@@ -97,14 +97,11 @@
         .result-title { font-family: 'Kanit', sans-serif; font-size: 1.6rem; color: #f8fafc; font-weight: 500; margin-bottom: 25px; line-height: 1.4; }
         .result-card {
             background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 16px; padding: 25px; margin-bottom: 20px; width: 100%;
+            border-radius: 16px; padding: 25px; margin-bottom: 30px; width: 100%;
             text-align: left; 
         }
         .result-desc { font-size: 0.95rem; color: #cbd5e1; line-height: 1.8; font-weight: 300; }
         .highlight { color: #fff; font-weight: 500; }
-
-        /* Spotify Embed Container */
-        .spotify-container { width: 100%; margin-bottom: 20px; border-radius: 12px; overflow: hidden; }
 
     </style>
 </head>
@@ -113,7 +110,7 @@
     <div class="container">
         
         <div id="screen-start" class="screen active">
-            <div class="cover-icon">✨</div>
+            <div class="cover-icon">🚀</div>
             <h1>SPACE MISSION<br>ภารกิจสำรวจอวกาศ</h1>
             <p class="subtitle">คุณถูกรับเลือกให้เป็นนักบินอวกาศ<br>ออกเดินทางเพื่อไขความลับของจักรวาล<br>มาจำลองสถานการณ์ภารกิจของคุณกัน!</p>
             <button class="btn-main" onclick="startQuiz()">INITIATE LAUNCH</button>
@@ -149,10 +146,6 @@
                     ระบบไม่สามารถระบุได้ว่าข้างในคืออะไร คุณต้องเป็นคนลงไปตรวจสอบด้วยตัวเอง
                 </div>
             </div>
-
-            <div class="spotify-container">
-                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3n3Ppam7vgaVa1iaRUc9Lp?utm_source=generator&theme=0" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-            </div>
             
             <button class="btn-main" onclick="alert('แต่งตัวให้เรียบร้อย แล้วลงไปตรวจสอบวัตถุลึกลับหน้าหอพักด่วนเลย! 🚀')">รับทราบภารกิจ</button>
         </div>
@@ -166,10 +159,10 @@
             {
                 q: "ระบบเตรียมพร้อมปล่อยยาน! เพื่อลดความตื่นเต้น คุณจะเลือกเปิดเพลงแนวไหนคลอไปตลอดการเดินทาง?",
                 choices: [
-                    // ถ้าหาไฟล์ mp3 ได้ ก็เอามาใส่ตรงนี้เหมือนเดิมครับ เพลงจะได้ดังตอนกด
-                    { text: "ร็อกเท่ๆ อารมณ์แบบ Oasis หรือ Green Day ปลุกพลังให้พร้อมลุย", audio: "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3" },
-                    { text: "J-Pop เสียงร้องทรงพลังแบบ Aimyon บิลด์อารมณ์สุดๆ", audio: "https://cdn.pixabay.com/download/audio/2022/03/24/audio_3cc7a7f474.mp3" },
-                    { text: "R&B ไทยชิลล์ๆ สไตล์ Room39 หรือ Lipta ฟังสบายๆ", audio: "https://cdn.pixabay.com/download/audio/2021/11/24/audio_9ec543e4f3.mp3" }
+                    // เปลี่ยนลิงก์เพลง MP3 ของคุณตรงนี้ (ในเครื่องหมาย " ")
+                    { text: "ร็อกเท่ๆ ปลุกพลังให้พร้อมลุย", audio: "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3" },
+                    { text: "J-Pop เสียงร้องทรงพลัง บิลด์อารมณ์สุดๆ", audio: "https://cdn.pixabay.com/download/audio/2022/03/24/audio_3cc7a7f474.mp3" },
+                    { text: "R&B ไทยชิลล์ๆ ฟังสบายๆ", audio: "https://cdn.pixabay.com/download/audio/2021/11/24/audio_9ec543e4f3.mp3" }
                 ]
             },
             {
