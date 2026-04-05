@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Birthday OS 🥥✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@200;400;600&family=Itim&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@100;300;400;600&family=Itim&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --primary: #ff8b8b;
-            --win-blue: #0078d4;
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --window-bg: rgba(255, 255, 255, 0.85);
+            --primary-neon: #ff6e7f; /* สีชมพูนีออน */
+            --secondary-neon: #bfe9ff; /* สีฟ้านีออน */
+            --bg-dark: #121212; /* พื้นหลังเข้มสุดๆ */
+            --window-bg: rgba(20, 20, 20, 0.9); /* หน้าต่างเข้มโปร่งแสง */
+            --text-glow: 0 0 10px rgba(191, 233, 255, 0.7); /* แสงฟุ้งสีฟ้า */
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -21,69 +22,71 @@
             margin: 0; padding: 0; height: 100%;
             font-family: 'Prompt', sans-serif;
             overflow: hidden;
-            /* พื้นหลังใหม่: แนว Abstract สีฟ้าพาสเทลละมุนๆ */
-            background: url('https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=2029') no-repeat center center fixed;
-            background-size: cover;
+            background: var(--bg-dark); /* ใช้สีเข้มเป็นหลัก */
         }
 
-        /* --- [หน้า 1: Windows 11 Lock Screen] --- */
+        /* --- [หน้า 1: Neon Lock Screen] --- */
         #login-screen {
             position: fixed; inset: 0;
-            backdrop-filter: blur(50px);
-            background: rgba(255, 255, 255, 0.05);
+            background: url('https://images.unsplash.com/photo-1599672651147-3806a35041a8?q=80&w=2070') no-repeat center center fixed; /* พื้นหลังไฟนีออนAbstract */
+            background-size: cover;
+            backdrop-filter: blur(20px) brightness(0.7); /* เบลอและทำให้มืดลงเพื่อเน้นแสง */
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
-            z-index: 1000; transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            color: white;
+            z-index: 1000; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s;
+            color: var(--secondary-neon);
+            text-shadow: var(--text-glow); /* ใส่แสงฟุ้งทั่วหน้าแรก */
         }
 
         .user-profile {
-            width: 140px; height: 140px;
-            background: rgba(255,255,255,0.1);
+            width: 130px; height: 130px;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            font-size: 70px; color: white;
-            border: 1px solid rgba(255,255,255,0.2);
+            font-size: 60px; color: var(--primary-neon);
+            border: 2px solid var(--primary-neon);
             margin-bottom: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 0 20px var(--primary-neon); /* แสงฟุ้งรอบโปรไฟล์ */
         }
 
         .login-box h2 {
-            font-size: 2.5rem; margin: 0 0 20px 0; font-weight: 200;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            font-size: 2.3rem; margin: 0 0 20px 0; font-weight: 300;
+            text-shadow: 0 0 15px var(--secondary-neon);
         }
 
         .login-input-group {
             display: flex; align-items: center; gap: 8px;
-            background: rgba(0, 0, 0, 0.15);
+            background: rgba(0, 0, 0, 0.4);
             padding: 5px 5px 5px 15px;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.15);
-            width: 300px;
+            border-radius: 30px; /* ปรับโค้งมน */
+            border: 1px solid var(--secondary-neon);
+            width: 320px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
         #passInput {
             background: transparent; border: none; color: white;
-            font-size: 22px; outline: none; width: 100%;
-            text-align: left; letter-spacing: 6px;
+            font-size: 24px; outline: none; width: 100%;
+            text-align: center; letter-spacing: 8px; /* เว้นระยะดอกจันให้ดูเก๋ */
         }
-        #passInput::placeholder { color: rgba(255,255,255,0.4); letter-spacing: normal; font-size: 16px; font-family: 'Prompt'; }
+        #passInput::placeholder { color: rgba(191, 233, 255, 0.4); letter-spacing: normal; font-size: 16px; font-family: 'Prompt'; font-weight: 200;}
 
         .enter-btn {
-            width: 40px; height: 40px; border-radius: 6px;
-            border: none; background: rgba(255,255,255,0.1); color: white;
+            width: 45px; height: 45px; border-radius: 50%;
+            border: none; background: var(--secondary-neon); color: var(--bg-dark);
             cursor: pointer; display: flex; justify-content: center; align-items: center;
-            transition: 0.3s; font-size: 18px;
+            transition: 0.3s; font-size: 20px;
+            box-shadow: 0 0 15px var(--secondary-neon);
         }
-        .enter-btn:hover { background: rgba(255,255,255,0.3); }
+        .enter-btn:hover { background: var(--primary-neon); color: white; box-shadow: 0 0 15px var(--primary-neon); transform: scale(1.05); }
 
-        .hint-text { font-size: 0.9rem; opacity: 0.7; margin-top: 15px; font-weight: 200; }
+        .hint-text { font-size: 0.95rem; opacity: 0.8; margin-top: 15px; font-weight: 100; color: #fff; text-shadow: none;}
 
         .lock-info {
-            position: absolute; bottom: 60px; text-align: center;
+            position: absolute; bottom: 50px; text-align: center;
         }
-        #live-time { font-size: 6rem; margin: 0; font-weight: 200; line-height: 1; }
-        .date-info { font-size: 1.4rem; margin: 10px 0 0 0; font-weight: 200; opacity: 0.9; }
+        #live-time { font-size: 6.5rem; margin: 0; font-weight: 100; line-height: 1; text-shadow: 0 0 20px rgba(191, 233, 255, 0.8);}
+        .date-info { font-size: 1.5rem; margin: 10px 0 0 0; font-weight: 200; opacity: 0.9; }
 
         /* --- [Desktop Area] --- */
         #desktop {
@@ -95,26 +98,30 @@
 
         .icon { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: 0.2s; }
         .icon-box {
-            width: 65px; height: 65px; border-radius: 15px;
+            width: 70px; height: 70px; border-radius: 18px;
             display: flex; justify-content: center; align-items: center;
             font-size: 32px; color: white; margin-bottom: 10px;
-            background: rgba(255,255,255,0.15); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            background: rgba(255,255,255,0.08); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: 0.3s;
         }
-        .icon span { font-size: 13px; color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.2); font-weight: 400; }
+        .icon:hover .icon-box { background: rgba(255, 255, 255, 0.2); transform: translateY(-3px);}
+        .icon span { font-size: 13px; color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.3); font-weight: 300; }
 
         /* --- Windows --- */
         .window {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 90%; max-width: 420px; background: var(--window-bg); border-radius: 16px;
+            width: 90%; max-width: 420px; background: var(--window-bg); border-radius: 20px;
             display: none; flex-direction: column; z-index: 100;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.2); backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 25px 70px rgba(0,0,0,0.4); backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #eee;
         }
-        .window-header { padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.02); }
-        .close-btn { width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; cursor: pointer; color: #666; font-size: 20px; }
-        .window-body { padding: 35px; text-align: center; color: #333; font-family: 'Itim', cursive; }
+        .window-header { padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2); border-radius: 20px 20px 0 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .close-btn { width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; cursor: pointer; color: #999; font-size: 20px; }
+        .close-btn:hover { color: var(--primary-neon); }
+        .window-body { padding: 35px; text-align: center; font-family: 'Itim', cursive; }
 
         .hidden { display: none !important; opacity: 0; }
     </style>
@@ -122,13 +129,13 @@
 <body>
 
     <div id="login-screen">
-        <div class="user-profile"><i class="fas fa-user-circle"></i></div>
+        <div class="user-profile"><i class="fas fa-heart"></i></div>
         <div class="login-box" style="text-align: center;">
-            <h2 style="font-family: 'Prompt';">ยินดีต้อนรับ</h2>
+            <h2>Unlock Surprise</h2>
             <div class="login-input-group">
                 <input type="password" id="passInput" placeholder="Password" autocomplete="off">
                 <button class="enter-btn" onclick="unlockOS()">
-                    <i class="fas fa-arrow-right"></i>
+                    <i class="fas fa-key"></i>
                 </button>
             </div>
             <p class="hint-text">รหัสผ่านคือวันเกิด (วว/ดด/พศ)</p>
@@ -156,21 +163,21 @@
     </div>
 
     <div id="quiz-win" class="window">
-        <div class="window-header"><span style="font-size: 0.85rem; font-weight: 600;">Distance.exe</span><div class="close-btn" onclick="closeWindow('quiz-win')">×</div></div>
+        <div class="window-header"><span style="font-size: 0.85rem; font-weight: 600; font-family: 'Prompt';">Distance.exe</span><div class="close-btn" onclick="closeWindow('quiz-win')">×</div></div>
         <div class="window-body">
             <p style="font-size: 1.3rem;">ทายซิ... ระยะทางจากระยอง <br>มาถึงใจเธอคือ "กี่กิโลเมตร"?</p>
-            <input type="number" id="distInput" style="width:100%; padding:15px; border-radius:10px; border:1px solid #ddd; text-align:center; margin-bottom:15px; font-family: 'Prompt';">
+            <input type="number" id="distInput" style="width:100%; padding:15px; border-radius:10px; border:1px solid #ddd; text-align:center; margin-bottom:15px; font-family: 'Prompt'; background: #fff;">
             <button onclick="checkDist()" style="width:100%; padding:12px; border-radius:10px; border:none; background:#0078d4; color:white; cursor:pointer; font-family: 'Prompt'; font-weight: 600;">Check</button>
-            <p id="hint" style="color:#e81123; margin-top:15px; font-weight: bold;"></p>
+            <p id="hint" style="color:#ff6e7f; margin-top:15px; font-weight: bold;"></p>
         </div>
     </div>
 
     <div id="cake-win" class="window">
-        <div class="window-header"><span style="font-size: 0.85rem; font-weight: 600;">Surprise.exe</span><div class="close-btn" onclick="closeWindow('cake-win')">×</div></div>
+        <div class="window-header"><span style="font-size: 0.85rem; font-weight: 600; font-family: 'Prompt';">Surprise.exe</span><div class="close-btn" onclick="closeWindow('cake-win')">×</div></div>
         <div class="window-body">
-            <h3 style="font-size: 1.6rem; margin-bottom: 10px;">HBD นะคะคนเก่ง! 🎂</h3>
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3hpeXN2ejN6ZzI2ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6JmNoYz1n/MCG263dfe91ONF5d54/giphy.gif" style="width:100%; border-radius:12px;">
-            <p style="margin-top: 15px;">เค้กมะพร้าวอร่อยไหมเอ่ย ❤️</p>
+            <h3 style="font-size: 1.7rem; margin-bottom: 10px; color: var(--primary-neon);">HBD นะคะคนเก่ง! 🎂</h3>
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3hpeXN2ejN6ZzI2ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6JmNoYz1n/MCG263dfe91ONF5d54/giphy.gif" style="width:100%; border-radius:12px; border: 3px solid var(--primary-neon);">
+            <p style="margin-top: 15px; color: #fff;">เค้กมะพร้าวอร่อยไหมเอ่ย ❤️</p>
         </div>
     </div>
 
@@ -183,7 +190,7 @@
                 screen.style.opacity = '0';
                 setTimeout(() => screen.classList.add('hidden'), 800);
             } else {
-                alert("รหัสผ่านไม่ถูกต้องน้าา");
+                alert("รหัสผ่านไม่ถูกต้องน้าา ลองใหม่ครับ!");
             }
         }
         
