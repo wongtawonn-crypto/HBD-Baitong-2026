@@ -3,106 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cosmic Personality: Mission 145 ✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500;600&family=Prompt:wght@100;300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Mission 145 🪐</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500&family=Prompt:wght@200;300;400;500&display=swap" rel="stylesheet">
     
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: 'Prompt', sans-serif;
-            /* พื้นหลังสีขาวสะอาดตาที่สุด */
-            background: #ffffff;
-            color: #333;
+            background: #F4F6F9; /* สีพื้นหลังขาวอมเทา สไตล์มินิมอลแพงๆ */
+            color: #2D3748;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 15px;
         }
 
         .container {
             width: 100%;
-            max-width: 380px; /* บีบหน้าจอให้แคบลงเพื่อความมินิมอล */
-            background: white;
-            border-radius: 20px;
-            /* เงาที่เบาบางมากเพื่อให้ดูเบา */
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
-            padding: 40px 20px;
+            max-width: 440px;
+            background: #FFFFFF;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
+            padding: 45px 30px;
             text-align: center;
             position: relative;
-            overflow: hidden;
-            min-height: 450px;
+            min-height: 550px;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
-        /* --- Screens --- */
-        .screen { display: none; opacity: 0; transition: opacity 0.4s ease, transform 0.4s ease; transform: translateY(10px); }
-        .screen.active { display: flex; flex-direction: column; align-items: center; opacity: 1; transform: translateY(0); width: 100%; }
+        /* --- Screens & Transitions --- */
+        .screen { display: none; opacity: 0; transition: opacity 0.4s ease, transform 0.4s ease; transform: translateY(15px); }
+        .screen.active { display: flex; flex-direction: column; opacity: 1; transform: translateY(0); width: 100%; height: 100%; }
 
         /* --- Start Screen --- */
-        .cover-img { font-size: 60px; margin-bottom: 25px; color: #78909c; } /* สีเทาอมฟ้ามินิมอล */
-        h1 { font-family: 'Kanit', sans-serif; font-size: 1.4rem; color: #444; margin-bottom: 10px; font-weight: 600; line-height: 1.3;}
-        p.subtitle { color: #888; font-size: 0.95rem; margin-bottom: 35px; line-height: 1.6; font-weight: 300;}
+        .tag { font-size: 0.85rem; color: #718096; letter-spacing: 2px; margin-bottom: 15px; text-transform: uppercase; font-family: 'Kanit'; }
+        h1 { font-family: 'Kanit', sans-serif; font-size: 1.8rem; color: #1A202C; margin-bottom: 20px; font-weight: 500; line-height: 1.3;}
+        p.subtitle { color: #4A5568; font-size: 1rem; margin-bottom: 40px; line-height: 1.7; font-weight: 300; text-align: left;}
         
         .btn-main {
-            /* ปุ่มแบบเรียบๆ เส้นขอบมินิมอล */
-            background: #fdfdfd; color: #666; border: 1px solid #ddd;
-            padding: 15px 30px; font-size: 1rem; border-radius: 12px;
-            font-family: 'Prompt'; font-weight: 400; cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
-            transition: 0.3s; width: 100%;
+            background: #2D3748; color: #FFF; border: none;
+            padding: 18px 30px; font-size: 1.05rem; border-radius: 12px;
+            font-family: 'Kanit'; font-weight: 400; cursor: pointer;
+            transition: 0.2s ease; width: 100%; margin-top: auto;
         }
-        .btn-main:hover, .btn-main:active {
-            border-color: #78909c; background: #fffafb; color: #78909c; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-        }
+        .btn-main:hover, .btn-main:active { background: #4A5568; transform: scale(0.98); }
 
         /* --- Quiz Screen --- */
-        .progress-header { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-        .q-number { font-family: 'Prompt'; font-weight: 500; font-size: 0.9rem; color: #aaa; }
-        .progress-bar { width: 75%; height: 5px; background: #eee; border-radius: 10px; overflow: hidden; position: relative; }
-        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: #78909c; transition: width 0.4s ease; }
+        .progress-container { width: 100%; display: flex; align-items: center; gap: 15px; margin-bottom: 35px; }
+        .q-number { font-family: 'Kanit'; font-weight: 500; font-size: 0.95rem; color: #A0AEC0; width: 45px; text-align: left; }
+        .progress-bar { flex: 1; height: 4px; background: #EDF2F7; border-radius: 4px; overflow: hidden; position: relative; }
+        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: #4A5568; transition: width 0.4s ease; }
         
-        .question-text { font-family: 'Kanit', sans-serif; font-size: 1.15rem; font-weight: 500; margin-bottom: 25px; line-height: 1.5; color: #333; text-align: left; width: 100%; }
+        .question-text { font-family: 'Kanit', sans-serif; font-size: 1.25rem; font-weight: 400; margin-bottom: 30px; line-height: 1.6; color: #1A202C; text-align: left; }
         
-        .choices-wrapper { width: 100%; display: flex; flex-direction: column; gap: 10px; }
+        .choices-wrapper { width: 100%; display: flex; flex-direction: column; gap: 12px; }
         .choice-btn {
-            background: #fdfdfd; border: 1px solid #eee; color: #666;
-            padding: 18px 15px; font-size: 0.95rem; border-radius: 12px;
+            background: #FFFFFF; border: 1px solid #E2E8F0; color: #4A5568;
+            padding: 20px 20px; font-size: 1rem; border-radius: 14px;
             font-family: 'Prompt'; font-weight: 300; cursor: pointer;
-            transition: 0.3s; width: 100%; text-align: left;
-            display: flex; align-items: center; gap: 15px; line-height: 1.3;
+            transition: all 0.2s ease; width: 100%; text-align: left;
+            line-height: 1.5;
         }
-        .choice-btn:hover, .choice-btn:active {
-            border-color: #78909c; background: #fffafb; color: #78909c;
-        }
-        .choice-icon { font-size: 1.3rem; color: #aaa; width: 25px; text-align: center;}
-        .choice-btn:hover .choice-icon { color: #78909c; }
+        .choice-btn:hover, .choice-btn:active { border-color: #A0AEC0; background: #F7FAFC; color: #2D3748; }
 
         /* --- Loading Screen --- */
-        /* เรดาร์แบบเส้นมินิมอลสุดๆ */
-        .radar-minimal { width: 50px; height: 50px; border: 2px solid #eee; border-radius: 50%; position: relative; margin: 0 auto 25px; }
-        .radar-minimal::before { content: ''; position: absolute; top: -2px; left: -2px; width: 50px; height: 50px; border: 2px solid transparent; border-top-color: #78909c; border-radius: 50%; animation: scan 1.5s linear infinite; }
-        @keyframes scan { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
-        .loading-text { font-size: 1.1rem; color: #78909c; font-weight: 500; margin-bottom: 5px; }
-        .loading-subtext { font-size: 0.85rem; color: #aaa; font-weight: 300; }
+        .loader { width: 40px; height: 40px; border: 2px solid #EDF2F7; border-top-color: #4A5568; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 30px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-text { font-size: 1.1rem; color: #2D3748; font-family: 'Kanit'; font-weight: 400; margin-bottom: 10px; }
+        .loading-subtext { font-size: 0.9rem; color: #A0AEC0; font-weight: 300; }
 
         /* --- Result Screen --- */
-        .result-type { font-family: 'Prompt'; font-size: 0.9rem; color: #aaa; margin-bottom: 5px; letter-spacing: 1px; }
-        .result-title { font-family: 'Kanit', sans-serif; font-size: 1.5rem; color: #333; font-weight: 600; margin-bottom: 25px; line-height: 1.3; }
+        .result-screen { text-align: left; display: flex; flex-direction: column; height: 100%; }
+        .result-title { font-family: 'Kanit', sans-serif; font-size: 1.6rem; color: #1A202C; font-weight: 500; margin-bottom: 25px; line-height: 1.4; }
         .result-card {
-            background: #fdfdfd; border: 1px solid #eee;
-            border-radius: 16px; padding: 25px; margin-bottom: 25px; width: 100%;
-            text-align: left;
+            background: #F7FAFC; border: 1px solid #EDF2F7;
+            border-radius: 16px; padding: 25px; margin-bottom: 30px;
         }
-        .result-desc { font-size: 0.95rem; color: #666; line-height: 1.6; font-weight: 300; }
-        .highlight { color: #ff6b81; font-weight: 500; } /* ยังเก็บสีชมพูไว้สำหรับจุดที่ต้องการเน้น */
-        .highlight-blue { color: #78909c; font-weight: 500; }
+        .result-desc { font-size: 1rem; color: #4A5568; line-height: 1.8; font-weight: 300; }
+        .highlight { color: #2B6CB0; font-weight: 500; }
 
     </style>
 </head>
@@ -111,15 +94,20 @@
     <div class="container">
         
         <div id="screen-start" class="screen active">
-            <div class="cover-img"><i class="fas fa-user-astronaut"></i></div>
-            <h1>PERSONALITY REPORT:<br>MISSION 145</h1>
-            <p class="subtitle">คุณถูกรับเลือกให้เป็นนักบินอวกาศ<br>เพื่อเดินทางไปปฏิบัติภารกิจสำรวจระบบดาวใหม่<br>มาจำลองสถานการณ์กัน!</p>
-            <button class="btn-main" onclick="startQuiz()">เริ่มปฏิบัติภารกิจ</button>
+            <div style="text-align: left; flex: 1;">
+                <div class="tag">Psychology Test</div>
+                <h1>สมมติว่าคุณคือนักบินอวกาศ<br>ที่กำลังเดินทางไปดาวดวงใหม่</h1>
+                <p class="subtitle">
+                    การเดินทางข้ามอวกาศต้องใช้เวลาและความอดทนสูงมาก<br><br>
+                    มาลองตอบคำถาม 7 สถานการณ์นี้ด้วยสัญชาตญาณแรกของคุณ เพื่อค้นหาว่า 'สิ่งล้ำค่า' แบบไหนที่รอคุณอยู่ที่ปลายทาง
+                </p>
+            </div>
+            <button class="btn-main" onclick="startQuiz()">เริ่มการเดินทาง</button>
         </div>
 
         <div id="screen-quiz" class="screen">
-            <div class="progress-header">
-                <span class="q-number" id="q-counter">LOG 1/5</span>
+            <div class="progress-container">
+                <span class="q-number" id="q-counter">01/07</span>
                 <div class="progress-bar"><div id="progress" class="progress-fill" style="width: 0%;"></div></div>
             </div>
             <div id="question-text" class="question-text">คำถาม</div>
@@ -127,70 +115,88 @@
                 </div>
         </div>
 
-        <div id="screen-loading" class="screen">
-            <div class="radar-minimal"></div>
-            <div class="loading-text" id="loading-msg">กำลังวิเคราะห์ข้อมูล...</div>
-            <div class="loading-subtext">ระบบกำลังสแกนหาพิกัดปลายทาง 📡</div>
+        <div id="screen-loading" class="screen" style="justify-content: center;">
+            <div class="loader"></div>
+            <div class="loading-text" id="loading-msg">กำลังประมวลผลรูปแบบการตัดสินใจ...</div>
+            <div class="loading-subtext">กรุณารอสักครู่</div>
         </div>
 
-        <div id="screen-result" class="screen">
-            <div class="result-type">MISSION COMPLETE</div>
-            <h2 class="result-title">ถึงที่หมายแล้ว<br>กัปตัน! 🎉</h2>
-            
-            <div class="result-card">
-                <div class="result-desc">
-                    ภารกิจสำรวจของคุณเสร็จสมบูรณ์!<br><br>
-                    เรดาร์ตรวจพบว่า <b>เสบียงพิเศษสุดอร่อย</b> ได้ถูกส่งตรงจากศูนย์บัญชาการอวกาศระยอง ข้ามผ่านระยะทาง <span class="highlight-blue">145 กิโลเมตร</span>...<br><br>
-                    และตอนนี้มันได้ลงจอดที่หน้า <span class="highlight">ดาวลาดกระบัง (หอพักของคุณ)</span> เรียบร้อยแล้ว!
+        <div id="screen-result" class="screen result-screen">
+            <div style="flex: 1;">
+                <div class="tag">Mission Complete</div>
+                <h2 class="result-title">ปลายทางของคุณคือ...<br>ความหอมหวานที่คุ้มค่ากับการรอคอย 🎂</h2>
+                
+                <div class="result-card">
+                    <div class="result-desc">
+                        จากการตัดสินใจของคุณ แสดงให้เห็นว่าคุณเป็นคนที่ใส่ใจในรายละเอียดและคู่ควรกับสิ่งที่ดีที่สุด<br><br>
+                        เรดาร์ของเราตรวจพบว่าตอนนี้ มี <b>เค้กมะพร้าวสุดพิเศษ</b> ที่เดินทางข้ามระยะทางกว่า <span class="highlight">145 กิโลเมตร</span> จากระยอง...<br><br>
+                        และมันได้ลงจอดที่หน้าหอพักของคุณอย่างปลอดภัยเป็นที่เรียบร้อยแล้ว!
+                    </div>
                 </div>
             </div>
             
-            <button class="btn-main" onclick="alert('แฮปปี้เบิร์ธเดย์นะคะ! รีบลงไปเอาเค้กที่หน้าหอด่วนเลย 🚀💨')">ปลดล็อคเสบียง (รับของ)</button>
+            <button class="btn-main" onclick="alert('แฮปปี้เบิร์ธเดย์นะคะ! รีบลงไปเอาของขวัญเร็ววว 🤍')">ลงไปรับของขวัญกัน!</button>
         </div>
 
     </div>
 
     <script>
-        // ชุดคำถามธีมอวกาศ + แอบหยอดดีเทลส่วนตัวแบบมินิมอล (ใช้ Line Icons ของ FontAwesome)
+        // เนื้อเรื่อง 7 คำถาม ที่เนียนไปกับแบบทดสอบจิตวิทยา
         const questions = [
             {
-                q: "คุณกำลังนั่งประจำที่ในยานอวกาศ เพลงที่จะเปิดผ่านลำโพงยานตอนนับถอยหลังปล่อยตัวคือแนวไหน?",
+                q: "ระบบแจ้งเตือนการตื่นจากสภาวะจำศีล เสียงดนตรีแบบไหนที่คุณตั้งค่าไว้เพื่อปลุกตัวเองในเช้าวันแรกของอวกาศ?",
                 choices: [
-                    { icon: "fa-solid fa-guitar", text: "อัลเทอร์เนทีฟร็อก หรือบริตป็อป ปลุกใจ" },
-                    { icon: "fa-solid fa-microphone", text: "เพลงญี่ปุ่นเสียงร้องทรงพลัง บิลด์อารมณ์" },
-                    { icon: "fa-solid fa-headphones", text: "R&B ไทย ฟังสบายๆ ชิลล์ๆ ลอยออกนอกโลก" }
+                    "เพลงร็อกหรือบริตป็อปจังหวะชัดเจน ปลุกพลังให้พร้อมลุย",
+                    "เสียงร้องทรงพลังแบบศิลปินญี่ปุ่น ให้ความรู้สึกอินและมีแพสชัน",
+                    "เพลง R&B ไทย ฟังสบายๆ ให้ค่อยๆ ตื่นอย่างอารมณ์ดี"
                 ]
             },
             {
-                q: "เพื่อความคล่องตัวในสภาวะไร้น้ำหนัก คุณแอบเปลี่ยนชุดอวกาศข้างในเป็นเสื้อยืดตัวเก่งสีอะไร?",
+                q: "คุณเดินไปที่ล็อกเกอร์เพื่อเปลี่ยนชุดสเปซสูท คุณคิดว่าชุดปฏิบัติการของคุณเป็นโทนสีอะไร?",
                 choices: [
-                    { icon: "fa-solid fa-shirt", text: "สีเขียวหรือสีฟ้าคุมโทน สบายตา" },
-                    { icon: "fa-solid fa-shirt", text: "สีดำหรือเทาเท่ๆ กลมกลืนกับอวกาศ" },
-                    { icon: "fa-solid fa-shirt", text: "สีขาวล้วน มินิมอลสุดๆ" }
+                    "โทนสีเขียวหรือสีฟ้าหม่นๆ ดูสบายตาและกลมกลืนธรรมชาติ",
+                    "โทนสีขาวล้วน ดูสะอาดตาและมินิมอลที่สุด",
+                    "โทนสีดำสนิท ดูทะมัดทะแมงและพร้อมเผชิญความมืดมิด"
                 ]
             },
             {
-                q: "สัญญาณเตือนดังขึ้น! มีฝูงอุกกาบาตขวางทางยานอยู่ คุณจะจัดการยังไง?",
+                q: "ยานกำลังพุ่งทะยานด้วยความเร็วสูง เมื่อมองออกไปนอกหน้าต่าง สิ่งที่ดึงดูดสายตาคุณมากที่สุดคืออะไร?",
                 choices: [
-                    { icon: "fa-solid fa-bolt", text: "จินตนาการว่าตัวเองเป็นโกคู ยิงพลังคลื่นเต่าใส่เลย" },
-                    { icon: "fa-solid fa-gamepad", text: "จับคันบังคับ โยกหลบด้วยสกิลระดับเซียน" },
-                    { icon: "fa-solid fa-shield", text: "เปิดเกราะบาเรียป้องกันยาน แล้วพุ่งชนทะลุไป" }
+                    "กลุ่มดาวสว่างไสวที่เรียงตัวกันเป็นรูปร่างแปลกตา",
+                    "แสงของเนบิวลาสีม่วงอมฟ้าที่ค่อยๆ เปลี่ยนรูปทรง",
+                    "ความมืดมิดที่กว้างใหญ่ไพศาล แต่กลับดูเงียบสงบ"
                 ]
             },
             {
-                q: "ยานลงจอดบนดาวดวงใหม่สำเร็จ สิ่งแรกที่คุณเจอคือพืชต่างดาวหน้าตาสวยงาม มันมีลักษณะแบบไหน?",
+                q: "จู่ๆ ระบบนำทางขัดข้อง คุณต้องสลับมาควบคุมยานด้วยตัวเอง สไตล์การควบคุมยานของคุณเป็นแบบไหน?",
                 choices: [
-                    { icon: "fa-solid fa-leaf", text: "ดอกไม้สีฟ้าหรือสีม่วงแปลกตา ที่บานสู้แสงอาทิตย์เทียม" },
-                    { icon: "fa-solid fa-leaf", text: "เห็ดเรืองแสงได้ในที่มืด" },
-                    { icon: "fa-solid fa-leaf", text: "ต้นไม้ขนาดยักษ์ที่มีใบเป็นสีเงิน" }
+                    "คุมพวงมาลัยและเบรกให้สมูทที่สุด คล้ายๆ ตอนขับรถ EV",
+                    "เร่งเครื่องทะยานฝ่าอุปสรรคไปเลย จินตนาการว่ามีพลังแบบซูเปอร์ไซย่า",
+                    "ปล่อยให้ AI ช่วยคำนวณเส้นทางหลบหลีกที่ปลอดภัยที่สุด"
                 ]
             },
             {
-                q: "เรดาร์ดาวเทียมแจ้งเตือนว่ามีพัสดุลึกลับกำลังพุ่งตรงมาหาคุณจากระยะทาง '145 กิโลเมตร' คิดว่ามันคืออะไร?",
+                q: "ในที่สุดยานก็ลงจอดบนดาวเคราะห์ดวงใหม่สำเร็จ สิ่งแรกที่คุณสัมผัสได้เมื่อเปิดประตูยานออกไปคืออะไร?",
                 choices: [
-                    { icon: "fa-solid fa-satellite", text: "จานบินของมนุษย์ต่างดาวแน่ๆ เตรียมตั้งรับ!" },
-                    { icon: "fa-solid fa-meteor", text: "ชิ้นส่วนดาวตกที่หลงทางมา" },
-                    { icon: "fa-solid fa-gift", text: "เสบียงหรือของขวัญจากใครบางคนที่อยู่ไกลๆ" }
+                    "ทุ่งพืชแปลกตา ที่มีดอกไม้สีฟ้าและสีม่วงบานสะพรั่งเต็มไปหมด",
+                    "สภาพอากาศที่อบอุ่นกำลังดี และมีลมเย็นๆ พัดผ่าน",
+                    "ความเงียบที่ทำให้รู้สึกเป็นอิสระจากความวุ่นวายทั้งหมด"
+                ]
+            },
+            {
+                q: "ระบบเซนเซอร์ดาวเทียม 'PatrolSat' แจ้งเตือนว่าพบ 'วัตถุปริศนา' กำลังเดินทางมาหาคุณ คุณคิดว่ามันคืออะไร?",
+                choices: [
+                    "สัญญาณจากสิ่งมีชีวิตอื่นที่อาศัยอยู่ที่นี่",
+                    "ชิ้นส่วนของสะเก็ดดาวที่บังเอิญตกลงมาใกล้ๆ",
+                    "ของขวัญหรือเสบียงบางอย่าง ที่ใครบางคนตั้งใจส่งมาให้"
+                ]
+            },
+            {
+                q: "วัตถุนั้นอยู่ห่างออกไป '145 กิโลเมตร' และกำลังใกล้เข้ามาเรื่อยๆ คุณจะตอบสนองต่อสิ่งนี้อย่างไร?",
+                choices: [
+                    "เตรียมตัวให้พร้อม แล้วเดินออกไปรอรับด้วยความตื่นเต้น",
+                    "แอบสังเกตการณ์จากในยานก่อน ขอแต่งตัวให้เรียบร้อยนิดนึง",
+                    "ส่งสัญญาณกลับไปว่า 'พร้อมรับแล้วนะ!'"
                 ]
             }
         ];
@@ -202,7 +208,7 @@
             const showEl = document.getElementById(showId);
             
             hideEl.style.opacity = '0';
-            hideEl.style.transform = 'translateY(-10px)';
+            hideEl.style.transform = 'translateY(-15px)';
             
             setTimeout(() => {
                 hideEl.classList.remove('active');
@@ -221,7 +227,12 @@
 
         function loadQuestion() {
             const qData = questions[currentQuestion];
-            document.getElementById('q-counter').innerText = `LOG ${currentQuestion + 1}/${questions.length}`;
+            
+            // Format number e.g., 01/07
+            const qNum = (currentQuestion + 1).toString().padStart(2, '0');
+            const totalQ = questions.length.toString().padStart(2, '0');
+            document.getElementById('q-counter').innerText = `${qNum}/${totalQ}`;
+            
             document.getElementById('question-text').innerText = qData.q;
             
             const progressPercent = ((currentQuestion) / questions.length) * 100;
@@ -230,10 +241,10 @@
             const choicesContainer = document.getElementById('choices-container');
             choicesContainer.innerHTML = ''; 
 
-            qData.choices.forEach((choice) => {
+            qData.choices.forEach((choiceText) => {
                 const btn = document.createElement('button');
                 btn.className = 'choice-btn';
-                btn.innerHTML = `<i class="choice-icon ${choice.icon}"></i> <span>${choice.text}</span>`;
+                btn.innerText = choiceText;
                 btn.onclick = () => handleAnswer();
                 choicesContainer.appendChild(btn);
             });
@@ -244,10 +255,15 @@
             
             if (currentQuestion < questions.length) {
                 const choicesContainer = document.getElementById('choices-container');
+                const qText = document.getElementById('question-text');
+                
                 choicesContainer.style.opacity = '0';
+                qText.style.opacity = '0';
+                
                 setTimeout(() => {
                     loadQuestion();
                     choicesContainer.style.opacity = '1';
+                    qText.style.opacity = '1';
                 }, 300);
             } else {
                 document.getElementById('progress').style.width = `100%`;
@@ -260,10 +276,11 @@
 
         function processResult() {
             const msgs = [
-                "เชื่อมต่อดาวเทียม...",
-                "กำลังคำนวณพิกัด...",
-                "ยืนยันระยะทาง 145 กม....",
-                "พบวัตถุต้องสงสัยหน้าดาวลาดกระบัง!"
+                "กำลังวิเคราะห์รูปแบบการตัดสินใจ...",
+                "เชื่อมต่อสัญญาณดาวเทียมค้นหาพิกัด...",
+                "คำนวณระยะทางจากระยอง...",
+                "ยืนยันระยะทาง 145 กิโลเมตร...",
+                "พบเป้าหมายแล้ว!"
             ];
             
             let i = 0;
