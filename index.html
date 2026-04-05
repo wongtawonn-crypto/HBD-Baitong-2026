@@ -3,282 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Secret Delivery 🚗💨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Personality Quiz ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&family=Itim&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; touch-action: manipulation; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: 'Prompt', sans-serif;
-            background: #a1c4fd;
-            height: 100vh;
-            overflow: hidden;
+            background: #fff5f5; /* สีชมพูพาสเทลอ่อนๆ สบายตา */
+            color: #333;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
-        /* --- Header --- */
-        .header {
-            width: 100%; padding: 15px; text-align: center;
-            background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            z-index: 10;
-        }
-        .header h1 { font-size: 1.2rem; color: #333; }
-        .distance-display { font-size: 1.8rem; font-weight: 600; color: #0078d4; }
-
-        /* --- Game Area --- */
-        #game-container {
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(255, 139, 139, 0.15);
+            padding: 40px 25px;
+            text-align: center;
             position: relative;
-            width: 100%; max-width: 400px;
-            flex-grow: 1;
-            background: #555; /* สีถนน */
             overflow: hidden;
-            border-left: 5px solid #888;
-            border-right: 5px solid #888;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
-
-        /* เส้นปะกลางถนน */
-        .lane-divider {
-            position: absolute; top: -100px; width: 4px; height: 100px; background: white;
-            box-shadow: 0 150px white, 0 300px white, 0 450px white, 0 600px white, 0 750px white;
-            animation: moveLines 0.5s linear infinite;
-        }
-        .lane-1 { left: 33%; }
-        .lane-2 { left: 66%; }
-
-        @keyframes moveLines { from { top: -100px; } to { top: 50px; } }
-
-        /* รถของเรา */
-        #player {
-            position: absolute; bottom: 80px; width: 50px; height: 80px;
-            font-size: 50px; line-height: 80px; text-align: center;
-            /* ตำแหน่งเริ่มต้นเลนกลาง */
-            left: 50%; transform: translateX(-50%);
-            transition: left 0.15s ease-out; /* ทำให้รถเปลี่ยนเลนสมูทๆ */
-            z-index: 5;
-        }
-
-        /* สิ่งกีดขวาง */
-        .obstacle {
-            position: absolute; top: -60px; width: 50px; height: 50px;
-            font-size: 40px; text-align: center; line-height: 50px;
-            transform: translateX(-50%);
-            z-index: 4;
-        }
-
-        /* --- Controls --- */
-        .controls {
-            width: 100%; max-width: 400px; display: flex;
-            background: white; padding: 15px; box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
-            z-index: 10;
-        }
-        .btn {
-            flex: 1; padding: 20px; margin: 0 5px; font-size: 24px;
-            border: none; border-radius: 15px; background: #e3f2fd;
-            color: #0078d4; cursor: pointer; box-shadow: 0 4px 0 #bbdefb;
-            transition: 0.1s;
-        }
-        .btn:active { transform: translateY(4px); box-shadow: none; }
 
         /* --- Screens --- */
-        .overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.8);
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 100; color: white; text-align: center; padding: 20px;
+        .screen { display: none; animation: fadeIn 0.5s ease-out; }
+        .screen.active { display: flex; flex-direction: column; align-items: center; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .hidden { display: none !important; }
 
-        .box { background: white; color: #333; padding: 30px; border-radius: 20px; max-width: 350px; width: 100%; }
-        .box h2 { font-size: 1.8rem; margin-bottom: 10px; color: #0078d4; }
-        .box p { font-size: 1.1rem; margin-bottom: 20px; }
-        .action-btn { padding: 12px 25px; font-size: 1.2rem; border: none; border-radius: 10px; background: #ff6b81; color: white; cursor: pointer; font-family: 'Prompt'; font-weight: 600; width: 100%; }
+        /* --- Start Screen --- */
+        .title-icon { font-size: 60px; margin-bottom: 20px; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        h1 { font-size: 1.5rem; color: #ff6b81; margin-bottom: 10px; font-weight: 600; }
+        p.subtitle { color: #666; font-size: 0.95rem; margin-bottom: 30px; line-height: 1.5; }
+        
+        .btn-start {
+            background: #ff6b81; color: white; border: none;
+            padding: 15px 30px; font-size: 1.1rem; border-radius: 50px;
+            font-family: 'Prompt'; font-weight: 500; cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 107, 129, 0.3);
+            transition: 0.2s; width: 100%;
+        }
+        .btn-start:active { transform: scale(0.95); box-shadow: none; }
 
-        /* ป๊อปอัปตอนชนะ */
-        #win-box { border: 4px solid #ff6b81; }
-        #win-box h2 { color: #ff6b81; }
+        /* --- Quiz Screen --- */
+        .progress-bar { width: 100%; height: 6px; background: #eee; border-radius: 10px; margin-bottom: 30px; overflow: hidden; position: relative; }
+        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: #ff6b81; transition: width 0.3s ease; }
+        
+        .question-text { font-size: 1.2rem; font-weight: 500; margin-bottom: 30px; line-height: 1.5; color: #444; }
+        
+        .choice-btn {
+            background: white; border: 2px solid #ffe3e3; color: #555;
+            padding: 15px 20px; font-size: 1rem; border-radius: 15px;
+            font-family: 'Prompt'; cursor: pointer; margin-bottom: 12px;
+            transition: 0.2s; width: 100%; text-align: left;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .choice-btn:hover, .choice-btn:active {
+            border-color: #ff6b81; background: #fff0f0; color: #ff6b81;
+        }
+
+        /* --- Loading Screen --- */
+        .loading-spinner { font-size: 40px; color: #ff6b81; margin-bottom: 20px; }
+        .loading-text { font-size: 1.1rem; color: #555; font-weight: 500; }
+
+        /* --- Result Screen --- */
+        .result-card {
+            background: #fff9f9; border: 2px dashed #ffb8b8;
+            border-radius: 20px; padding: 25px; margin-bottom: 20px; width: 100%;
+        }
+        .result-title { font-family: 'Itim'; font-size: 1.4rem; color: #ff6b81; margin-bottom: 15px; }
+        .result-desc { font-size: 1rem; color: #444; line-height: 1.6; }
+        .highlight { color: #0078d4; font-weight: 600; }
+
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>ภารกิจส่งของลับ 📦</h1>
-        <div class="distance-display" id="score">0 / 145 กม.</div>
-    </div>
-
-    <div id="game-container">
-        <div class="lane-divider lane-1"></div>
-        <div class="lane-divider lane-2"></div>
-        <div id="player">🚗</div>
-    </div>
-
-    <div class="controls">
-        <button class="btn" onclick="moveLeft()"><i class="fas fa-arrow-left"></i> ซ้าย</button>
-        <button class="btn" onclick="moveRight()">ขวา <i class="fas fa-arrow-right"></i></button>
-    </div>
-
-    <div id="start-screen" class="overlay">
-        <div class="box">
-            <h2>พร้อมไหม?</h2>
-            <p>ช่วยขับรถไปให้ถึง <b>145 กิโลเมตร</b><br>หลบกรวยและหินให้ดีๆ ล่ะ!</p>
-            <button class="action-btn" onclick="startGame()">Start Game 🏁</button>
+    <div class="container">
+        
+        <div id="screen-start" class="screen active">
+            <div class="title-icon">🔮</div>
+            <h1>แบบทดสอบพลังจิต</h1>
+            <p class="subtitle">มาดูกันว่าในวันหยุดแบบนี้<br>เซนส์ของคุณจะแม่นยำแค่ไหน?</p>
+            <button class="btn-start" onclick="startQuiz()">เริ่มทำแบบทดสอบเลย</button>
         </div>
-    </div>
 
-    <div id="game-over-screen" class="overlay hidden">
-        <div class="box">
-            <h2 style="color: #e81123;">ชนซะแล้ว! 💥</h2>
-            <p>ของยังไม่ถึงมือเลย เอาใหม่ๆ ใจเย็นๆ</p>
-            <button class="action-btn" style="background: #0078d4;" onclick="startGame()">ลองอีกครั้ง 🔄</button>
+        <div id="screen-quiz" class="screen">
+            <div class="progress-bar"><div id="progress" class="progress-fill" style="width: 0%;"></div></div>
+            <div id="question-text" class="question-text">คำถามจะอยู่ตรงนี้</div>
+            <div id="choices-container" style="width: 100%;">
+                </div>
         </div>
-    </div>
 
-    <div id="win-screen" class="overlay hidden">
-        <div class="box" id="win-box">
-            <h2>ถึงเป้าหมายแล้ว! 🎉</h2>
-            <div style="font-size: 60px; margin: 10px 0; animation: pop 0.5s ease-out;">🎁</div>
-            <p>มีคนมาส่ง <b>"ของความลับ"</b> ให้แล้วนะ!</p>
-            <p style="font-weight: 600; color: #e81123; font-size: 1.2rem;">รีบแต่งตัวลงไปรับของเร็วเข้า! 🏃‍♀️💨</p>
+        <div id="screen-loading" class="screen">
+            <i class="fas fa-magic fa-spin loading-spinner"></i>
+            <div class="loading-text" id="loading-msg">กำลังประมวลผลคำตอบ...</div>
         </div>
+
+        <div id="screen-result" class="screen">
+            <h2 style="font-size: 1.8rem; margin-bottom: 5px;">ผลลัพธ์ของคุณคือ...</h2>
+            <div style="font-size: 50px; margin-bottom: 10px;">🎂✨</div>
+            
+            <div class="result-card">
+                <div class="result-title">"ผู้โชคดีประจำวันที่ 7 เมษา"</div>
+                <div class="result-desc">
+                    คำทำนายบอกว่า ไม่ว่าคุณจะเลือกคำตอบไหน... 
+                    ตอนนี้มี <b>เค้กมะพร้าวแสนอร่อย</b> เดินทางฝ่าฟันระยะทาง <span class="highlight">145 กิโลเมตร</span> 
+                    มาถึงหน้าหอพักของคุณเรียบร้อยแล้ว!
+                </div>
+            </div>
+            
+            <p style="font-weight: 600; color: #ff6b81; font-size: 1.1rem; margin-top: 10px; font-family: 'Itim';">
+                รีบแต่งตัวแล้วลงไปรับของด่วนนน! 🏃‍♀️💨
+            </p>
+        </div>
+
     </div>
 
     <script>
-        const player = document.getElementById('player');
-        const gameContainer = document.getElementById('game-container');
-        const scoreDisplay = document.getElementById('score');
-        
-        let currentLane = 1; // เลน: 0 (ซ้าย), 1 (กลาง), 2 (ขวา)
-        const lanePositions = [16.5, 50, 83.5]; // เปอร์เซ็นต์ความกว้างซ้าย กลาง ขวา
-        
-        let gameInterval;
-        let obstacleInterval;
-        let distance = 0;
-        const targetDistance = 145; // เป้าหมายชนะที่ 145
-        let isGameRunning = false;
+        // ชุดคำถามหลอกล่อ
+        const questions = [
+            {
+                q: "สมมติว่าตอนนี้กำลังรู้สึกหิวจัดๆ สิ่งแรกที่โหยหาคืออะไร?",
+                choices: [
+                    { icon: "🍧", text: "ของหวานเยียวยาจิตใจ" },
+                    { icon: "🥩", text: "หมูกระทะชาบูเท่านั้น!" }
+                ]
+            },
+            {
+                q: "ถ้าจู่ๆ มีคนบอกให้ 'แต่งตัวลงมาข้างล่างตอนนี้เลย' จะทำยังไง?",
+                choices: [
+                    { icon: "😳", text: "หน้าสดชุดนอนก็ลงไปได้เลย!" },
+                    { icon: "💄", text: "ขอเวลา 5 นาที เติมคิ้วนิดนึง" }
+                ]
+            },
+            {
+                q: "ระหว่าง 'ระยะทางไกลๆ' กับ 'ของกินอร่อยๆ' คิดว่าอะไรจะมาถึงก่อนกัน?",
+                choices: [
+                    { icon: "🤤", text: "ของกินสิ รอรับเลย!" },
+                    { icon: "🤔", text: "ความหิวววว" }
+                ]
+            }
+        ];
 
-        // อาร์เรย์สิ่งกีดขวาง (สุ่มออกมา)
-        const obstacles = ['🚧', '🪨', '🛑'];
+        let currentQuestion = 0;
 
-        // บังคับรถ
-        function moveLeft() {
-            if (currentLane > 0 && isGameRunning) {
-                currentLane--;
-                updatePlayerPosition();
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function startQuiz() {
+            currentQuestion = 0;
+            showScreen('screen-quiz');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const qData = questions[currentQuestion];
+            document.getElementById('question-text').innerText = `คำถามที่ ${currentQuestion + 1}: ${qData.q}`;
+            
+            // อัปเดตหลอดความคืบหน้า
+            const progressPercent = ((currentQuestion) / questions.length) * 100;
+            document.getElementById('progress').style.width = `${progressPercent}%`;
+
+            const choicesContainer = document.getElementById('choices-container');
+            choicesContainer.innerHTML = ''; // เคลียร์ปุ่มเก่า
+
+            qData.choices.forEach((choice, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'choice-btn';
+                btn.innerHTML = `<span style="font-size: 1.5rem;">${choice.icon}</span> ${choice.text}`;
+                btn.onclick = () => handleAnswer();
+                choicesContainer.appendChild(btn);
+            });
+        }
+
+        function handleAnswer() {
+            currentQuestion++;
+            
+            if (currentQuestion < questions.length) {
+                // ไปคำถามถัดไป
+                loadQuestion();
+            } else {
+                // ตอบครบแล้ว ไปหน้า Loading
+                document.getElementById('progress').style.width = `100%`;
+                setTimeout(() => {
+                    showScreen('screen-loading');
+                    processResult();
+                }, 300);
             }
         }
 
-        function moveRight() {
-            if (currentLane < 2 && isGameRunning) {
-                currentLane++;
-                updatePlayerPosition();
-            }
-        }
-
-        function updatePlayerPosition() {
-            player.style.left = lanePositions[currentLane] + '%';
-        }
-
-        // เริ่มเกม
-        function startGame() {
-            document.getElementById('start-screen').classList.add('hidden');
-            document.getElementById('game-over-screen').classList.add('hidden');
+        function processResult() {
+            const msgs = [
+                "กำลังวิเคราะห์นิสัย...",
+                "กำลังเชื่อมต่อกับดาวเทียม...",
+                "กำลังคำนวณระยะทางจากระยอง...",
+                "พบพิกัดหอพักเป้าหมายแล้ว!"
+            ];
             
-            // ล้างสิ่งกีดขวางเก่า
-            document.querySelectorAll('.obstacle').forEach(obs => obs.remove());
+            let i = 0;
+            const msgEl = document.getElementById('loading-msg');
             
-            distance = 0;
-            currentLane = 1;
-            updatePlayerPosition();
-            scoreDisplay.innerText = `0 / ${targetDistance} กม.`;
-            isGameRunning = true;
-
-            // Loop เพิ่มระยะทาง
-            gameInterval = setInterval(() => {
-                distance++;
-                scoreDisplay.innerText = `${distance} / ${targetDistance} กม.`;
-                
-                if (distance >= targetDistance) {
-                    winGame();
+            // เปลี่ยนข้อความตอนโหลดเพื่อบิลด์อารมณ์
+            const interval = setInterval(() => {
+                i++;
+                if (i < msgs.length) {
+                    msgEl.innerText = msgs[i];
+                } else {
+                    clearInterval(interval);
+                    showScreen('screen-result'); // โชว์ผลลัพธ์
                 }
-            }, 100); // ความเร็วในการเพิ่มระยะ (100ms = 1 กม. จะใช้เวลาประมาณ 14.5 วินาที)
-
-            // Loop สร้างสิ่งกีดขวาง
-            obstacleInterval = setInterval(createObstacle, 800); // ปล่อยของทุก 0.8 วิ (ระดับง่าย)
+            }, 1000); // เปลี่ยนข้อความทุกๆ 1 วินาที
         }
-
-        // สร้างสิ่งกีดขวาง
-        function createObstacle() {
-            if (!isGameRunning) return;
-
-            const obs = document.createElement('div');
-            obs.classList.add('obstacle');
-            obs.innerText = obstacles[Math.floor(Math.random() * obstacles.length)];
-            
-            // สุ่มเลน
-            const randomLane = Math.floor(Math.random() * 3);
-            obs.style.left = lanePositions[randomLane] + '%';
-            obs.style.top = '-60px'; // เริ่มจากขอบบน
-            
-            gameContainer.appendChild(obs);
-
-            // ทำให้สิ่งกีดขวางตกลงมา
-            let obsTop = -60;
-            const fallInterval = setInterval(() => {
-                if (!isGameRunning) {
-                    clearInterval(fallInterval);
-                    return;
-                }
-
-                obsTop += 10; // ความเร็วของสิ่งกีดขวาง
-                obs.style.top = obsTop + 'px';
-
-                // ตรวจสอบการชน (Collision)
-                const playerRect = player.getBoundingClientRect();
-                const obsRect = obs.getBoundingClientRect();
-
-                // ลดขนาดกล่องชนให้เล็กลงนิดหน่อย จะได้ไม่ชนง่ายเกินไป (ใจดี)
-                if (
-                    obsRect.bottom - 15 > playerRect.top &&
-                    obsRect.top + 15 < playerRect.bottom &&
-                    obsRect.right - 15 > playerRect.left &&
-                    obsRect.left + 15 < playerRect.right
-                ) {
-                    clearInterval(fallInterval);
-                    gameOver();
-                }
-
-                // ลบสิ่งกีดขวางเมื่อเลยขอบล่างไปแล้ว
-                if (obsTop > gameContainer.offsetHeight) {
-                    clearInterval(fallInterval);
-                    obs.remove();
-                }
-            }, 20); // อัปเดตทุก 20ms
-        }
-
-        // จบเกม (แพ้)
-        function gameOver() {
-            isGameRunning = false;
-            clearInterval(gameInterval);
-            clearInterval(obstacleInterval);
-            document.getElementById('game-over-screen').classList.remove('hidden');
-        }
-
-        // จบเกม (ชนะ)
-        function winGame() {
-            isGameRunning = false;
-            clearInterval(gameInterval);
-            clearInterval(obstacleInterval);
-            
-            // ทำให้เส้นถนนหยุดขยับ
-            document.querySelectorAll('.lane-divider').forEach(el => el.style.animationPlayState = 'paused');
-            
-            setTimeout(() => {
-                document.getElementById('win-screen').classList.remove('hidden');
-            }, 500); // หน่วงเวลาครึ่งวิให้ชัวร์ว่าชนะแล้ว
-        }
-
     </script>
 </body>
 </html>
