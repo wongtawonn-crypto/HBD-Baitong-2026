@@ -9,9 +9,10 @@
     
     <style>
         :root {
-            --bg-blue: #e3f2fd; /* สีฟ้าอ่อนพาสเทล */
+            /* รูปทะเลสีฟ้าอ่อนละมุน */
+            --wallpaper: url('https://images.unsplash.com/photo-1505118380757-91f5f5632de0?q=80&w=2052');
             --win-blue: #0078d4;
-            --text-dark: #333;
+            --glass-white: rgba(255, 255, 255, 0.7);
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -20,96 +21,95 @@
             margin: 0; padding: 0; height: 100%;
             font-family: 'Prompt', sans-serif;
             overflow: hidden;
-            background-color: var(--bg-blue);
+            background: var(--wallpaper) no-repeat center center fixed;
+            background-size: cover;
         }
 
-        /* --- [หน้า 1: Simple Lock Screen] --- */
+        /* --- [หน้า 1: Lock Screen - Sea Style] --- */
         #login-screen {
             position: fixed; inset: 0;
-            background-color: var(--bg-blue);
+            /* เพิ่มความมืดและเบลอนิดๆ เพื่อให้ตัวหนังสืออ่านง่าย */
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(15px);
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
-            z-index: 1000; transition: transform 0.6s ease-in-out, opacity 0.6s;
-            color: var(--text-dark);
+            z-index: 1000; transition: 0.8s ease-in-out;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         .user-profile {
             width: 120px; height: 120px;
-            background: white;
+            background: rgba(255,255,255,0.2);
             border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            font-size: 70px; color: #bbdefb;
-            border: 1px solid rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            font-size: 70px; color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            margin-bottom: 25px;
         }
 
         .login-box h2 {
-            font-size: 2rem; margin: 0 0 20px 0; font-weight: 400;
+            font-size: 2.2rem; margin: 0 0 20px 0; font-weight: 400;
         }
 
         .login-input-group {
-            display: flex; align-items: center; gap: 5px;
-            background: white;
+            display: flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.9);
             padding: 5px 5px 5px 15px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
+            border-radius: 6px;
             width: 280px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         #passInput {
-            background: transparent; border: none; color: var(--text-dark);
+            background: transparent; border: none; color: #333;
             font-size: 20px; outline: none; width: 100%;
-            text-align: left; letter-spacing: 4px;
+            text-align: left; letter-spacing: 5px;
         }
-        #passInput::placeholder { color: #aaa; letter-spacing: normal; font-size: 15px; }
+        #passInput::placeholder { color: #999; letter-spacing: normal; font-size: 15px; }
 
         .enter-btn {
-            width: 35px; height: 35px; border-radius: 4px;
-            border: none; background: #eee; color: #666;
+            width: 38px; height: 38px; border-radius: 4px;
+            border: none; background: #f0f0f0; color: #555;
             cursor: pointer; display: flex; justify-content: center; align-items: center;
-            transition: 0.2s;
         }
         .enter-btn:hover { background: var(--win-blue); color: white; }
 
-        .hint-text { font-size: 0.9rem; opacity: 0.6; margin-top: 15px; font-family: 'Itim'; }
+        .hint-text { font-size: 0.9rem; opacity: 0.8; margin-top: 15px; font-family: 'Itim'; color: white; }
 
-        /* --- [ส่วนเวลาด้านล่าง] --- */
-        .lock-info {
-            position: absolute; bottom: 60px; text-align: center;
-        }
-        #live-time { font-size: 5rem; margin: 0; font-weight: 200; }
-        .date-info { font-size: 1.3rem; margin: 0; font-weight: 200; opacity: 0.7; }
+        /* --- [ส่วนเวลา] --- */
+        .lock-info { position: absolute; bottom: 60px; text-align: center; color: white; }
+        #live-time { font-size: 5.5rem; margin: 0; font-weight: 200; }
+        .date-info { font-size: 1.4rem; margin: 0; font-weight: 200; }
 
         /* --- [Desktop Area] --- */
         #desktop {
             height: 100%; padding: 30px; 
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-            grid-auto-rows: 100px; gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
+            grid-auto-rows: 110px; gap: 20px;
         }
 
         .icon { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
         .icon-box {
-            width: 60px; height: 60px; border-radius: 12px;
+            width: 65px; height: 65px; border-radius: 15px;
             display: flex; justify-content: center; align-items: center;
-            font-size: 30px; color: white; margin-bottom: 8px;
-            background: white; border: 1px solid #ddd;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            font-size: 32px; color: white; margin-bottom: 8px;
+            background: rgba(255,255,255,0.2); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
         }
-        .icon span { font-family: 'Itim'; color: #555; font-size: 14px; }
+        .icon span { font-family: 'Itim'; color: white; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
 
         /* --- Windows --- */
         .window {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 90%; max-width: 380px; background: white; border-radius: 8px;
+            width: 90%; max-width: 400px; background: white; border-radius: 12px;
             display: none; flex-direction: column; z-index: 100;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1); border: 1px solid #ddd;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
         }
-        .window-header { padding: 8px 15px; display: flex; justify-content: space-between; align-items: center; background: #f9f9f9; border-radius: 8px 8px 0 0; }
-        .close-btn { width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; cursor: pointer; color: #999; }
-        .close-btn:hover { background: #e81123; color: white; border-radius: 0 8px 0 0; }
-        .window-body { padding: 30px; text-align: center; color: #444; font-family: 'Itim'; }
+        .window-header { padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; background: #f5f5f5; border-radius: 12px 12px 0 0; }
+        .close-btn { cursor: pointer; color: #888; padding: 5px 10px; }
+        .window-body { padding: 30px; text-align: center; font-family: 'Itim'; color: #333; }
 
         .hidden { display: none !important; }
     </style>
@@ -117,7 +117,7 @@
 <body>
 
     <div id="login-screen">
-        <div class="user-profile"><i class="fas fa-user"></i></div>
+        <div class="user-profile"><i class="fas fa-user-circle"></i></div>
         <div class="login-box" style="text-align: center;">
             <h2>ยินดีต้อนรับ</h2>
             <div class="login-input-group">
@@ -147,20 +147,20 @@
     </div>
 
     <div id="quiz-win" class="window">
-        <div class="window-header"><span style="font-size: 0.8rem; color:#888;">Distance Tracker</span><div class="close-btn" onclick="closeWindow('quiz-win')">×</div></div>
+        <div class="window-header"><span style="font-size: 0.8rem; color: #999;">Distance Tracker</span><div class="close-btn" onclick="closeWindow('quiz-win')">×</div></div>
         <div class="window-body">
             <p style="font-size: 1.2rem;">ทายซิ... ระยะทางจากระยอง <br>มาถึงใจเธอคือ "กี่กิโลเมตร"?</p>
             <input type="number" id="distInput" style="width:100%; padding:12px; border-radius:4px; border:1px solid #ddd; text-align:center; margin-bottom:15px;" placeholder="0">
-            <button onclick="checkDist()" style="width:100%; padding:10px; border-radius:4px; border:none; background:var(--win-blue); color:white; cursor:pointer;">ตรวจสอบ</button>
+            <button onclick="checkDist()" style="width:100%; padding:10px; border-radius:4px; border:none; background:var(--win-blue); color:white; cursor:pointer;">Check</button>
             <p id="hint" style="color:#e81123; margin-top:10px;"></p>
         </div>
     </div>
 
     <div id="cake-win" class="window">
-        <div class="window-header"><span style="font-size: 0.8rem; color:#888;">Surprise</span><div class="close-btn" onclick="closeWindow('cake-win')">×</div></div>
+        <div class="window-header"><span style="font-size: 0.8rem; color: #999;">Surprise</span><div class="close-btn" onclick="closeWindow('cake-win')">×</div></div>
         <div class="window-body">
             <h3>HBD นะคะคนเก่ง! 🎂</h3>
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3hpeXN2ejN6ZzI2ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6JmNoYz1n/MCG263dfe91ONF5d54/giphy.gif" style="width:100%; border-radius:4px;">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3hpeXN2ejN6ZzI2ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6JmNoYz1n/MCG263dfe91ONF5d54/giphy.gif" style="width:100%; border-radius:8px;">
             <p>เค้กมะพร้าวอร่อยไหมเอ่ย ❤️</p>
         </div>
     </div>
@@ -170,9 +170,9 @@
             const pass = document.getElementById('passInput').value;
             if(pass === "07/04/2550") {
                 const screen = document.getElementById('login-screen');
-                screen.style.transform = 'translateY(-100%)';
+                screen.style.transform = 'scale(1.2)';
                 screen.style.opacity = '0';
-                setTimeout(() => screen.classList.add('hidden'), 600);
+                setTimeout(() => screen.classList.add('hidden'), 800);
             } else {
                 alert("รหัสผ่านไม่ถูกต้องน้าา ลองใหม่ครับ!");
             }
@@ -188,7 +188,7 @@
         function checkDist() {
             const val = document.getElementById('distInput').value;
             if(parseInt(val) === 145) {
-                alert("ถูกต้องครับ! 🎉");
+                alert("เก่งมากครับ! 🎉");
                 openWindow('cake-win');
                 closeWindow('quiz-win');
             } else {
