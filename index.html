@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>What is your true vibe? ✨</title>
+    <title>Space Mission: 145 🚀</title>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&family=Itim&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -12,8 +12,10 @@
 
         body {
             font-family: 'Prompt', sans-serif;
-            background: #f7f9fc; /* สีพื้นหลังสไตล์ Ooopenlab */
-            color: #333;
+            /* พื้นหลังอวกาศมืดๆ มีดวงดาว */
+            background: url('https://images.unsplash.com/photo-1506703719100-a0f3a48c0f41?q=80&w=2070') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -25,9 +27,12 @@
         .container {
             width: 100%;
             max-width: 420px;
-            background: white;
+            /* กระจกฝ้าแบบ Dark Mode */
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 30px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
             padding: 40px 30px;
             text-align: center;
             position: relative;
@@ -39,60 +44,68 @@
         }
 
         /* --- Screens --- */
-        .screen { display: none; opacity: 0; transition: opacity 0.4s ease, transform 0.4s ease; transform: translateY(20px); }
-        .screen.active { display: flex; flex-direction: column; align-items: center; opacity: 1; transform: translateY(0); }
+        .screen { display: none; opacity: 0; transition: opacity 0.5s ease, transform 0.5s ease; transform: translateY(20px); }
+        .screen.active { display: flex; flex-direction: column; align-items: center; opacity: 1; transform: translateY(0); width: 100%; }
 
         /* --- Start Screen --- */
-        .cover-img { font-size: 80px; margin-bottom: 20px; animation: float 3s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        h1 { font-size: 1.6rem; color: #4a6572; margin-bottom: 15px; font-weight: 600; line-height: 1.4;}
-        p.subtitle { color: #888; font-size: 1rem; margin-bottom: 35px; line-height: 1.6; font-weight: 300;}
+        .cover-img { font-size: 80px; margin-bottom: 20px; animation: float 4s ease-in-out infinite; text-shadow: 0 0 20px rgba(255,255,255,0.5); }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        h1 { font-size: 1.6rem; color: #64ffda; margin-bottom: 15px; font-weight: 600; line-height: 1.4; letter-spacing: 1px;}
+        p.subtitle { color: #ccd6f6; font-size: 1rem; margin-bottom: 35px; line-height: 1.6; font-weight: 300;}
         
         .btn-main {
-            background: #f9a826; color: white; border: none;
-            padding: 16px 30px; font-size: 1.1rem; border-radius: 16px;
+            background: transparent; color: #64ffda; border: 2px solid #64ffda;
+            padding: 16px 30px; font-size: 1.1rem; border-radius: 50px;
             font-family: 'Prompt'; font-weight: 500; cursor: pointer;
-            box-shadow: 0 8px 20px rgba(249, 168, 38, 0.3);
-            transition: 0.2s; width: 100%;
+            box-shadow: 0 0 15px rgba(100, 255, 218, 0.2);
+            transition: 0.3s; width: 100%;
+            position: relative; overflow: hidden;
         }
-        .btn-main:active { transform: scale(0.96); box-shadow: none; }
+        .btn-main:hover, .btn-main:active {
+            background: #64ffda; color: #0a192f; box-shadow: 0 0 25px rgba(100, 255, 218, 0.5);
+        }
 
         /* --- Quiz Screen --- */
-        .progress-header { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .q-number { font-family: 'Itim'; font-size: 1.2rem; color: #f9a826; }
-        .progress-bar { width: 70%; height: 8px; background: #eee; border-radius: 10px; overflow: hidden; position: relative; }
-        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: #f9a826; transition: width 0.3s ease; }
+        .progress-header { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .q-number { font-family: 'Prompt'; font-weight: 600; font-size: 1.1rem; color: #64ffda; letter-spacing: 1px;}
+        .progress-bar { width: 75%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; position: relative; }
+        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: #64ffda; transition: width 0.4s ease; box-shadow: 0 0 10px #64ffda; }
         
-        .question-text { font-size: 1.25rem; font-weight: 500; margin-bottom: 30px; line-height: 1.6; color: #333; text-align: left; width: 100%; }
+        .question-text { font-size: 1.2rem; font-weight: 400; margin-bottom: 30px; line-height: 1.6; color: #e2e8f0; text-align: left; width: 100%; }
         
         .choices-wrapper { width: 100%; display: flex; flex-direction: column; gap: 12px; }
         .choice-btn {
-            background: #fdfdfd; border: 2px solid #eee; color: #555;
-            padding: 18px 20px; font-size: 1.05rem; border-radius: 16px;
-            font-family: 'Prompt'; cursor: pointer;
-            transition: 0.2s; width: 100%; text-align: left;
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); color: #e2e8f0;
+            padding: 18px 20px; font-size: 1rem; border-radius: 16px;
+            font-family: 'Prompt'; font-weight: 300; cursor: pointer;
+            transition: 0.3s; width: 100%; text-align: left;
             display: flex; align-items: center; gap: 15px; line-height: 1.4;
+            backdrop-filter: blur(5px);
         }
         .choice-btn:hover, .choice-btn:active {
-            border-color: #f9a826; background: #fffaf0; color: #f9a826;
+            border-color: #64ffda; background: rgba(100, 255, 218, 0.1); color: #64ffda;
         }
         .choice-icon { font-size: 1.5rem; }
 
         /* --- Loading Screen --- */
-        .loading-spinner { font-size: 50px; color: #f9a826; margin-bottom: 25px; }
-        .loading-text { font-size: 1.1rem; color: #555; font-weight: 500; margin-bottom: 10px; }
-        .loading-subtext { font-size: 0.9rem; color: #999; font-weight: 300; }
+        .radar { width: 60px; height: 60px; border: 2px solid rgba(100, 255, 218, 0.3); border-radius: 50%; position: relative; overflow: hidden; margin: 0 auto 30px; }
+        .radar::before { content: ''; position: absolute; top: 50%; left: 50%; width: 50%; height: 50%; background: linear-gradient(45deg, transparent, rgba(100, 255, 218, 0.8)); transform-origin: 0 0; animation: scan 2s linear infinite; }
+        @keyframes scan { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .loading-text { font-size: 1.2rem; color: #64ffda; font-weight: 500; margin-bottom: 10px; letter-spacing: 1px;}
+        .loading-subtext { font-size: 0.9rem; color: #8892b0; font-weight: 300; }
 
         /* --- Result Screen --- */
-        .result-type { font-family: 'Itim'; font-size: 1.2rem; color: #888; margin-bottom: 5px; }
-        .result-title { font-size: 2rem; color: #f9a826; font-weight: 600; margin-bottom: 20px; line-height: 1.2; }
+        .result-type { font-family: 'Prompt'; font-size: 1rem; color: #8892b0; margin-bottom: 10px; letter-spacing: 2px; text-transform: uppercase;}
+        .result-title { font-size: 1.8rem; color: #64ffda; font-weight: 600; margin-bottom: 25px; line-height: 1.3; text-shadow: 0 0 10px rgba(100,255,218,0.3);}
         .result-card {
-            background: #fffaf0; border: 2px dashed #fcd288;
-            border-radius: 20px; padding: 25px; margin-bottom: 25px; width: 100%;
-            text-align: left;
+            background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(100, 255, 218, 0.3);
+            border-radius: 20px; padding: 25px; margin-bottom: 30px; width: 100%;
+            text-align: left; box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
         }
-        .result-desc { font-size: 1rem; color: #555; line-height: 1.7; font-weight: 300; }
-        .highlight { color: #ff6b81; font-weight: 500; }
+        .result-desc { font-size: 1rem; color: #ccd6f6; line-height: 1.7; font-weight: 300; }
+        .highlight { color: #ff6b81; font-weight: 500; text-shadow: 0 0 5px rgba(255,107,129,0.5); }
+        .highlight-blue { color: #64ffda; font-weight: 500; }
 
     </style>
 </head>
@@ -101,15 +114,15 @@
     <div class="container">
         
         <div id="screen-start" class="screen active">
-            <div class="cover-img">🎧🌱</div>
-            <h1>แบบทดสอบ:<br>วันหยุดนี้ คุณเป็นคนแบบไหน?</h1>
-            <p class="subtitle">ลองจินตนาการว่าวันนี้คือวันหยุดพักผ่อนของคุณ<br>มาตอบคำถามสั้นๆ 6 ข้อ เพื่อดูผลลัพธ์กัน!</p>
-            <button class="btn-main" onclick="startQuiz()">เริ่มทำแบบทดสอบ</button>
+            <div class="cover-img">👩‍🚀</div>
+            <h1>MISSION: STARLIGHT<br>บททดสอบนักบินอวกาศ</h1>
+            <p class="subtitle">คุณถูกรับเลือกให้เป็นนักบินอวกาศ<br>เพื่อเดินทางไปสำรวจดาวเคราะห์ดวงใหม่<br>มาจำลองสถานการณ์ภารกิจของคุณกัน!</p>
+            <button class="btn-main" onclick="startQuiz()">เริ่มภารกิจ (Initiate Launch)</button>
         </div>
 
         <div id="screen-quiz" class="screen">
             <div class="progress-header">
-                <span class="q-number" id="q-counter">Q.1</span>
+                <span class="q-number" id="q-counter">LOG 1</span>
                 <div class="progress-bar"><div id="progress" class="progress-fill" style="width: 0%;"></div></div>
             </div>
             <div id="question-text" class="question-text">คำถาม</div>
@@ -118,76 +131,69 @@
         </div>
 
         <div id="screen-loading" class="screen">
-            <i class="fas fa-compact-disc fa-spin loading-spinner"></i>
-            <div class="loading-text" id="loading-msg">กำลังวิเคราะห์บุคลิกภาพ...</div>
-            <div class="loading-subtext">รอแป๊บนึงนะกำลังประมวลผล ✨</div>
+            <div class="radar"></div>
+            <div class="loading-text" id="loading-msg">กำลังเชื่อมต่อสัญญาณดาวเทียม...</div>
+            <div class="loading-subtext">ระบบกำลังสแกนหาพิกัดปลายทาง 🛰️</div>
         </div>
 
         <div id="screen-result" class="screen">
-            <div class="result-type">ผลลัพธ์ของคุณคือ...</div>
-            <h2 class="result-title">ผู้โชคดีที่ควรได้รับ<br>ของขวัญเดี๋ยวนี้! 🎂</h2>
+            <div class="result-type">MISSION ACCOMPLISHED</div>
+            <h2 class="result-title">ถึงที่หมายแล้ว<br>กัปตันคนเก่ง! 🎂✨</h2>
             
             <div class="result-card">
                 <div class="result-desc">
-                    ดวงดาวบอกว่าช่วงนี้คุณอาจจะเหนื่อยกับการเรียนวิศวะหรือการเดินทาง แต่ไม่ต้องห่วง!<br><br>
-                    เพราะตอนนี้มี <span class="highlight">เค้กมะพร้าวสุดอร่อย</span> ที่เดินทางข้ามระยะทางกว่า <span class="highlight">145 กิโลเมตร</span> จากระยอง มาถึงหน้าหอพักย่านลาดกระบังของคุณเรียบร้อยแล้ว!<br><br>
-                    ไม่ว่าคุณจะตอบว่าชอบฟังเพลง J-Pop หรือ Britpop หรือชอบใส่เสื้อยืดสีเขียว... ผลลัพธ์เดียวของวันนี้คือคุณต้องมีความสุขมากๆ นะ!
+                    ภารกิจสำรวจอวกาศของคุณเสร็จสมบูรณ์แล้ว!<br><br>
+                    เรดาร์ตรวจพบว่า <b>เสบียงพิเศษ (เค้กมะพร้าวสุดอร่อย)</b> ได้ถูกส่งตรงจากศูนย์บัญชาการอวกาศระยอง ข้ามผ่านระยะทาง <span class="highlight-blue">145 กิโลเมตร</span>...<br><br>
+                    และตอนนี้มันได้ลงจอดที่หน้า <span class="highlight">ดาวลาดกระบัง (หอพักของคุณ)</span> เป็นที่เรียบร้อยแล้ว!
                 </div>
             </div>
             
-            <button class="btn-main" onclick="alert('แฮปปี้เบิร์ธเดย์นะคะคนเก่ง! รีบลงไปเอาเค้กเร็ววว 🏃‍♀️💨')">รับของขวัญของคุณ 🎁</button>
+            <button class="btn-main" onclick="alert('แฮปปี้เบิร์ธเดย์นะคะ! รีบใส่ชุดเก่งลงไปรับเค้กหน้าหอด่วนนน 🚀💨')">ปลดล็อคเสบียง (รับเค้ก)</button>
         </div>
 
     </div>
 
     <script>
-        // ชุดคำถามแนวสถานการณ์ (Storytelling)
+        // ชุดคำถามธีมอวกาศ + แอบหยอดดีเทลส่วนตัว
         const questions = [
             {
-                q: "ตื่นเช้ามาในวันหยุดแสนสบาย เสียงเพลงที่คุณอยากเปิดฟังเพื่อปลุกเอนเนอร์จี้คือแนวไหน?",
+                q: "คุณกำลังนั่งประจำที่ในยานอวกาศ เพลงที่จะเปิดผ่านลำโพงยานตอนนับถอยหลังปล่อยตัวคือแนวไหน?",
                 choices: [
-                    { icon: "🎸", text: "แนวร็อก 90s หรือบริตป็อปเท่ๆ ให้มีเอนเนอร์จี้" },
-                    { icon: "🎤", text: "เสียงร้องทรงพลังแบบศิลปินญี่ปุ่น ฟังแล้วอินสุดๆ" },
-                    { icon: "🎧", text: "ป็อปอาร์แอนด์บีไทยชิลล์ๆ ฟังสบายๆ" }
+                    { icon: "🎸", text: "อัลเทอร์เนทีฟร็อก หรือบริตป็อป ปลุกใจให้ฮึกเหิม" },
+                    { icon: "🎤", text: "เพลงญี่ปุ่นเสียงร้องทรงพลัง บิลด์อารมณ์สุดๆ" },
+                    { icon: "🎧", text: "R&B ไทย ฟังสบายๆ ชิลล์ๆ ลอยออกนอกโลก" }
                 ]
             },
             {
-                q: "ได้เวลาลุกไปอาบน้ำเตรียมตัวออกไปข้างนอก ชุดเก่งที่คุณมักจะหยิบมาใส่บ่อยๆ คือชุดแบบไหน?",
+                q: "เพื่อความคล่องตัวในสภาวะไร้น้ำหนัก คุณแอบเปลี่ยนชุดอวกาศข้างในเป็นเสื้อยืดตัวเก่งสีอะไร?",
                 choices: [
-                    { icon: "👕", text: "เสื้อยืดสีฟ้าหรือเขียวสบายๆ คู่กับกางเกงยีนส์" },
-                    { icon: "👗", text: "เดรสน่ารักๆ ที่เตรียมรีดไว้ตั้งแต่เมื่อคืน" },
-                    { icon: "🕶️", text: "ชุดคุมโทนสไตล์ชิคๆ ดูทะมัดทะแมง" }
+                    { icon: "🟢", text: "สีเขียวหรือสีฟ้าคุมโทน สบายตา" },
+                    { icon: "⚫", text: "สีดำหรือเทาเท่ๆ กลมกลืนกับอวกาศ" },
+                    { icon: "⚪", text: "สีขาวล้วน มินิมอลสุดๆ" }
                 ]
             },
             {
-                q: "ระหว่างนั่งรถไฟฟ้าไปเที่ยว ถ้าบังเอิญมีคนเดินมาทัก คิดว่าเขาจะทักคุณเรื่องอะไร?",
+                q: "สัญญาณเตือนดังขึ้น! มีฝูงอุกกาบาตขวางทางยานอยู่ คุณจะจัดการยังไงกัปตัน?",
                 choices: [
-                    { icon: "⚙️", text: "'น้องเรียนวิศวะป่าวครับ หน้าตาดูทรงอย่างแบด'" },
-                    { icon: "🗺️", text: "'ขอโทษนะครับ แถวลาดกระบังไปทางไหนครับ'" },
-                    { icon: "👋", text: "'อุ๊ย ทักคนผิดครับ ขอโทษครับ!'" }
+                    { icon: "🔥", text: "จินตนาการว่าตัวเองเป็นโกคู แล้วยิงพลังคลื่นเต่าใส่เลย!" },
+                    { icon: "🕹️", text: "จับคันบังคับ โยกหลบซ้ายขวาด้วยสกิลระดับเซียน" },
+                    { icon: "🛡️", text: "เปิดเกราะบาเรียป้องกันยาน แล้วพุ่งชนทะลุไปเลย" }
                 ]
             },
             {
-                q: "คุณเดินผ่านร้านขายของเล่นและโมเดล มีของตั้งโชว์อยู่ คุณจะหยุดดูชิ้นไหน?",
+                q: "ยานลงจอดบนดาวดวงใหม่สำเร็จ สิ่งแรกที่คุณเจอคือพืชต่างดาวหน้าตาสวยงาม มันมีลักษณะแบบไหน?",
                 choices: [
-                    { icon: "🔥", text: "โมเดลโกคูร่างซูเปอร์ไซย่าสุดเท่จาก Dragon Ball" },
-                    { icon: "🪴", text: "โมเดลต้นไม้จัดสวนสวยๆ มีดอกไม้สีม่วงหรือสีฟ้า" },
-                    { icon: "🧸", text: "กล่องสุ่มอาร์ตทอยคอลเลกชันใหม่ล่าสุด" }
+                    { icon: "🌺", text: "ดอกไม้สีฟ้าหรือสีม่วงแปลกตา ที่บานสู้แสงอาทิตย์เทียม" },
+                    { icon: "🍄", text: "เห็ดเรืองแสงได้ในที่มืด" },
+                    { icon: "🌳", text: "ต้นไม้ขนาดยักษ์ที่มีใบเป็นสีเงิน" }
                 ]
             },
             {
-                q: "ตกเย็น จู่ๆ โทรศัพท์ก็ดังขึ้น มีข้อความลึกลับส่งมาว่า 'เตรียมตัวรับของขวัญ' คิดว่าของขวัญนั้นเดินทางมาจากไหน?",
+                q: "เรดาร์ดาวเทียม 'PatrolSat' แจ้งเตือนว่ามีพัสดุลึกลับกำลังพุ่งตรงมาหาคุณจากระยะทาง '145 กิโลเมตร' คิดว่ามันคืออะไร?",
                 choices: [
-                    { icon: "🛵", text: "แถวๆ นี้แหละ สั่งเดลิเวอรี่สาขาใกล้ๆ มาแน่ๆ" },
-                    { icon: "✈️", text: "ส่งมาจากต่างประเทศแหงๆ รอนานหน่อยแต่ชัวร์" },
-                    { icon: "🛣️", text: "น่าจะไกลหน่อย... สัก 145 กิโลเมตรล่ะมั้ง" }
-                ]
-            },
-            {
-                q: "ในที่สุด... โทรศัพท์ก็เข้า! 'ฮัลโหลครับ มีของมาส่งครับ' คุณจะทำยังไง?",
-                choices: [
-                    { icon: "💄", text: "ขอเวลา 5 นาที หวีผมทาลิปนิดนึง แล้วค่อยเดินลงไป" },
-                    { icon: "🏃‍♀️", text: "วิ่งลงไปทั้งชุดนี้แหละ อยากรู้ว่าคืออะไร!" }
+                    { icon: "👽", text: "จานบินของมนุษย์ต่างดาวแน่ๆ เตรียมตั้งรับ!" },
+                    { icon: "☄️", text: "ชิ้นส่วนดาวตกที่หลงทางมา" },
+                    { icon: "🎁", text: "เสบียงหรือของขวัญจากใครบางคนที่อยู่ไกลๆ" }
                 ]
             }
         ];
@@ -204,11 +210,10 @@
             setTimeout(() => {
                 hideEl.classList.remove('active');
                 showEl.classList.add('active');
-                // Force reflow
-                void showEl.offsetWidth;
+                void showEl.offsetWidth; // Force reflow
                 showEl.style.opacity = '1';
                 showEl.style.transform = 'translateY(0)';
-            }, 400);
+            }, 500);
         }
 
         function startQuiz() {
@@ -219,7 +224,7 @@
 
         function loadQuestion() {
             const qData = questions[currentQuestion];
-            document.getElementById('q-counter').innerText = `Q.${currentQuestion + 1}`;
+            document.getElementById('q-counter').innerText = `LOG ${currentQuestion + 1}/${questions.length}`;
             document.getElementById('question-text').innerText = qData.q;
             
             const progressPercent = ((currentQuestion) / questions.length) * 100;
@@ -241,7 +246,6 @@
             currentQuestion++;
             
             if (currentQuestion < questions.length) {
-                // ให้ปุ่มเฟดออกนิดนึงก่อนโหลดข้อใหม่
                 const choicesContainer = document.getElementById('choices-container');
                 choicesContainer.style.opacity = '0';
                 setTimeout(() => {
@@ -259,10 +263,10 @@
 
         function processResult() {
             const msgs = [
-                "กำลังวิเคราะห์บุคลิกภาพ...",
-                "กำลังสแกนหาพิกัดย่านลาดกระบัง...",
-                "ตรวจพบกล่องของขวัญลึกลับ...",
-                "คำนวณระยะทางจากระยอง 145 กม. สำเร็จ!"
+                "เชื่อมต่อดาวเทียม PatrolSat...",
+                "กำลังคำนวณพิกัดดวงดาวเป้าหมาย...",
+                "ยืนยันระยะทาง 145 กิโลเมตร...",
+                "พบวัตถุต้องสงสัยหน้าดาวลาดกระบัง!"
             ];
             
             let i = 0;
@@ -282,7 +286,7 @@
                         transitionScreen('screen-loading', 'screen-result');
                     }, 800);
                 }
-            }, 1500); 
+            }, 1800); 
         }
     </script>
 </body>
