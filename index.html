@@ -5,15 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Deep Space: LOG 01 🌌</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500&family=Prompt:wght@200;300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: 'Prompt', sans-serif;
-            /* พื้นหลังห้วงอวกาศเนบิวลา */
-            background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2048') no-repeat center center fixed;
+            background: url('https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2071') no-repeat center center fixed;
             background-size: cover;
             color: #e2e8f0;
             min-height: 100vh;
@@ -27,13 +25,12 @@
         .container {
             width: 100%;
             max-width: 420px;
-            /* เอฟเฟกต์หน้าจอยานอวกาศ (Glassmorphism) */
-            background: rgba(15, 23, 42, 0.5);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(100, 255, 218, 0.2);
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 24px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(100, 255, 218, 0.05);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
             padding: 40px 30px;
             text-align: center;
             position: relative;
@@ -49,63 +46,65 @@
         .screen.active { display: flex; flex-direction: column; align-items: center; opacity: 1; transform: translateY(0); width: 100%; }
 
         /* --- Start Screen --- */
-        .cover-img { font-size: 65px; margin-bottom: 20px; animation: float 4s ease-in-out infinite; text-shadow: 0 0 20px rgba(100, 255, 218, 0.5); }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
-        h1 { font-family: 'Kanit', sans-serif; font-size: 1.6rem; color: #f8fafc; margin-bottom: 15px; font-weight: 500; line-height: 1.4; letter-spacing: 1px; text-shadow: 0 0 10px rgba(255,255,255,0.3);}
-        p.subtitle { color: #94a3b8; font-size: 1rem; margin-bottom: 35px; line-height: 1.6; font-weight: 300;}
+        .cover-icon { font-size: 50px; margin-bottom: 25px; animation: float 4s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        h1 { font-family: 'Kanit', sans-serif; font-size: 1.5rem; color: #f8fafc; margin-bottom: 15px; font-weight: 500; line-height: 1.4; letter-spacing: 1px;}
+        p.subtitle { color: #cbd5e1; font-size: 0.95rem; margin-bottom: 35px; line-height: 1.7; font-weight: 300;}
         
         .btn-main {
-            background: rgba(100, 255, 218, 0.1); color: #64ffda; 
-            border: 1px solid #64ffda;
+            background: rgba(255, 255, 255, 0.1); color: #fff; 
+            border: 1px solid rgba(255, 255, 255, 0.3);
             padding: 16px 30px; font-size: 1.05rem; border-radius: 12px;
             font-family: 'Kanit'; font-weight: 400; cursor: pointer;
-            box-shadow: 0 0 15px rgba(100, 255, 218, 0.15);
             transition: all 0.3s ease; width: 100%; letter-spacing: 1px;
         }
         .btn-main:hover, .btn-main:active {
-            background: #64ffda; color: #0f172a; box-shadow: 0 0 25px rgba(100, 255, 218, 0.4); transform: scale(0.98);
+            background: rgba(255, 255, 255, 0.9); color: #0f172a; transform: scale(0.98);
         }
 
         /* --- Quiz Screen --- */
         .progress-header { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-        .q-number { font-family: 'Prompt'; font-weight: 500; font-size: 1rem; color: #64ffda; letter-spacing: 1px;}
-        .progress-bar { width: 75%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; position: relative; }
-        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: #64ffda; transition: width 0.4s ease; box-shadow: 0 0 10px #64ffda; }
+        .q-number { font-family: 'Prompt'; font-weight: 400; font-size: 0.95rem; color: #94a3b8; letter-spacing: 1px;}
+        .progress-bar { width: 75%; height: 3px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; position: relative; }
+        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: #fff; transition: width 0.4s ease; }
         
-        .question-text { font-family: 'Kanit', sans-serif; font-size: 1.2rem; font-weight: 300; margin-bottom: 30px; line-height: 1.6; color: #f8fafc; text-align: left; width: 100%; }
+        .question-text { font-family: 'Kanit', sans-serif; font-size: 1.2rem; font-weight: 400; margin-bottom: 30px; line-height: 1.6; color: #f8fafc; text-align: left; width: 100%; }
         
         .choices-wrapper { width: 100%; display: flex; flex-direction: column; gap: 12px; }
         .choice-btn {
-            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); color: #cbd5e1;
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15); color: #e2e8f0;
             padding: 18px 20px; font-size: 0.95rem; border-radius: 12px;
             font-family: 'Prompt'; font-weight: 300; cursor: pointer;
             transition: all 0.3s ease; width: 100%; text-align: left;
             line-height: 1.5;
         }
         .choice-btn:hover, .choice-btn:active {
-            border-color: #64ffda; background: rgba(100, 255, 218, 0.05); color: #64ffda;
+            border-color: rgba(255, 255, 255, 0.8); background: rgba(255, 255, 255, 0.15); color: #fff;
         }
 
         /* --- Loading Screen --- */
-        .radar-box { position: relative; width: 80px; height: 80px; margin: 0 auto 30px; }
-        .radar-circle { width: 100%; height: 100%; border: 1px dashed rgba(100, 255, 218, 0.5); border-radius: 50%; animation: spin 4s linear infinite; }
-        .radar-core { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 20px; height: 20px; background: #64ffda; border-radius: 50%; box-shadow: 0 0 20px #64ffda; animation: pulse 1.5s ease-in-out infinite; }
+        .radar-box { position: relative; width: 70px; height: 70px; margin: 0 auto 30px; }
+        .radar-circle { width: 100%; height: 100%; border: 1px dashed rgba(255, 255, 255, 0.4); border-radius: 50%; animation: spin 4s linear infinite; }
+        .radar-core { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 15px; height: 15px; background: #fff; border-radius: 50%; box-shadow: 0 0 15px #fff; animation: pulse 1.5s ease-in-out infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
         @keyframes pulse { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.5; } }
         
-        .loading-text { font-size: 1.1rem; color: #64ffda; font-family: 'Kanit'; font-weight: 400; margin-bottom: 10px; letter-spacing: 1px;}
-        .loading-subtext { font-size: 0.9rem; color: #64748b; font-weight: 300; }
+        .loading-text { font-size: 1.1rem; color: #fff; font-family: 'Kanit'; font-weight: 400; margin-bottom: 10px; letter-spacing: 1px;}
+        .loading-subtext { font-size: 0.9rem; color: #94a3b8; font-weight: 300; }
 
         /* --- Result Screen --- */
-        .result-type { font-family: 'Prompt'; font-size: 0.9rem; color: #94a3b8; margin-bottom: 10px; letter-spacing: 2px; text-transform: uppercase;}
-        .result-title { font-family: 'Kanit', sans-serif; font-size: 1.6rem; color: #f8fafc; font-weight: 500; margin-bottom: 25px; line-height: 1.4; text-shadow: 0 0 10px rgba(255,255,255,0.2);}
+        .result-type { font-family: 'Prompt'; font-size: 0.85rem; color: #94a3b8; margin-bottom: 10px; letter-spacing: 2px; text-transform: uppercase;}
+        .result-title { font-family: 'Kanit', sans-serif; font-size: 1.6rem; color: #f8fafc; font-weight: 500; margin-bottom: 25px; line-height: 1.4; }
         .result-card {
-            background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(100, 255, 218, 0.2);
-            border-radius: 16px; padding: 25px; margin-bottom: 30px; width: 100%;
-            text-align: left; box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
+            background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px; padding: 25px; margin-bottom: 20px; width: 100%;
+            text-align: left; 
         }
-        .result-desc { font-size: 1rem; color: #cbd5e1; line-height: 1.8; font-weight: 300; }
-        .highlight { color: #64ffda; font-weight: 500; }
+        .result-desc { font-size: 0.95rem; color: #cbd5e1; line-height: 1.8; font-weight: 300; }
+        .highlight { color: #fff; font-weight: 500; }
+
+        /* Spotify Embed Container */
+        .spotify-container { width: 100%; margin-bottom: 20px; border-radius: 12px; overflow: hidden; }
 
     </style>
 </head>
@@ -114,8 +113,8 @@
     <div class="container">
         
         <div id="screen-start" class="screen active">
-            <div class="cover-img"><i class="fas fa-satellite"></i></div>
-            <h1>DEEP SPACE MISSION<br>บททดสอบการสำรวจอวกาศ</h1>
+            <div class="cover-icon">✨</div>
+            <h1>SPACE MISSION<br>ภารกิจสำรวจอวกาศ</h1>
             <p class="subtitle">คุณถูกรับเลือกให้เป็นนักบินอวกาศ<br>ออกเดินทางเพื่อไขความลับของจักรวาล<br>มาจำลองสถานการณ์ภารกิจของคุณกัน!</p>
             <button class="btn-main" onclick="startQuiz()">INITIATE LAUNCH</button>
         </div>
@@ -146,73 +145,79 @@
             <div class="result-card">
                 <div class="result-desc">
                     ภารกิจสำรวจของคุณเสร็จสมบูรณ์ แต่ระบบเรดาร์แจ้งเตือนเหตุการณ์ไม่คาดฝัน...<br><br>
-                    ขณะนี้มี <span class="highlight">วัตถุลึกลับบางอย่าง</span> กำลังเดินทางผ่านห้วงอวกาศ และพุ่งตรงลงมาจอดที่หน้า <span class="highlight">ฐานลาดกระบัง (หอพักของคุณ)</span> อย่างปลอดภัย!<br><br>
-                    ระบบไม่สามารถระบุได้ว่าข้างในคืออะไร... คุณต้องเป็นคนตรวจสอบด้วยตัวเอง
+                    ขณะนี้มี <span class="highlight">วัตถุลึกลับบางอย่าง</span> พุ่งตรงลงมาจอดที่หน้า <span class="highlight">ฐานลาดกระบัง (หอพักของคุณ)</span> อย่างปลอดภัย!<br><br>
+                    ระบบไม่สามารถระบุได้ว่าข้างในคืออะไร คุณต้องเป็นคนลงไปตรวจสอบด้วยตัวเอง
                 </div>
             </div>
+
+            <div class="spotify-container">
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3n3Ppam7vgaVa1iaRUc9Lp?utm_source=generator&theme=0" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
             
-            <button class="btn-main" onclick="alert('แต่งตัวให้เรียบร้อย แล้วลงไปตรวจสอบวัตถุลึกลับหน้าหอพักด่วนเลย! 🚀💨')">ตรวจสอบวัตถุลึกลับ</button>
+            <button class="btn-main" onclick="alert('แต่งตัวให้เรียบร้อย แล้วลงไปตรวจสอบวัตถุลึกลับหน้าหอพักด่วนเลย! 🚀')">รับทราบภารกิจ</button>
         </div>
 
     </div>
 
     <script>
-        // ชุดคำถาม 7 ข้อ ธีมอวกาศลึกลับ ไม่มีเรื่องเพลง ไม่มีคำว่าของขวัญ
+        let bgMusic = null;
+
         const questions = [
+            {
+                q: "ระบบเตรียมพร้อมปล่อยยาน! เพื่อลดความตื่นเต้น คุณจะเลือกเปิดเพลงแนวไหนคลอไปตลอดการเดินทาง?",
+                choices: [
+                    // ถ้าหาไฟล์ mp3 ได้ ก็เอามาใส่ตรงนี้เหมือนเดิมครับ เพลงจะได้ดังตอนกด
+                    { text: "ร็อกเท่ๆ อารมณ์แบบ Oasis หรือ Green Day ปลุกพลังให้พร้อมลุย", audio: "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3" },
+                    { text: "J-Pop เสียงร้องทรงพลังแบบ Aimyon บิลด์อารมณ์สุดๆ", audio: "https://cdn.pixabay.com/download/audio/2022/03/24/audio_3cc7a7f474.mp3" },
+                    { text: "R&B ไทยชิลล์ๆ สไตล์ Room39 หรือ Lipta ฟังสบายๆ", audio: "https://cdn.pixabay.com/download/audio/2021/11/24/audio_9ec543e4f3.mp3" }
+                ]
+            },
             {
                 q: "เพื่อความคล่องตัวในสภาวะไร้น้ำหนัก คุณเลือกสวมเสื้อยืดปฏิบัติการด้านในเป็นสีอะไร?",
                 choices: [
-                    "สีเขียวหรือสีฟ้าคุมโทน ดูสบายตา",
-                    "สีดำสนิท กลมกลืนกับความมืดมิดของอวกาศ",
-                    "สีขาวล้วน ดูสะอาดและมินิมอลที่สุด"
+                    { text: "สีเขียวหรือสีฟ้าคุมโทน ดูสบายตา" },
+                    { text: "สีดำสนิท กลมกลืนกับความมืดมิดของอวกาศ" },
+                    { text: "สีขาวล้วน ดูสะอาดและมินิมอลที่สุด" }
                 ]
             },
             {
                 q: "ยานพุ่งทะยานออกจากศูนย์บัญชาการ เมื่อมองออกไปนอกหน้าต่างบานใหญ่ สิ่งแรกที่คุณสังเกตเห็นคืออะไร?",
                 choices: [
-                    "กลุ่มเนบิวลาหลากสีที่กำลังก่อตัวเป็นรูปร่างแปลกตา",
-                    "ความมืดมิดที่กว้างใหญ่ไพศาล แต่กลับดูเงียบสงบ",
-                    "สะเก็ดดาวตกที่ส่องแสงวาบผ่านไปอย่างรวดเร็ว"
+                    { text: "กลุ่มเนบิวลาหลากสีที่กำลังก่อตัวเป็นรูปร่างแปลกตา" },
+                    { text: "ความมืดมิดที่กว้างใหญ่ไพศาล แต่กลับดูเงียบสงบ" },
+                    { text: "สะเก็ดดาวตกที่ส่องแสงวาบผ่านไปอย่างรวดเร็ว" }
                 ]
             },
             {
                 q: "สัญญาณเตือนภัยดังขึ้น! มีกลุ่มอุกกาบาตขวางเส้นทางโคจร คุณจะแก้ปัญหานี้อย่างไร?",
                 choices: [
-                    "จินตนาการว่าตัวเองเป็นโกคู แล้วยิงพลังคลื่นเต่าทำลายมันซะเลย",
-                    "จับคันบังคับ โยกหลบซ้ายขวาด้วยทักษะการขับระดับสูง",
-                    "เปิดระบบเกราะบาเรียป้องกัน แล้วพุ่งชนฝ่าออกไปตรงๆ"
+                    { text: "จินตนาการว่าตัวเองเป็นโกคู แล้วยิงพลังคลื่นเต่าทำลายมันซะเลย" },
+                    { text: "จับคันบังคับ โยกหลบซ้ายขวาด้วยทักษะการขับระดับสูง" },
+                    { text: "เปิดระบบเกราะบาเรียป้องกัน แล้วพุ่งชนฝ่าออกไปตรงๆ" }
                 ]
             },
             {
                 q: "ในที่สุดยานก็ลงจอดบนดาวเคราะห์ดวงใหม่สำเร็จ สิ่งแรกที่คุณพบคือพืชต่างดาวหน้าตาประหลาด...",
                 choices: [
-                    "ทุ่งดอกไม้สีฟ้าและสีม่วงเรืองแสง ที่บานต้อนรับการมาเยือน",
-                    "ป่าเห็ดคริสตัลใส ที่สะท้อนแสงระยิบระยับ",
-                    "ต้นไม้ยักษ์ที่มีใบเป็นสีเงิน ส่งเสียงสะท้อนเบาๆ"
+                    { text: "ทุ่งดอกไม้สีฟ้าและสีม่วงเรืองแสง ที่บานต้อนรับการมาเยือน" },
+                    { text: "ป่าเห็ดคริสตัลใส ที่สะท้อนแสงระยิบระยับ" },
+                    { text: "ต้นไม้ยักษ์ที่มีใบเป็นสีเงิน ส่งเสียงสะท้อนเบาๆ" }
                 ]
             },
             {
                 q: "ทันใดนั้น ระบบดาวเทียม 'PatrolSat' สแกนพบความผิดปกติบางอย่าง คุณคิดว่ามันคืออะไร?",
                 choices: [
-                    "สัญญาณชีพของสิ่งมีชีวิตบางอย่างบนดาวดวงนี้",
-                    "คลื่นพลังงานแม่เหล็กไฟฟ้าที่รบกวนระบบนำทาง",
-                    "มี 'วัตถุลึกลับ' บางอย่างกำลังพุ่งตรงมาทางนี้!"
+                    { text: "สัญญาณชีพของสิ่งมีชีวิตบางอย่างบนดาวดวงนี้" },
+                    { text: "คลื่นพลังงานแม่เหล็กไฟฟ้าที่รบกวนระบบนำทาง" },
+                    { text: "มี 'วัตถุลึกลับ' บางอย่างกำลังพุ่งตรงมาทางนี้!" }
                 ]
             },
             {
-                q: "'วัตถุลึกลับ' นั้นกำลังเคลื่อนที่เข้ามาใกล้เรื่อยๆ อย่างรวดเร็ว คุณจะทำอย่างไร?",
+                q: "'วัตถุลึกลับ' นั้นกำลังเคลื่อนที่เข้ามาใกล้เรื่อยๆ และลงจอดที่พื้นที่เป้าหมาย คุณจะทำอย่างไรต่อไป?",
                 choices: [
-                    "เตรียมพร้อมรับมือ ยืนจ้องมองมันตรงๆ เพื่อดูว่าคืออะไร",
-                    "หลบฉากไปสังเกตการณ์ในที่ปลอดภัยก่อน",
-                    "ลองส่งสัญญาณสื่อสารกลับไปเผื่อมันจะตอบรับ"
-                ]
-            },
-            {
-                q: "ในที่สุด... วัตถุลึกลับก็พุ่งทะลุชั้นบรรยากาศ และลงจอดที่พื้นที่เป้าหมาย คุณจะทำอย่างไรต่อไป?",
-                choices: [
-                    "วิ่งออกไปดูให้เห็นกับตาตัวเองเดี๋ยวนี้เลย",
-                    "รอดูสถานการณ์ให้ฝุ่นควันจางลงก่อน",
-                    "แจ้งศูนย์ควบคุมให้เตรียมเครื่องมือตรวจสอบ"
+                    { text: "วิ่งออกไปดูให้เห็นกับตาตัวเองเดี๋ยวนี้เลย" },
+                    { text: "หลบฉากไปสังเกตการณ์ในที่ปลอดภัยก่อน" },
+                    { text: "ส่งสัญญาณสื่อสารกลับไปเผื่อมันจะตอบรับ" }
                 ]
             }
         ];
@@ -229,7 +234,7 @@
             setTimeout(() => {
                 hideEl.classList.remove('active');
                 showEl.classList.add('active');
-                void showEl.offsetWidth; // Force reflow
+                void showEl.offsetWidth; 
                 showEl.style.opacity = '1';
                 showEl.style.transform = 'translateY(0)';
             }, 500);
@@ -244,7 +249,6 @@
         function loadQuestion() {
             const qData = questions[currentQuestion];
             
-            // Format number e.g., LOG 01/07
             const qNum = (currentQuestion + 1).toString().padStart(2, '0');
             const totalQ = questions.length.toString().padStart(2, '0');
             document.getElementById('q-counter').innerText = `LOG ${qNum}/${totalQ}`;
@@ -257,16 +261,26 @@
             const choicesContainer = document.getElementById('choices-container');
             choicesContainer.innerHTML = ''; 
 
-            qData.choices.forEach((choiceText) => {
+            qData.choices.forEach((choice) => {
                 const btn = document.createElement('button');
                 btn.className = 'choice-btn';
-                btn.innerText = choiceText;
-                btn.onclick = () => handleAnswer();
+                btn.innerText = choice.text;
+                
+                btn.onclick = () => handleAnswer(choice.audio);
+                
                 choicesContainer.appendChild(btn);
             });
         }
 
-        function handleAnswer() {
+        function handleAnswer(audioSrc) {
+            if (audioSrc) {
+                if (bgMusic) { bgMusic.pause(); } 
+                bgMusic = new Audio(audioSrc);
+                bgMusic.loop = true; 
+                bgMusic.volume = 0.4; 
+                bgMusic.play().catch(e => console.log("รอให้มีปฏิสัมพันธ์กับจอก่อน"));
+            }
+
             currentQuestion++;
             
             if (currentQuestion < questions.length) {
