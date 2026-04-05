@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Birthday OS 🥥✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@200;400&family=Itim&display=swap" rel="stylesheet">
+    <title>Personal OS 🥥✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@200;300;400;600&family=Itim&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            /* รูปทะเลสีฟ้าอ่อนละมุน */
+            /* รูปทะเลสุดละมุน */
             --wallpaper: url('https://images.unsplash.com/photo-1505118380757-91f5f5632de0?q=80&w=2052');
             --win-blue: #0078d4;
-            --glass-white: rgba(255, 255, 255, 0.7);
+            --glass-white: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --text-dark: #2c3e50;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -23,112 +25,129 @@
             overflow: hidden;
             background: var(--wallpaper) no-repeat center center fixed;
             background-size: cover;
+            user-select: none;
         }
 
-        /* --- [หน้า 1: Lock Screen - Sea Style] --- */
+        /* --- [1. Boot Screen] --- */
+        #boot-screen {
+            position: fixed; inset: 0;
+            background: #111; z-index: 9999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            color: white; transition: opacity 0.8s ease-out;
+        }
+        .loader { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px;}
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* --- [2. Lock Screen] --- */
         #login-screen {
             position: fixed; inset: 0;
-            /* เพิ่มความมืดและเบลอนิดๆ เพื่อให้ตัวหนังสืออ่านง่าย */
-            background: rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(15px);
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            z-index: 1000; transition: 0.8s ease-in-out;
-            color: white;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            background: rgba(0, 0, 0, 0.2); backdrop-filter: blur(20px);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 1000; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s;
+            color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
         .user-profile {
-            width: 120px; height: 120px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 70px; color: white;
-            border: 1px solid rgba(255,255,255,0.3);
-            margin-bottom: 25px;
-        }
-
-        .login-box h2 {
-            font-size: 2.2rem; margin: 0 0 20px 0; font-weight: 400;
+            width: 130px; height: 130px; background: rgba(255,255,255,0.15);
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            font-size: 70px; color: white; border: 1px solid var(--glass-border);
+            margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
         .login-input-group {
             display: flex; align-items: center; gap: 8px;
-            background: rgba(255,255,255,0.9);
-            padding: 5px 5px 5px 15px;
-            border-radius: 6px;
-            width: 280px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background: rgba(255,255,255,0.85); padding: 5px 5px 5px 20px;
+            border-radius: 50px; width: 300px; box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            transition: 0.3s;
         }
+        .login-input-group:focus-within { background: white; transform: scale(1.02); }
 
         #passInput {
-            background: transparent; border: none; color: #333;
-            font-size: 20px; outline: none; width: 100%;
-            text-align: left; letter-spacing: 5px;
+            background: transparent; border: none; color: var(--text-dark);
+            font-size: 20px; outline: none; width: 100%; text-align: center; letter-spacing: 5px;
         }
-        #passInput::placeholder { color: #999; letter-spacing: normal; font-size: 15px; }
+        #passInput::placeholder { color: #888; letter-spacing: normal; font-size: 15px; }
 
         .enter-btn {
-            width: 38px; height: 38px; border-radius: 4px;
-            border: none; background: #f0f0f0; color: #555;
-            cursor: pointer; display: flex; justify-content: center; align-items: center;
+            width: 40px; height: 40px; border-radius: 50%; border: none;
+            background: #eee; color: #555; cursor: pointer; display: flex;
+            justify-content: center; align-items: center; transition: 0.3s; font-size: 16px;
         }
         .enter-btn:hover { background: var(--win-blue); color: white; }
 
-        .hint-text { font-size: 0.9rem; opacity: 0.8; margin-top: 15px; font-family: 'Itim'; color: white; }
+        .lock-info { position: absolute; bottom: 50px; text-align: center; color: white; }
+        #live-time { font-size: 6rem; margin: 0; font-weight: 200; line-height: 1; }
+        .date-info { font-size: 1.4rem; margin: 10px 0 0 0; font-weight: 300; }
 
-        /* --- [ส่วนเวลา] --- */
-        .lock-info { position: absolute; bottom: 60px; text-align: center; color: white; }
-        #live-time { font-size: 5.5rem; margin: 0; font-weight: 200; }
-        .date-info { font-size: 1.4rem; margin: 0; font-weight: 200; }
-
-        /* --- [Desktop Area] --- */
+        /* --- [3. Desktop & Taskbar] --- */
         #desktop {
-            height: 100%; padding: 30px; 
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
-            grid-auto-rows: 110px; gap: 20px;
+            height: calc(100% - 60px); padding: 30px; 
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            grid-auto-rows: 100px; gap: 20px;
         }
 
-        .icon { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+        .icon { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: 0.2s; }
+        .icon:hover { transform: translateY(-5px); }
         .icon-box {
-            width: 65px; height: 65px; border-radius: 15px;
+            width: 65px; height: 65px; border-radius: 16px;
             display: flex; justify-content: center; align-items: center;
-            font-size: 32px; color: white; margin-bottom: 8px;
+            font-size: 30px; color: white; margin-bottom: 8px;
             background: rgba(255,255,255,0.2); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.3);
+            border: 1px solid var(--glass-border); box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        .icon span { font-family: 'Itim'; color: white; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+        .icon span { font-family: 'Itim'; color: white; font-size: 14px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); font-weight: 400;}
 
-        /* --- Windows --- */
+        #taskbar {
+            position: fixed; bottom: 0; left: 0; right: 0; height: 60px;
+            background: rgba(255,255,255,0.3); backdrop-filter: blur(20px);
+            border-top: 1px solid var(--glass-border); display: flex; justify-content: center; align-items: center;
+            gap: 15px; z-index: 50; padding: 0 20px;
+        }
+        .task-icon { width: 45px; height: 45px; border-radius: 12px; background: rgba(255,255,255,0.4); display: flex; justify-content: center; align-items: center; font-size: 22px; cursor: pointer; transition: 0.2s; color: var(--win-blue); border: 1px solid rgba(255,255,255,0.5); }
+        .task-icon:hover { background: white; transform: translateY(-3px); }
+
+        /* --- [4. Draggable Windows] --- */
         .window {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 90%; max-width: 400px; background: white; border-radius: 12px;
+            width: 90%; max-width: 400px; background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px); border-radius: 16px;
             display: none; flex-direction: column; z-index: 100;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.8);
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .window-header { padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; background: #f5f5f5; border-radius: 12px 12px 0 0; }
-        .close-btn { cursor: pointer; color: #888; padding: 5px 10px; }
-        .window-body { padding: 30px; text-align: center; font-family: 'Itim'; color: #333; }
+        @keyframes popIn { 0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); } 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
 
-        .hidden { display: none !important; }
+        .window-header { 
+            padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; 
+            background: rgba(255,255,255,0.5); border-radius: 16px 16px 0 0; 
+            border-bottom: 1px solid rgba(0,0,0,0.05); cursor: grab; /* ลากได้ตรงนี้! */
+        }
+        .window-header:active { cursor: grabbing; }
+        .win-title { font-size: 0.85rem; color: #555; font-weight: 600; display: flex; align-items: center; gap: 8px;}
+        .close-btn { width: 28px; height: 28px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; background: #e81123; color: white; font-size: 14px; opacity: 0.8; transition: 0.2s;}
+        .close-btn:hover { opacity: 1; transform: scale(1.1); }
+        .window-body { padding: 30px; text-align: center; font-family: 'Itim'; color: var(--text-dark); }
+
+        .hidden { display: none !important; opacity: 0; pointer-events: none;}
     </style>
 </head>
 <body>
 
+    <div id="boot-screen">
+        <div class="loader"></div>
+        <h2 style="font-weight: 300; letter-spacing: 2px;">Personal OS</h2>
+    </div>
+
     <div id="login-screen">
-        <div class="user-profile"><i class="fas fa-user-circle"></i></div>
+        <div class="user-profile"><i class="fas fa-heart"></i></div>
         <div class="login-box" style="text-align: center;">
-            <h2>ยินดีต้อนรับ</h2>
+            <h2 style="font-weight: 400; margin-bottom: 15px;">Welcome Back</h2>
             <div class="login-input-group">
                 <input type="password" id="passInput" placeholder="Password" autocomplete="off">
-                <button class="enter-btn" onclick="unlockOS()">
-                    <i class="fas fa-arrow-right"></i>
-                </button>
+                <button class="enter-btn" onclick="unlockOS()"><i class="fas fa-unlock-alt"></i></button>
             </div>
-            <p class="hint-text">รหัสผ่านคือวันเกิด (วว/ดด/พศ)</p>
+            <p style="font-size: 0.85rem; opacity: 0.8; margin-top: 15px; font-family: 'Itim';">Hint: วันเกิดคนเก่ง (วว/ดด/พศ)</p>
         </div>
-        
         <div class="lock-info">
             <p id="live-time">00:00</p>
             <p class="date-info">วันอังคารที่ 7 เมษายน 2569</p>
@@ -136,72 +155,180 @@
     </div>
 
     <div id="desktop">
-        <div class="icon" onclick="openWindow('quiz-win')">
-            <div class="icon-box"><i class="fas fa-compass" style="color: #4fc3f7;"></i></div>
+        <div class="icon" onclick="openApp('quiz-win')">
+            <div class="icon-box" style="background: rgba(79, 195, 247, 0.4);"><i class="fas fa-map-marked-alt"></i></div>
             <span>Distance</span>
         </div>
-        <div class="icon" onclick="openWindow('cake-win')">
-            <div class="icon-box"><i class="fas fa-birthday-cake" style="color: #ff8b8b;"></i></div>
+        <div class="icon" onclick="openApp('cake-win')">
+            <div class="icon-box" style="background: rgba(255, 139, 139, 0.4);"><i class="fas fa-birthday-cake"></i></div>
             <span>Surprise</span>
         </div>
-    </div>
-
-    <div id="quiz-win" class="window">
-        <div class="window-header"><span style="font-size: 0.8rem; color: #999;">Distance Tracker</span><div class="close-btn" onclick="closeWindow('quiz-win')">×</div></div>
-        <div class="window-body">
-            <p style="font-size: 1.2rem;">ทายซิ... ระยะทางจากระยอง <br>มาถึงใจเธอคือ "กี่กิโลเมตร"?</p>
-            <input type="number" id="distInput" style="width:100%; padding:12px; border-radius:4px; border:1px solid #ddd; text-align:center; margin-bottom:15px;" placeholder="0">
-            <button onclick="checkDist()" style="width:100%; padding:10px; border-radius:4px; border:none; background:var(--win-blue); color:white; cursor:pointer;">Check</button>
-            <p id="hint" style="color:#e81123; margin-top:10px;"></p>
+        <div class="icon" onclick="openApp('music-win')">
+            <div class="icon-box" style="background: rgba(162, 155, 254, 0.4);"><i class="fas fa-music"></i></div>
+            <span>Playlist</span>
         </div>
     </div>
 
-    <div id="cake-win" class="window">
-        <div class="window-header"><span style="font-size: 0.8rem; color: #999;">Surprise</span><div class="close-btn" onclick="closeWindow('cake-win')">×</div></div>
+    <div id="taskbar">
+        <div class="task-icon" onclick="openApp('quiz-win')"><i class="fas fa-compass"></i></div>
+        <div class="task-icon" onclick="openApp('cake-win')"><i class="fas fa-gift"></i></div>
+        <div class="task-icon" onclick="openApp('music-win')"><i class="fas fa-headphones"></i></div>
+    </div>
+
+    <div id="quiz-win" class="window drag-container">
+        <div class="window-header drag-handle">
+            <span class="win-title"><i class="fas fa-map-marker-alt"></i> Distance.exe</span>
+            <div class="close-btn" onclick="closeApp('quiz-win')"><i class="fas fa-times"></i></div>
+        </div>
         <div class="window-body">
-            <h3>HBD นะคะคนเก่ง! 🎂</h3>
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3hpeXN2ejN6ZzI2ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6JmNoYz1n/MCG263dfe91ONF5d54/giphy.gif" style="width:100%; border-radius:8px;">
-            <p>เค้กมะพร้าวอร่อยไหมเอ่ย ❤️</p>
+            <p style="font-size: 1.3rem;">ทายซิ... ระยะทางจากระยอง <br>มาถึงใจเธอคือ "กี่กิโลเมตร"?</p>
+            <input type="number" id="distInput" style="width:100%; padding:15px; border-radius:10px; border:1px solid #ddd; text-align:center; margin-bottom:15px; font-family:'Prompt'; font-size:18px;" placeholder="0">
+            <button onclick="checkDist()" style="width:100%; padding:12px; border-radius:10px; border:none; background:var(--win-blue); color:white; cursor:pointer; font-family:'Prompt'; font-size:16px;">เช็คคำตอบ</button>
+            <p id="hint" style="color:#e81123; margin-top:15px; font-weight:bold; height: 20px;"></p>
+        </div>
+    </div>
+
+    <div id="cake-win" class="window drag-container">
+        <div class="window-header drag-handle">
+            <span class="win-title"><i class="fas fa-birthday-cake"></i> Surprise.exe</span>
+            <div class="close-btn" onclick="closeApp('cake-win')"><i class="fas fa-times"></i></div>
+        </div>
+        <div class="window-body">
+            <h3 style="font-size: 1.6rem; color: #ff6b81; margin-top: 0;">Happy Birthday! 🎂</h3>
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3hpeXN2ejN6ZzI2ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6ZzJ6JmNoYz1n/MCG263dfe91ONF5d54/giphy.gif" style="width:100%; border-radius:12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            <p style="margin-top: 15px; font-size: 1.2rem;">เค้กมะพร้าวอร่อยไหมเอ่ย ❤️</p>
+        </div>
+    </div>
+
+    <div id="music-win" class="window drag-container">
+        <div class="window-header drag-handle">
+            <span class="win-title"><i class="fas fa-music"></i> Player.exe</span>
+            <div class="close-btn" onclick="closeApp('music-win')"><i class="fas fa-times"></i></div>
+        </div>
+        <div class="window-body" style="padding: 20px;">
+            <div style="width: 100px; height: 100px; background: #eee; border-radius: 15px; margin: 0 auto 15px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-compact-disc fa-spin" style="font-size: 50px; color: #ccc;"></i>
+            </div>
+            <h4 style="margin: 0; font-family: 'Prompt'; font-weight: 500;">Our Favorite Song</h4>
+            <p style="margin: 5px 0 20px; font-size: 0.9rem; color: #888;">Artist Name</p>
+            <div style="display: flex; justify-content: center; gap: 20px; font-size: 24px; color: var(--win-blue);">
+                <i class="fas fa-step-backward" style="cursor: pointer;"></i>
+                <i class="fas fa-play-circle" style="font-size: 32px; cursor: pointer;"></i>
+                <i class="fas fa-step-forward" style="cursor: pointer;"></i>
+            </div>
         </div>
     </div>
 
     <script>
+        // 1. Boot Screen Logic
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const boot = document.getElementById('boot-screen');
+                boot.style.opacity = '0';
+                setTimeout(() => boot.remove(), 800);
+            }, 1500); // โชว์หน้า Boot 1.5 วินาที
+        });
+
+        // 2. Unlock System
         function unlockOS() {
             const pass = document.getElementById('passInput').value;
             if(pass === "07/04/2550") {
                 const screen = document.getElementById('login-screen');
-                screen.style.transform = 'scale(1.2)';
+                screen.style.transform = 'scale(1.1)';
                 screen.style.opacity = '0';
                 setTimeout(() => screen.classList.add('hidden'), 800);
             } else {
-                alert("รหัสผ่านไม่ถูกต้องน้าา ลองใหม่ครับ!");
+                alert("รหัสผ่านไม่ถูกต้องน้า ลองนึกดูดีๆ!");
             }
         }
-        
-        document.getElementById('passInput').addEventListener('keypress', (e) => {
-            if(e.key === 'Enter') unlockOS();
-        });
+        document.getElementById('passInput').addEventListener('keypress', (e) => { if(e.key === 'Enter') unlockOS(); });
 
-        function openWindow(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeWindow(id) { document.getElementById(id).style.display = 'none'; }
+        // 3. Window Manager
+        let zIndexCounter = 100;
+        function openApp(id) { 
+            const win = document.getElementById(id);
+            win.style.display = 'flex'; 
+            win.style.zIndex = ++zIndexCounter; // ดันหน้าต่างที่เปิดใหม่ให้อยู่บนสุด
+        }
+        function closeApp(id) { document.getElementById(id).style.display = 'none'; }
 
+        // 4. Quiz Logic
         function checkDist() {
             const val = document.getElementById('distInput').value;
             if(parseInt(val) === 145) {
-                alert("เก่งมากครับ! 🎉");
-                openWindow('cake-win');
-                closeWindow('quiz-win');
+                document.getElementById('hint').innerText = "เก่งมากก! ถูกต้องครับ 🎉";
+                document.getElementById('hint').style.color = "#27ae60";
+                setTimeout(() => {
+                    closeApp('quiz-win');
+                    openApp('cake-win');
+                }, 1000);
             } else {
-                document.getElementById('hint').innerText = val > 145 ? "ไกลไปนิด ลองใหม่!" : "ใกล้ไปหน่อย ลองใหม่!";
+                document.getElementById('hint').style.color = "#e81123";
+                document.getElementById('hint').innerText = val > 145 ? "ไกลไปนิดด ลองลดลงหน่อย!" : "ใกล้ไปหน่อยย ลองเพิ่มอีกนิด!";
             }
         }
 
+        // 5. Clock
         function updateClock() {
             const now = new Date();
             document.getElementById('live-time').innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
         }
         setInterval(updateClock, 1000);
         updateClock();
+
+        // 6. Draggable Windows Logic (รองรับเมาส์และนิ้วสัมผัส)
+        const dragContainers = document.querySelectorAll('.drag-container');
+        dragContainers.forEach(container => {
+            const handle = container.querySelector('.drag-handle');
+            let isDragging = false, startX, startY, initialX, initialY;
+
+            // เอาหน้าต่างมาไว้บนสุดตอนกด
+            container.addEventListener('mousedown', () => container.style.zIndex = ++zIndexCounter);
+            container.addEventListener('touchstart', () => container.style.zIndex = ++zIndexCounter);
+
+            handle.addEventListener('mousedown', dragStart);
+            handle.addEventListener('touchstart', dragStart, {passive: false});
+
+            function dragStart(e) {
+                if(e.target.closest('.close-btn')) return; // ถ้ากดปุ่มปิด ไม่ต้องลาก
+                e.preventDefault();
+                isDragging = true;
+                const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+                const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+                
+                // คำนวณตำแหน่งปัจจุบันของหน้าต่าง
+                const rect = container.getBoundingClientRect();
+                // ลบ transform เดิมออก เพื่อจัดตำแหน่งด้วย top/left ตรงๆ
+                container.style.transform = 'none';
+                container.style.left = rect.left + 'px';
+                container.style.top = rect.top + 'px';
+
+                startX = clientX - rect.left;
+                startY = clientY - rect.top;
+
+                document.addEventListener('mousemove', drag);
+                document.addEventListener('touchmove', drag, {passive: false});
+                document.addEventListener('mouseup', dragEnd);
+                document.addEventListener('touchend', dragEnd);
+            }
+
+            function drag(e) {
+                if (!isDragging) return;
+                e.preventDefault();
+                const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+                const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+                container.style.left = (clientX - startX) + 'px';
+                container.style.top = (clientY - startY) + 'px';
+            }
+
+            function dragEnd() {
+                isDragging = false;
+                document.removeEventListener('mousemove', drag);
+                document.removeEventListener('touchmove', drag);
+                document.removeEventListener('mouseup', dragEnd);
+                document.removeEventListener('touchend', dragEnd);
+            }
+        });
     </script>
 </body>
 </html>
